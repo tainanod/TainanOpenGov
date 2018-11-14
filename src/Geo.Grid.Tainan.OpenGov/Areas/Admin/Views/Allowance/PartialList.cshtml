@@ -1,0 +1,61 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<Geo.Grid.Tainan.OpenGov.Entity.AllowanceSource>
+
+<div class="container-fluid">
+    <table class="table table-bordered table-striped table-hover">
+        <caption class="text-right">
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions
+            {
+
+                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+                DisplayLinkToNextPage = PagedListDisplayMode.Never,
+                DisplayLinkToIndividualPages = false,
+                DisplayItemSliceAndTotal = true,
+                ItemSliceAndTotalFormat = "顯示: {0} ~ {1} , 共 {2}"
+            })
+
+        </caption>
+        <tr>
+            <th>資料集名稱</th>
+            <th class="w130">管理組織</th>
+            <th width="180px">&nbsp;</th>
+        </tr>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.Name</td>
+                    <td>@item.Organization</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("Edit",new { id=item.SourceId})">編輯</a>
+                        <input type="button" class="btn btn-danger btn-sm" value="刪除" onclick="Delete('@item.SourceId'); " />
+                        <input type="button" class="btn btn-primary btn-sm" value="更新" onclick="Update('@item.SourceId'); " />
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<div class="container-fluid">
+    <div class="col-md-9 col-lg-9 text-center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+    <div class="col-md-3 col-lg-3 text-left">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions
+        {
+            DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+            DisplayLinkToLastPage = PagedListDisplayMode.Never,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+            DisplayLinkToNextPage = PagedListDisplayMode.Never,
+            DisplayLinkToIndividualPages = false,
+            DisplayPageCountAndCurrentLocation = true,
+            PageCountAndCurrentLocationFormat = "第 {0} 頁 / 共 {1} 頁"
+        })
+    </div>
+</div>

@@ -1,0 +1,230 @@
+﻿@using Geo.Grid.Tainan.OpenGov.Entity.Enumeration
+@model Geo.Grid.Tainan.OpenGov.Entity.Participation
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="pull-right">
+    <a class="btn btn-primary" href="@Url.Action("Index", "Participation")">
+        <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>
+        返回市政參與清單
+    </a>
+</div>
+<h2>編輯市政參與</h2>
+<input id="editId" type="hidden" value="@Model.ParticipationId" />
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <div class="tabbable" role="tabpanel">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#訊息管理" aria-controls="訊息管理" role="tab" data-toggle="tab">訊息管理</a></li>
+                <li role="presentation"><a href="#相片上傳" aria-controls="相片上傳" role="tab" data-toggle="tab">相片上傳</a></li>
+                <li role="presentation"><a href="#附件管理" aria-controls="附件管理" role="tab" data-toggle="tab">附件管理</a></li>
+                <li role="presentation"><a href="#相關連結" aria-controls="相關連結" role="tab" data-toggle="tab">相關連結</a></li>
+                <li role="presentation"><a href="#市府回應" aria-controls="市府回應" role="tab" data-toggle="tab">市府回應</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active pad20" id="訊息管理">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+
+                            @Html.HiddenFor(model => model.ParticipationId)
+
+                            @Html.EditorFor(model => model.Category)
+
+                            @Html.EditorFor(model => model.DataSetUnitId)
+
+                            @Html.EditorFor(model => model.Subject)
+
+                            @Html.EditorFor(model => model.Description)
+
+                            @Html.EditorFor(model => model.Announcement)
+
+                            @Html.EditorFor(model => model.EnableDiscussStr)
+
+                            @Html.EditorFor(model => model.OpenDate)
+
+                            @Html.EditorFor(model => model.CloseDate)
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="更新" class="btn btn-primary" />
+                                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div id="相片上傳" role="tabpanel" class="tab-pane pad20">
+                    <div id="dvPhotoNew" class="pull-right pad10">
+                        <button id="btnNewPhoto" type="button" class="btn btn-primary">相片上傳</button>
+                    </div>
+                    <div id="dvPhotoView" style="max-width: 915px;">
+                        <img id="imgHeader" alt="" class="img-thumbnail" src="">
+                    </div>
+                </div>
+
+                <div id="附件管理" role="tabpanel" class="tab-pane pad20">
+                    <div class="text-right pad10">
+                        <button id="btnNewDocument" type="button" class="btn btn-primary">新增附件</button>
+                    </div>
+                    <div id="dvDocument">
+                        @Html.Partial("PartialDocument", Model.ParticipationDocuments.Where(x => x.IsEnabled && x.DocumentType == DocType.一般文件).AsQueryable())
+                    </div>
+                </div>
+
+                <div id="相關連結" role="tabpanel" class="tab-pane pad20">
+                    <div class="text-right pad10">
+                        <button id="btnNewHyperlink" type="button" class="btn btn-primary">新增相關連結</button>
+                    </div>
+                    <div id="dvHyperlink">
+                        @Html.Partial("PartialHyperlink", Model.ParticipationHyperlinks.Where(x => x.IsEnabled).AsQueryable())
+                    </div>
+                </div>
+
+                <div id="市府回應" role="tabpanel" class="tab-pane pad20">
+                    <div class="text-right pad10">
+                        <button id="btnNewResponse" type="button" class="btn btn-primary">新增回應</button>
+                    </div>
+                    <div id="dvResponse">
+                        @Html.Partial("PartialResponse", Model.ParticipationDocuments.Where(x => x.IsEnabled && x.DocumentType == DocType.市府回應).AsQueryable())
+                    </div>
+                </div>
+            </div>
+
+
+            @*panel end*@
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_ModalFrame")
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#OpenDate").datetimepicker();
+            $("#CloseDate").datetimepicker();
+            $('#btnNewPhoto').click(function () {
+                $('#modalFrameTitle').html('相片上傳');
+                $('#frameModal').attr("src", '@Url.Action("PhotoUpload", "Participation", new {Area = "Admin", id = Model.ParticipationId})');
+                $('#dvModalFrame').modal({ show: true });
+            });
+            $('#btnNewDocument').click(function () {
+                $('#modalFrameTitle').html('附件上傳');
+                $('#frameModal').attr("src", '@Url.Action("DocumentUpload", "Participation", new {Area = "Admin", id = Model.ParticipationId })');
+                $('#dvModalFrame').modal({ show: true });
+            });
+
+            $('#btnNewHyperlink').click(function () {
+                ShowModal('新增相關連結', '@Url.Action("CreateHyperlink", "Participation", new {Area = "Admin", id = Model.ParticipationId })');
+            });
+
+            $('#btnNewResponse').click(function () {
+                $('#modalFrameTitle').html('新增回應');
+                $('#frameModal').attr("src", '@Url.Action("ResponseUpload", "Participation", new {Area = "Admin", id = Model.ParticipationId })');
+                $('#dvModalFrame').modal({ show: true });
+            });
+
+            @if (Model.Photos.Any())
+            {
+                var script = "PhotoShow('" + Model.Photos.First().PhotoId + "');";
+                @Html.Raw(script);
+            }
+        });
+
+        function ShowModal(title, url) {
+            $('#modalFrameTitle').html(title);
+            $('#frameModal').attr("src", url);
+            $('#dvModalFrame').modal({ show: true });
+        }
+
+        function PhotoSuccess(result) {
+            $("#dvModalFrame").modal('hide');
+            $.notify("照片新增完成", "success");
+            PhotoShow(result.Data.PhotoId);
+        }
+
+        function PhotoShow(id) {
+            $('#imgHeader').attr("src", "@Url.Action("photo", "resource", new { area = "" })/" + id + "?size=4");
+        }
+
+        function DocumentSuccess(result) {
+            $("#dvModalFrame").modal('hide');
+            $.notify("附件新增完成", "success");
+            DocumentShow();
+        }
+
+        function DocumentShow() {
+            var url = "@Url.Action("PartialDocument", "Participation")/" + $('#editId').val();
+            ShowPartial(url, "dvDocument", function () { });
+        }
+
+        function ReponseSuccess(result) {
+            $("#dvModalFrame").modal('hide');
+            $.notify("回應文件新增完成", "success");
+            ReponseShow();
+        }
+
+        function ReponseShow() {
+            var url = "@Url.Action("PartialResponse", "Participation")/" + $('#editId').val();
+            ShowPartial(url, "dvResponse", function () { });
+        }
+
+        function RemoveDocument(evt) {
+            if (!confirm('確認要移除此附件?')) {
+                return;
+            }
+            DoAjaxPost('@Url.Action("RemoveDocument", "Participation")/' + evt.value, null, function (result) {
+                if (result.Success) {
+                    $.notify("附件已移除!", "success");
+                    DocumentShow();
+                    ReponseShow();
+                } else {
+                    $.notify(result.Message, "error");
+                }
+            });
+        }
+
+        function HyperlinkSuccess() {
+            $("#dvModalFrame").modal('hide');
+            $.notify("相關連結新增完成!", "success");
+
+            HyperlinkShow();
+        }
+
+        function HyperlinkShow() {
+            var url = "@Url.Action("PartialHyperlink", "Participation")/" + $('#editId').val();
+            ShowPartial(url, "dvHyperlink", function () { });
+        }
+
+        function RemoveHyperlink(evt) {
+            if (!confirm('確認要移除此相關連結?')) {
+                return;
+            }
+            DoAjaxPost('@Url.Action("RemoveHyperlink", "Participation")/' + evt.value, null, function (result) {
+                if (result.Success) {
+                    $.notify("相關連結已移除!", "success");
+                    HyperlinkShow();
+                } else {
+                    $.notify(result.Message, "error");
+                }
+            });
+        }
+    </script>
+}
+
+@if (ViewBag.Error != null)
+{
+    <script type="text/javascript">
+        alert('@ViewBag.Error');
+    </script>
+}

@@ -1,0 +1,194 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.VoteVm
+
+@{
+    ViewBag.Title = "編輯投票";
+    var groupData = ViewBag.groupData as IQueryable<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.IdNameVm>;
+    var optionData = ViewBag.optionData as IList<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.GuidNameVm>;
+    var verifyType = ViewBag.verifyType as IEnumerable<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.IdNameVm>;
+    int[] intArray = new int[] { 6, 7 };
+}
+@section styles{
+    <style>
+        .table1 input[type='date'] {
+            width: 200px;
+            display: inline;
+        }
+
+        #datafill li {
+            display: inline;
+        }
+
+        input[type='text'].txt {
+            width: 600px;
+            display: inline-block;
+        }
+    </style>
+}
+
+@Html.ActionLink("返回投票", "Index", new { id = Model.ForumId }, new { @class = "btn btn-primary pull-right" })
+<h2>編輯投票</h2>
+<hr />
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", @id = "form_1", enctype = "multipart/form-data" }))
+{
+    <input type="hidden" id="VoteId" name="VoteId" value="@Model.VoteId" />
+    <input type="hidden" id="ForumId" name="ForumId" value="@Model.ForumId" />
+    <table class="table1" width="100%">
+        <tr>
+            <th class="w130">題目*</th>
+            <td><input type="text" id="Title" name="Title" class="form-control" value="@Model.Title" required="required" data-require="請填寫題目" /></td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>說明</th>
+            <td>
+                <textarea id="Info" name="Info" class="form-control" style="height:150px;">@Model.Info</textarea>
+            </td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>投票期間*</th>
+            <td>
+                <input type="date" id="StartDate" name="StartDate" class="form-control" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+                ～
+                <input type="date" id="EndDate" name="EndDate" class="form-control" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+            </td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>選項*</th>
+            <td>
+                <input type="text" id="optionTxt" name="optionTxt" class="form-control txt" value="" />
+                <input type="button" value="確認" class="btn btn-primary optionTxtAdd" />
+            </td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>&nbsp;</th>
+            <td>
+                <ol class="blockOption">
+                    @foreach (var item in optionData)
+                    {
+                        int i = optionData.IndexOf(item);
+                        <li class="blockLi">
+                            <input type="hidden" name="OptionArray[@(i)].PageGuid" value="@item.PageGuid" />
+                            <input type="text" name="OptionArray[@(i)].PageName" class="form-control txt blockTxt" value="@item.PageName" />
+                            <input type="button" class="btn btn-danger blockRemove" value="X" />
+                        </li>
+                    }
+                </ol>
+            </td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>選項最多勾選幾個*</th>
+            <td>
+                <input type="number" id="SelectNumber" name="SelectNumber" class="form-control" min="1" value="@Model.SelectNumber" style="width:150px;" />
+            </td>
+        </tr>
+        <tr><td style="height:30px;"></td></tr>
+        <tr>
+            <th>驗證方式＊</th>
+            <td>
+                <select id="VerifyType" name="VerifyType" class="form-control" disabled="disabled" style="width:auto" data-require="請選擇驗證方式" required>
+                    <option value="">請選擇</option>
+                    @foreach (var item in verifyType)
+                    {
+                        <option value="@item.PageId" @(Model.VerifyType == item.PageId ? "selected=selected" : string.Empty) >@item.PageName</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>資料填寫欄位</th>
+            <td>
+                @foreach (var item in groupData)
+                {
+                    if (intArray.Contains(item.PageId))
+                    {
+                        <label>
+                            <input type="radio" name="GroupIdArray" value="@item.PageId" disabled="disabled" @(Model.GroupIdArray.Contains(item.PageId) ? "checked=checked" : string.Empty) />&nbsp;@item.PageName
+                        </label>
+                    }
+                    else
+                    {
+                        <label style="margin-right:10px;">
+                            <input type="checkbox" name="GroupIdArray" value="@item.PageId" disabled="disabled" @(Model.GroupIdArray.Contains(item.PageId) ? "checked=checked" : string.Empty) />&nbsp;@item.PageName
+                        </label>
+                    }
+
+                }
+            </td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>結果是否開放*</th>
+            <td>
+                <label>
+                    <input type="radio" name="CanVote" value="true" @(Model.CanVote ? "checked=checked" : string.Empty) />&nbsp;是
+                </label>
+                <label>
+                    <input type="radio" name="CanVote" value="false" @(!Model.CanVote ? "checked=checked" : string.Empty) />&nbsp;否
+                </label>
+            </td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>是否發佈*</th>
+            <td>
+                <label>
+                    <input type="radio" name="IsPublish" value="true" @(Model.IsPublish ? "checked=checked" : string.Empty) />&nbsp;是
+                </label>
+                <label>
+                    <input type="radio" name="IsPublish" value="false" @(!Model.IsPublish ? "checked=checked" : string.Empty) />&nbsp;否
+                </label>
+            </td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th></th>
+            <td>
+                <input type="submit" class="btn btn-primary" value="Update" />
+            </td>
+        </tr>
+    </table>
+}
+
+<ul id="blockOption" style="display:none;">
+    <li class="blockLi">
+        <input type="hidden" name="OptionArray[{number}].PageGuid" value="" />
+        <input type="text" name="OptionArray[{number}].PageName" class="form-control txt blockTxt" value="{txt}" />
+        <input type="button" class="btn btn-danger blockRemove" value="X" />
+    </li>
+</ul>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //新增
+            $('#form_1').on('click', '.optionTxtAdd', function () {
+                var $txt = $('#optionTxt'),
+                    $val = $txt.val(),
+                    $html = $('#blockOption').html(),
+                    $li = $('.blockOption>.blockLi').length;
+
+                $html = $html.replace(/{number}/ig, $li);
+                $html = $html.replace(/{txt}/ig, $val);
+
+                $('.blockOption').append($html);
+
+                //清空
+                $txt.val('');
+            });
+
+            //刪除
+            $('#form_1').on('click', '.blockRemove', function () {
+                var i = $('#form_1 .blockRemove').index($(this));
+                $('.blockLi').eq(i).hide();
+                $('.blockTxt').eq(i).val('');
+            });
+        });
+    </script>
+}

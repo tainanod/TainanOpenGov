@@ -1,0 +1,39 @@
+﻿@model DateTime?
+@{
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();
+    htmlAttributes.Add("class", "control-label col-md-2");
+
+    IDictionary<string, object> htmlAttributes2 = new Dictionary<string, object>();
+    htmlAttributes2.Add("class", "form-control");
+    htmlAttributes2.Add("type", "datetime");
+    htmlAttributes2.Add("style", "max-width:200px;");
+    htmlAttributes2.Add("data-date-format", "YYYY/MM/DD HH:mm");
+    string value = "";
+    if (Model.HasValue) { value = Model.Value.ToString("yyyy/MM/dd hh:mm:ss"); }
+
+    string id = ViewData.ModelMetadata.PropertyName;
+    bool bt = ViewData.ModelMetadata.IsRequired;
+    if (bt)
+    {
+        htmlAttributes2.Add("aria_required", "true");
+    }
+}
+
+<div class="form-group">
+    @Html.Label("", htmlAttributes)
+    <div class="col-md-10">
+        @Html.TextBox("", value, htmlAttributes2)
+        @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            $(function () {
+                $("#@(id)").datetimepicker();
+            });
+        </script>
+        );
+}

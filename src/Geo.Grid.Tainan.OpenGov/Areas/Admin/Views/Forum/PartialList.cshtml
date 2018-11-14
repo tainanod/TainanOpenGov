@@ -1,0 +1,77 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<Geo.Grid.Tainan.OpenGov.Entity.Forum>
+
+<div class="container-fluid">
+    <table class="table table-bordered table-striped table-hover">
+        <caption class="text-right">                
+            @Html.PagedListPager(Model, page => Url.Action("Index", new {page = page}), new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+                DisplayLinkToNextPage = PagedListDisplayMode.Never,
+                DisplayLinkToIndividualPages = false,
+                DisplayItemSliceAndTotal = true,
+                ItemSliceAndTotalFormat = "顯示: {0} ~ {1} , 共 {2}"
+            })
+            
+        </caption>
+        <tr>
+            <th>主題</th>
+            <th class="w130">發佈時間</th>
+            <th class="w130">截止時間</th>
+            <th class="w215">&nbsp;</th>
+            <th class="w130">&nbsp;</th>
+            <th style="width: 50px;">&nbsp;</th>
+            <th class="w130">&nbsp;</th>
+        </tr>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    
+                    <td>@item.Subject</td>
+                    <td>@item.OpenDate.ToString("yyyy/MM/dd HH:mm")</td>
+                    <td>@item.CloseDate.ToString("yyyy/MM/dd HH:mm")</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("ActIndex", "Activity", new {Area = "Admin", id = item.ForumId})">論壇活動</a>
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("WorkIndex", "Activity", new {Area = "Admin", id = item.ForumId})">工作坊</a>
+                        <a class="btn btn-success btn-sm" href="@Url.Action("Index", "SubForum", new {Area = "Admin", id = item.ForumId})">子議題</a>
+                    </td>
+                    <td align="center">
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("Index", "Vote", new { id = item.ForumId })">投票</a>
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("Index", "Question", new { Area = "Admin", id = item.ForumId })">問卷</a>
+                    </td>
+                    <td style="width: 80px; ">
+                        <a href="@Url.Action("Index", "Tag", new { id = item.ForumId })" class="btn btn-primary btn-sm">標籤設定</a>
+                        <a href="@Url.Action("Index", "Discuss", new { id = item.ForumId })" class="btn btn-success btn-sm">論壇列表</a>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="ShowExportDialog('@item.ForumId');">論壇匯出</button>
+                    </td>
+                    <td align="center">
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("Edit",new { id=item.ForumId})">編輯</a>
+                        <input type="button" class="btn btn-danger btn-sm" value="刪除" onclick="DeleteForum('@item.ForumId'); "/>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<div class="container-fluid">
+    <div class="col-md-9 col-lg-9 text-center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+    <div class="col-md-3 col-lg-3 text-left">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page}), new PagedListRenderOptions
+    {
+        DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+        DisplayLinkToLastPage = PagedListDisplayMode.Never,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+        DisplayLinkToIndividualPages = false,
+        DisplayPageCountAndCurrentLocation = true,
+        PageCountAndCurrentLocationFormat = "第 {0} 頁 / 共 {1} 頁"
+    })
+    </div>
+</div>

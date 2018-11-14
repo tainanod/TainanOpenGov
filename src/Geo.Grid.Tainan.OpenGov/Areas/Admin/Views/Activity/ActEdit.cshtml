@@ -1,0 +1,50 @@
+﻿@using Geo.Grid.Tainan.OpenGov.Entity
+@using Geo.Grid.Tainan.OpenGov.Entity.Common
+@using Newtonsoft.Json
+@model Geo.Grid.Tainan.OpenGov.Entity.Activity
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutClean.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.ActivityId)
+
+        @Html.EditorFor(model => model.Subject)
+
+        @Html.EditorFor(model => model.HoldDate)
+
+        @Html.EditorFor(model => model.Location)
+
+        @Html.EditorFor(model => model.Description)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="儲存" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    @if (ViewBag.Result != null)
+    {
+        <script type="text/javascript">
+            var result = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Result as Result<Activity>));
+            if(result.Success){
+                parent.ActivitySuccess('論壇活動更新完成!');
+            }else{
+                parent.$.notify(result.Message, "error");
+            }
+        </script>
+    }
+}
+
+
+

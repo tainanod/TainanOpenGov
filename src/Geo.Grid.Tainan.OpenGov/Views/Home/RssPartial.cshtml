@@ -1,0 +1,6 @@
+﻿@model List<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.RssEntity>
+@foreach (var m in Model)
+{
+    <li><a href="@m.Link" target="_blank"><span>@m.PubDate.ToString("MM/dd")</span>&nbsp;@m.Title</a></li>
+}
+

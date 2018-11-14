@@ -1,0 +1,420 @@
+﻿@using Geo.Grid.Tainan.OpenGov.Entity.ViewModel;
+@using Geo.Grid.Tainan.OpenGov.Entity.Enumeration;
+@using Geo.Grid.Tainan.OpenGov.Common;
+@model QuestInfoVm
+@{
+    ViewBag.Title = "問卷調查";
+
+    var cityData = ViewBag.cityData as IQueryable<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.SeqNameVm>;
+    var townData = ViewBag.townData as IQueryable<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.CityTownVm>;
+    bool isComplete = ViewBag.isComplete;
+}
+
+@section styles {
+    <style>
+        .homephoto {
+            display: none;
+        }
+
+        .introduce ol, .introduce.ul {
+            list-style: decimal;
+        }
+
+            .introduce ol li, .introduce ul li {
+                margin-left: 25px;
+            }
+    </style>
+    <link rel="stylesheet" href="@Url.Content("~/Content/jquery.fancybox.min.css")" media="all" />
+}
+
+@functions{
+    public MvcHtmlString Str2HtmlStr(string ori)
+    {
+        return new MvcHtmlString(ori);
+    }
+
+    public string AddQuestRel(QuestQuestionVm question)
+    {
+        return question.QuestSetItemVms.Any(x => x.MdQuestNecessaryRel != null) ? "hasNacessary" : "";
+    }
+}
+
+@helper SetItem(Guid qstId, int qstAnsType, bool isRequired, Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestSetItemVm set)
+{
+switch (qstAnsType)  //答案類型 1:單選(含是非) 2:複選 3:問答 4:多重問答
+{
+    case (int)QstAnsType.單選題:
+            <div class="option-wrapper sel-qst">
+                <input type="radio" value="@set.SetId" name="@qstId" id="@set.SetId" tid='@(set.MdQuestNecessaryRel!=null?set.MdQuestNecessaryRel.TargetId.ToString():"")' ttype="@(set.MdQuestNecessaryRel!=null?set.MdQuestNecessaryRel.TargetType.ToString():"")" placeholder="test" data-require="請至少選擇其中一項" @(isRequired ? "required=required" : "") />
+                <label for="@set.SetId">
+                    <span>@set.SetDesc</span>
+                </label>
+                @if (set.SetNote)
+                {
+                    <input type="text" value="" id="" placeholder="您的回答" data-require="請填寫" />
+                    <label class="col-xs-12"></label>
+                }
+            </div>
+        break;
+    case (int)QstAnsType.多選題:
+            <div class="option-wrapper sel-qst">
+                <input type="checkbox" name="@qstId" value="@set.SetId" id="@set.SetId" data-require="請至少選擇其中一項" />
+                <label for="@set.SetId">
+                    <span>@set.SetDesc</span>
+                </label>
+                @if (set.SetNote)
+                {
+                    <input type="text" value="" id="" placeholder="您的回答" data-require="請填寫" />
+                    <label class="col-xs-12"></label>
+                }
+            </div>
+        break;
+    case (int)QstAnsType.問答題:
+            <div class="col-xs-12 ask-qst">
+                <textarea name="" placeholder="您的回答" @(isRequired ? "required=required" : "") id="@set.SetId" data-require="請填寫"></textarea>
+                <label class="col-xs-12"></label>
+            </div>
+        break;
+    case (int)QstAnsType.多重問答題:
+            <label class="col-xs-12" for="textarea1">
+                <span>@set.SetDesc</span>
+            </label>
+            <div class="col-xs-12 ask-qst">
+                <textarea name="" id="@set.SetId" @(isRequired ? "required=required" : "") placeholder="您的回答" data-require="請填寫"></textarea>
+                <label class="col-xs-12"></label>
+            </div>
+        break;
+            @*case (int)QstAnsType.台南地址:
+                    <option value="@set.SetId">@set.SetDesc</option>
+                break;*@
+default:
+    <div>No template</div>
+        break;
+
+}
+}
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "myForm" }))
+{
+    @Html.HiddenFor(x => x.InfoId)
+    <div id="myText" style="display:none;"></div>
+    <div class="container no-big-banner">
+        <h2 class="hidden">@Model.InfoTitle</h2>
+        <div class="introduce">
+            @Model.InfoDesc.GetHtmlStr()
+        </div>
+
+        @foreach (var gp in Model.QuestGroupVms)
+        {
+            <section class="qa-section-wrapper" gid="@gp.GroupId">
+                <h3 class="section-title">@gp.GroupTitle</h3>
+                <!--群組說明-->
+                @if (!string.IsNullOrEmpty(gp.GroupDesc))
+                    {
+                    <p> @Str2HtmlStr(gp.GroupDesc)</p>
+                }
+                <!--題目-->
+                @foreach (var qst in gp.MdQuestions)
+                {
+                    <div class="qa-wrapper" qid="@qst.QstId" @(qst.QstAnsType == (int)QstAnsType.多選題 ? "multichk" : "") @(qst.IsRequired ? "needed orireq" : "")>
+                        <!--題目敘述-->
+                        <div class="q-wrapper">@Str2HtmlStr(qst.QstQuestion)</div>
+                        <!--選項，如果沒選項則為大標題-->
+                        @if (qst.QuestSetItemVms != null && qst.QuestSetItemVms.Any())
+                        {
+                            if (new int[] { 1, 2, 3, 4 }.Contains(qst.QstAnsType))
+                            {
+                                <div class="a-wrapper @AddQuestRel(qst)">
+                                    @foreach (var set in qst.QuestSetItemVms)
+                                    {
+                                        @SetItem(qst.QstId, qst.QstAnsType, qst.IsRequired, set);
+                                    }
+                                </div>
+                            }
+                            else if (qst.QstAnsType == 5)
+                            {
+                                //地址題型(台南Only)
+                                <div class="a-wrapper">
+                                    <div class="option-wrapper addr-qst tainan">
+                                        <label class="control-label">台南市</label>
+                                        <select class="form-control town ddlTown" style="display:inline-block;width:auto" id="@qst.QuestSetItemVms.First().SetId" data-require="請至少選擇其中一項" required="required">
+                                            <option value="">請選擇</option>
+                                            @foreach (var town in townData.Where(x => x.CityId == 16))
+                                            {
+                                                <option value="@town.TownId">@town.TownName</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            }
+                            else if (qst.QstAnsType == 6)
+                            {
+                                //地址題型(全台)
+                                <div class="a-wrapper">
+                                    <div class="option-wrapper addr-qst alltw">
+                                        <select class="form-control w150 ddlCity" style="display:inline-block;width:auto" data-require="請至少選擇其中一項" required="required">
+                                            <option value="">縣市</option>
+                                            @foreach (var item in cityData)
+                                            {
+                                                <option value="@item.PageSeq">@item.PageName</option>
+                                            }
+                                        </select>
+                                        <select class="form-control w150 ddlTown" style="display:inline-block;width:auto" id="@qst.QuestSetItemVms.First().SetId" data-require="請至少選擇其中一項" required="required">
+                                            <option value="">鄉鎮區</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+                @if (gp.GroupTitle.Contains("基本資料") && Model.VerifyType == 2)
+                {
+                    <div class="qa-wrapper">
+                        <div class="a-wrapper">
+                            <label for="formEmail">
+                                <span>E-Mail</span>
+                            </label>
+                            <input type="email" id="UserMail" name="UserMail" placeholder="您的回答" size="60" value="" data-require="請填寫正確mail" required />
+                            <label class="col-xs-12"></label>
+                            <span style="color:red; margin-top:1em; padding:1em;">投票將寄出驗證信，請填寫正確mail。</span>
+                        </div>
+                    </div>
+                }
+            </section>
+        }
+
+        @if (Model.QuestGroupVms.FirstOrDefault(x => x.GroupTitle.Contains("基本資料")) == null && Model.VerifyType == 2)
+        {
+            <section class="qa-section-wrapper">
+                <h3 class="section-title">基本資料</h3>
+
+                <div class="qa-wrapper">
+                    <div class="a-wrapper">
+                        <label for="formEmail">
+                            <span>E-Mail</span>
+                        </label>
+                        <input type="email" id="UserMail" name="UserMail" placeholder="您的回答" size="60" value="" data-require="請填寫正確mail" required />
+                        <label class="col-xs-12"></label>
+                        <span style="color:red; margin-top:1em; padding:1em;">投票將寄出驗證信，請填寫正確mail。</span>
+                    </div>
+                </div>
+            </section>
+        }
+        
+        @if (!isComplete)
+        {
+            <div class="col-xs-12 text-center">
+                <input type="reset" value="清除重填" class="qa-btn gray" />
+                <input id="submitBtn" type="button" value="送出問卷" class="qa-btn" />
+                <input type="submit" style="display:none" value="" id="submit" />
+            </div>
+            <a style="display:none" href="#afterSubmitBox" id="hidLink"></a>
+        }
+    </div>
+}
+
+<div id="afterSubmitBox" class="cover" style="display: none;">
+    <p>感謝您的填寫。</p>
+    <div class="col-xs-12">
+        <input type="button" value="返回公民論壇" class="qa-btn" onclick="window.location.href='@Url.Action("Index", "Forum")'" />
+        @*<input type="button" value="問卷結果" class="qa-btn" />*@
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.fancybox.min.js")"></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+
+    <noscript>縣市/鄉鎮區</noscript>
+    <script type="text/javascript">
+        $(function () {
+            $('.ddlCity').change(function () {
+                var i = $(this).val(),
+                    html = '';
+                $('.ddlTown').html(html);
+                $.get('@Url.Action("Town","Api/CityTown")/' + i, function (result) {
+                    $('.ddlTown').append($('<option></option>').attr("value", "").text("鄉鎮區"));
+                    for (var i = 0; i < result.length; i++) {
+                        $('.ddlTown').append($('<option></option>').attr("value", result[i].TownId).text(result[i].TownName));
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#submitBtn').click(function () {
+                if (ddlAndChkboxRequiredValidation()) {
+                    myFormChk();
+                    $('#submit').click();
+                }
+            });
+        });
+
+        function myFormChk() {
+            var index = 0;
+            var form = $('#myText');
+            var htmlStr = "";
+
+            form.html(htmlStr);
+            htmlStr += "<input type='hidden' name='vmD.InfoId' value='@(Model.InfoId)' />";
+            htmlStr += "<input type='hidden' name='vmD.UserMail' value='" + $('#UserMail').val() + "' />";
+            $('.sel-qst input:radio:checked,.sel-qst input:checkbox:checked').parent().each(function (i, n) {
+                var item = $(n);
+
+                htmlStr += "<input type='hidden' value='" + item.find('input:radio,input:checkbox').val() + "' name='vmD.SetItemArray[" + index + "].SetId' />";
+
+                if (item.find('input:text').length > 0) {
+                    htmlStr += "<input type='hidden' value='" + item.find('input:text').val() + "' name='vmD.SetItemArray[" + index + "].FillDesc' />";
+                }
+                index++;
+            });
+
+            $('.ask-qst textarea').each(function (i, n) {
+                var item = $(n);
+                if (item.val().trim()) {
+                    htmlStr += "<input type='hidden' value='" + item.attr('id') + "' name='vmD.SetItemArray[" + index + "].SetId' />";
+                    htmlStr += "<input type='hidden' value='" + item.val() + "' name='vmD.SetItemArray[" + index + "].FillDesc' />";
+
+                    index++;
+                }
+            });
+
+            var townSelect = $('.addr-qst.tainan select option:selected');
+            if (townSelect.val() != "" && townSelect.val() != null) {
+                htmlStr += "<input type='hidden' name='vmD.SetItemArray[" + index + "].SetId' value='" + $('.addr-qst.tainan select').attr("id") + "' />";
+                htmlStr += "<input type='hidden' name='vmD.SetItemArray[" + index + "].FillDesc' value='台南市" + townSelect.text() + "' />";
+                index++;
+            }
+
+            $('.addr-qst.alltw').each(function (i, n) {
+                //debugger;
+                var setId = $(this).find('select.ddlTown').attr('id');
+                htmlStr += "<input type='hidden' value='" + setId + "' name='vmD.SetItemArray[" + index + "].SetId' />";
+                htmlStr += "<input type='hidden' value='" + $(this).find('select.ddlCity option:selected').text() + $(this).find('select.ddlTown  option:selected').text() + "' name='vmD.SetItemArray[" + index + "].FillDesc' />";
+            });
+
+            form.html(htmlStr);
+        }
+    </script>
+
+    <script>
+        var adaptiveHeight = function (element, baserows) {
+            var po = parseInt(element.css('padding-top')) + parseInt(element.css('padding-bottom'));
+            var baseLineHeight = parseInt(element.css('line-height'));
+            var baseHeight = baseLineHeight * baserows;
+            element.height(baseHeight);
+            var scrollval = element[0].scrollHeight;
+
+            element.height(scrollval - po);
+        };
+        var adaptiveTextarea = function (sel, baserows, callback) {
+            if (sel.length == 0) {
+                return;
+            }
+
+            sel.bind('input propertychange', function (e) {
+                adaptiveHeight($(this), baserows);
+                if (callback) callback(e);
+            });
+
+            adaptiveHeight(sel, baserows);
+        };
+
+        adaptiveTextarea($('textarea'), 1);
+
+        function ddlAndChkboxRequiredValidation() {
+            var validErr = "";
+            $('div[multichk][needed]').each(function (i, n) {
+                if ($(this).find('input:checkbox:checked').length == 0) {
+                    validErr += $(this).find('div.q-wrapper').text() + " 請選擇至少1一個.\r\n";
+                }
+            });
+
+            $('div[needed]').has('.addr-qst').each(function (i, n) {
+                if (!$(this).find('.addr-qst select.ddlTown').val()) {
+                    validErr += $(this).find('div.q-wrapper').text() + " 請選擇至少2一個.\r\n";
+                }
+            });
+
+            if (validErr.length > 0) {
+                alert(validErr);
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+
+        $(function () {
+            var $qaWrapper = $('.qa-wrapper');
+            $qaWrapper.each(function (i) {
+                var noAnswerOption = $qaWrapper.eq(i).find('.a-wrapper').length;
+                if (!noAnswerOption) $qaWrapper.eq(i).addClass('no-answer');
+            })
+
+            $("#hidLink").fancybox({
+                hideOnContentClick: true,
+                afterClose: function () {
+                    window.location.href = '@Url.Action("index","forum")';
+                }
+            });
+
+            @if(ViewData["Success"]!=null && (bool)ViewData["Success"])
+            {
+                @:$('#hidLink').click();
+                                                                                }
+
+            @if (ViewData["Warn"] != null)
+            {
+                @:alert('@ViewData["Warn"]'); window.location.href = '@Url.Action("index", "forum")';
+                                                                                }
+
+            $('div.hasNacessary').each(function () { var self = this; $(this).find('input:radio').on('click', relSingleQuestCheck) });
+        });
+
+        function relSingleQuestCheck(e) {
+            var checkedRadio = $(e.target).parent().parent().find('input:radio:checked');
+            var unCheckedRadio = $(e.target).parent().parent().find('input:radio').not(':checked');
+
+            SetNecessary(checkedRadio.attr('ttype'), checkedRadio.attr('tid'))
+            unCheckedRadio.each(function () {
+                debugger;
+                RemoveMecessary($(this).attr('ttype'), $(this).attr('tid'));
+            });
+        }
+
+        function SetNecessary(targetType, targetId) {
+            if (!targetType || !targetId) {
+                return;
+            }
+            if (targetType === "1") {
+
+            }
+            else if (targetType === "2") {
+                var qdiv = $('.qa-wrapper[qid="' + targetId + '"]');
+                qdiv.attr('needed', true);
+                qdiv.find('input:radio,textarea').attr('required', true);
+            }
+        }
+
+        function RemoveMecessary(targetType, targetId) {
+            if (!targetType || !targetId) {
+                return;
+            }
+            if (targetType === "1") {
+
+            }
+            else if (targetType === "2") {
+                var qdiv = $('.qa-wrapper[qid="' + targetId + '"]');
+                if (!qdiv.attr('orireq')) {
+                    qdiv.removeAttr("needed");
+                    qdiv.find('input:radio,textarea').removeAttr('required');
+                }
+            }
+        }
+    </script>
+}

@@ -1,0 +1,38 @@
+﻿CREATE TABLE [dbo].[PHOTO] (
+    [PHOTO_ID]     UNIQUEIDENTIFIER CONSTRAINT [DF__tmp_ms_xx__PHOTO__1DF06171] DEFAULT (newid()) NOT NULL,
+    [SIZE]         BIGINT           NOT NULL,
+    [FILE_NAME]    NVARCHAR (255)   NOT NULL,
+    [FILE_TYPE]    NVARCHAR (255)   NOT NULL,
+    [ALT]          NVARCHAR (255)   NULL,
+    [IS_ENABLED]   BIT              NOT NULL,
+    [CREATED_BY]   NVARCHAR (100)   NOT NULL,
+    [CREATED_DATE] DATETIME         NOT NULL,
+    [UPDATE_BY]    NVARCHAR (100)   NOT NULL,
+    [UPDATE_DATE]  DATETIME         NOT NULL,
+    CONSTRAINT [PK_dbo.PHOTO] PRIMARY KEY CLUSTERED ([PHOTO_ID] ASC)
+);
+
+
+
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+

@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "資料目錄";
+}
+
+@section styles {
+    <style>
+
+        body {
+            background: #fff;
+        }
+    </style>
+}
+
+<div class="main" ng-app="app" ng-controller="datasetController" ng-cloak>
+    <h1 class="hidden">野生台南 - @(ViewBag.Title)</h1>
+    <h1 class="clear-title-style">
+        <i class="fa fa-rocket" aria-hidden="true"></i>
+        野生台南
+    </h1>
+
+    <main role="tabpanel">
+        <!-- Nav tabs -->
+        @Html.Partial("_TabPartial")
+        <!-- Tab panes -->
+        <div class="tab-content pd-1">
+            <div role="tabpanel" class="tab-pane active">
+                <div class="row">
+                    <div class="col-sm-4 col-md-3">
+                        <nav class="data-filter-wrapper">
+                            <h1><i class="fa fa-filter" aria-hidden="true"></i> 類別</h1>
+                            <ul>
+                                <li ng-repeat="t in vm.types">
+                                    <a href="javascript:;" ng-class="{'active': vm.filteredType[0].TypeId==t.TypeId}" ng-click="getTypeSeq(t.TypeId)">{{t.Title}} ({{t.Counts}})</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-sm-8 col-md-9">
+                        <div class="search-wrapper">
+                            <input class="form-control search-input-text" type="text" value="" placeholder="搜尋資料集。" ng-model="search"/>
+                            <button class="btn search-btn" type="button">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="search-result-wrapper">
+                            <h2><span class="hidden">根據"機構"</span>找到{{page.totalRecord}}個資料集</h2>
+                            <p ng-show="vm.filteredType.length">
+                                類別
+                                <span class="filtered">
+                                    {{vm.filteredType[0].Title}}
+                                    <a href="javascript:;" class="remove" title="移除" ng-click="resetTypeSeq()"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </span>
+                            </p>
+                            <form class="form-inline">
+                                每頁顯示
+                                <select class="form-control pageShowItem" ng-model="page.pageSize" ng-options="o for o in vm.optionModel" ng-change="pageChange()"></select> 筆
+                            </form>
+
+                            @Html.Partial("_Loading")
+
+                            <ul class="list-wrapper">
+                                <li ng-repeat="x in vm.list | filter:vm.filteredType[0].TypeId | filter: search">
+                                    <a href="@Url.Action("Detail","DataSet")/{{x.Setid}}" title="{{x.Title}}">
+                                        <h3>{{x.Title}}</h3>
+                                    </a>
+                                    <p>{{x.Info}}</p>
+                                    <div class="form-inline text-left">
+                                        <a href="@Url.Action("Detail","DataSet")/{{x.Setid}}" title="{{x.Title}}">
+                                            <span class="form-control label" data-format="{{y.PageName | toLower}}" ng-repeat="y in x.ExtensionList">{{y.PageName}}</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-push-8 col-md-4">
+                                    <div class="text-center mg-tb-1" style="font-size: .9em;">
+                                        資料筆數:{{page.totalRecord}} 總頁數:{{page.totalPages}} 目前頁數{{page.currentPage}}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-pull-4 col-md-8">
+                                    <uib-pagination style="vertical-align:middle" boundary-links="true" items-per-page="page.pageSize" max-size="10" total-items="page.totalRecord" ng-model="page.currentPage" class="pagination-sm" previous-text="上一頁" next-text="下一頁" first-text="第一頁" last-text="最後頁" ng-change="pageChange()"></uib-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/DataSet/dataset.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/DataSet/dataset.service.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/DataSet/dataset.controller.js")'></script>
+    <script>
+        $('#imgLoading').show();
+        $('#submitPop').modal({
+            show: false,
+            backdrop: 'static'
+        });
+    </script>
+}

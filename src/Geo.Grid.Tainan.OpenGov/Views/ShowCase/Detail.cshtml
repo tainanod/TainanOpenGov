@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "應用展示";
+}
+@section styles {
+
+
+    <style>
+
+        body {
+            background: #fff;
+        }
+    </style>
+}
+
+<div class="main" ng-app="app" ng-controller="showcaseController" ng-init="caseId='@(Url.RequestContext.RouteData.Values["id"])'" ng-cloak>
+    <h1 class="hidden">野生台南 - @(ViewBag.Title)</h1>
+    <h1 class="clear-title-style">
+        <i class="fa fa-rocket" aria-hidden="true"></i>
+        野生台南
+    </h1>
+
+    <main role="tabpanel">
+        <!-- Nav tabs -->
+        @Html.Partial("_TabPartial")
+        <!-- Tab panes -->
+        <div class="tab-content pd-1">
+            <div role="tabpanel" class="tab-pane active">
+                <div class="row">
+                    <div class="col-md-12 text-right form-inline mg-tb-5">
+                        <button class="btn btn-info btn-sm form-control" style="color: #fff;" onclick="javascript:window.history.back();"><i class="fa fa-arrow-left" aria-hidden="true"></i> 返回</button>
+                    </div>
+                </div>
+
+                @Html.Partial("_Loading")
+
+                <article id="detailTemplate" class="row">
+                    <figure class="col-xs-12 col-sm-3 col-md-2 text-center">
+                        <img class="case-app-img" ng-src="{{vm.detail.PhotoUrl}}" alt="{{vm.detail.Title}} icon" />
+                    </figure>
+                    <figcaption class="col-xs-12 col-sm-9 col-md-10">
+                        <h2 class="detail-title">{{vm.detail.Title}}</h2>
+                        <p>創作者：{{vm.detail.UserName}}</p>
+                        <section id="slickWrapper" class="case-img-wrapper" ng-if="vm.detail.PhotoList.length">
+                            <img ng-src="{{x.PageUrl}}" alt="" ng-repeat="x in vm.detail.PhotoList" />
+                        </section>
+                        <section class="case-info-wrapper">
+                            <h3><i class="fa fa-file-text" aria-hidden="true"></i> 應用簡介</h3>
+                            <p ng-bind-html="vm.detail.Contents | trust"></p>
+                        </section>
+                        <section class="case-info-wrapper" ng-if="vm.detail.UrlList.length">
+                            <h3><i class="fa fa-link" aria-hidden="true"></i> 相關連結</h3>
+                            <ul>
+                                <li ng-repeat="y in vm.detail.UrlList">
+                                    <a href="{{y.PageUrl}}" target="_blank" title="開新視窗 {{y.PageName}}">{{y.PageName}}</a>
+                                </li>
+                            </ul>
+                        </section>
+                        <section class="case-info-wrapper" ng-if="vm.detail.DataSetList.length">
+                            <h3><i class="fa fa-database" aria-hidden="true"></i> 應用資料集</h3>
+                            <ul>
+                                <li ng-repeat="z in vm.detail.DataSetList">
+                                    <a href="{{z.PageUrl}}" target="_blank" title="開新視窗 {{z.PageName}}">{{z.PageName}}</a>
+                                </li>
+                            </ul>
+                        </section>
+                    </figcaption>
+                </article>
+            </div>
+        </div>
+    </main>
+</div>
+
+@section scripts {
+
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Content/geo/slick/slick.min.js")"></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/ShowCase/showcase.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/ShowCase/showcase.service.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/ShowCase/showcase.detail.controller.js")'></script>
+    <script>
+        $('#imgLoading').show();
+        $('#detailTemplate').hide();
+    </script>
+}

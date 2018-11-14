@@ -1,0 +1,156 @@
+﻿@using Geo.Grid.Tainan.OpenGov.Entity.Enumeration;
+@model Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestInfoVm
+@{
+    ViewBag.Title = "Detail";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <title>台南開放政府平台</title>
+    @Styles.Render("~/Content/geo/style")
+    <style>
+        .homephoto {
+            display: none;
+        }
+
+        .introduce ol, .introduce.ul {
+            list-style: decimal;
+        }
+
+            .introduce ol li, .introduce ul li {
+                margin-left: 25px;
+            }
+    </style>
+    <link rel="stylesheet" href="@Url.Content("~/Content/jquery.fancybox.min.css")" media="all" />
+
+    @Html.Partial("_ga")
+
+</head>
+
+<body>
+    <div id="header">
+        <div class="wrapper">
+            <a href="@Url.Action("Index","Home")" class="logo"><img src="@Url.Content("~/Content/geo/img/logo.png")"></a>
+            <br style="clear: both;">
+        </div>
+    </div>
+    <div class="container no-big-banner">
+        <h2 class="hidden">@Model.InfoTitle</h2>
+        <div class="introduce">
+            @Html.Raw(Model.InfoDesc)
+        </div>
+        <!--題組-->
+        @foreach (var gp in Model.QuestGroupVms)
+        {
+            <section class="qa-section-wrapper">
+                <h3 class="section-title">@gp.GroupTitle</h3>
+                <p>@Html.Raw(gp.GroupDesc)</p>
+                <!--題目-->
+                @foreach (var qst in gp.MdQuestions)
+                {
+                    <div class="qa-wrapper">
+                        <div class="q-wrapper">
+                            @Html.Raw(qst.QstQuestion)
+                        </div>
+                        <!--選項，如果沒選項則為大標題-->
+                        @if (qst.QuestSetItemVms != null && qst.QuestSetItemVms.Any())
+                        {
+                            if (new int[] { 1, 2, 3, 4 }.Contains(qst.QstAnsType))
+                            {
+                                <div class="a-wrapper @AddQuestRel(qst)">
+                                    @foreach (var set in qst.QuestSetItemVms)
+                                    {
+                                        @SetItem(qst.QstId, qst.QstAnsType, qst.IsRequired, set);
+                                    }
+                                </div>
+                            }
+                            else if (qst.QstAnsType == 5)
+                            {
+                                //地址題型(台南Only)
+                                <div class="a-wrapper">
+                                    <div class="option-wrapper addr-qst tainan">
+                                        <label class="control-label">
+                                            @(qst.QuestSetItemVms.FirstOrDefault() != null ? qst.QuestSetItemVms.FirstOrDefault().SetChoose.FillDesc : string.Empty)
+                                        </label>
+
+                                    </div>
+                                </div>
+                            }
+                            else if (qst.QstAnsType == 6)
+                            {
+                                //地址題型(全台)
+                                <div class="a-wrapper">
+                                    <div class="option-wrapper addr-qst tainan">
+                                        <label class="control-label">
+                                            @(qst.QuestSetItemVms.FirstOrDefault() != null ? qst.QuestSetItemVms.FirstOrDefault().SetChoose.FillDesc : string.Empty)
+                                        </label>
+
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            </section>
+        }
+
+    </div>
+    @functions{
+        public string AddQuestRel(Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestQuestionVm question)
+        {
+            return question.QuestSetItemVms.Any(x => x.MdQuestNecessaryRel != null) ? "hasNacessary" : "";
+        }
+    }
+
+    @helper SetItem(Guid qstId, int qstAnsType, bool isRequired, Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestSetItemVm set)
+    {
+switch (qstAnsType)  //答案類型 1:單選(含是非) 2:複選 3:問答 4:多重問答
+{
+    case (int)QstAnsType.單選題:
+            <div class="option-wrapper sel-qst">
+                <input type="radio" @(set.SetChoose != null ? "checked=checked" : "") disabled="disabled" />
+                <label for="@set.SetId">
+                    <span>@set.SetDesc</span>
+                </label>
+            </div>
+        break;
+    case (int)QstAnsType.多選題:
+            <div class="option-wrapper sel-qst">
+                <input type="checkbox" @(set.SetChoose != null ? "checked=checked" : "") disabled="disabled" />
+                <label for="@set.SetId">
+                    <span>@set.SetDesc</span>
+                </label>
+            </div>
+        break;
+    case (int)QstAnsType.問答題:
+            <div class="col-xs-12 ask-qst">
+                <textarea placeholder="您的回答" disabled="disabled">@Html.Raw(set.SetChoose != null ? set.SetChoose.FillDesc : string.Empty)</textarea>
+                <label class="col-xs-12"></label>
+            </div>
+        break;
+    case (int)QstAnsType.多重問答題:
+            <label class="col-xs-12" for="textarea1">
+                <span>@set.SetDesc</span>
+            </label>
+            <div class="col-xs-12 ask-qst">
+                <textarea placeholder="您的回答" disabled="disabled">@Html.Raw(set.SetChoose != null ? set.SetChoose.FillDesc : string.Empty)</textarea>
+                <label class="col-xs-12"></label>
+            </div>
+        break;
+    default:
+            <div>No template</div>
+        break;
+}
+}
+
+
+</body>
+</html>

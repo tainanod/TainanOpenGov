@@ -1,0 +1,316 @@
+﻿
+@{
+    ViewBag.Title = "問卷調查";
+}
+
+@section styles {
+    <style>
+        .homephoto {
+            display: none;
+        } 
+    </style>
+    <link rel="stylesheet" href="@Url.Content("~/Content/jquery.fancybox.min.css")" media="all" />
+}
+<div class="container no-big-banner">
+    <h2 class="hidden">臺南市政府新市政中心開放決策問卷調查</h2>
+    <p class="introduce">
+        敬愛的市民朋友您好：
+        <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;感謝您撥冗填寫，這是一份關於臺南新市政中心開放決策的調查問卷，本問卷以瞭解臺南市民對新市政中心評估指標的看法為主，您所填寫資料會以匿名的方式供本案彙整分析之用。
+        <br />
+        臺南市政府
+        <br />
+        2016年9月
+    </p>
+    <section class="qa-section-wrapper">
+        <h3 class="section-title">第一部分：評估指標重要程度</h3>
+        <p>填寫說明：請閱讀完以下題目後，依據您個人狀況勾選適當的答案。</p>
+        <div class="qa-wrapper">
+            <div class="q-wrapper">
+                您認為未來臺南市新市政中心區位在以下「交通便利性」考量面向中，其重要性為何？
+            </div>
+            <div class="a-wrapper">
+                <div class="option-wrapper">
+                    <input type="radio" value="1" name="radioSq1" id="radioSq11"/>
+                    <label for="radioSq11">
+                        <span>非常不重要</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="radio" value="2" name="radioSq1" id="radioSq12" />
+                    <label for="radioSq12">
+                        <span>不重要</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="radio" value="3" name="radioSq1" id="radioSq13" />
+                    <label for="radioSq13">
+                        <span>普通</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="radio" value="4" name="radioSq1" id="radioSq14" />
+                    <label for="radioSq14">
+                        <span>重要</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="radio" value="5" name="radioSq1" id="radioSq15" />
+                    <label for="radioSq15">
+                        <span>非常重要</span>
+                    </label>
+                </div> 
+            </div>
+        </div>
+        <div class="qa-wrapper">
+            <div class="q-wrapper">
+                鄰近現有國道、快速道路交流道系統及省道等公路系統
+            </div>
+            <div class="a-wrapper">
+                <div class="option-wrapper">
+                    <input type="checkbox" value="1" id="checkSq1" />
+                    <label for="checkSq1">
+                        <span>非常不重要</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="checkbox" value="1" id="checkSq2" />
+                    <label for="checkSq2">
+                        <span>不重要</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="checkbox" value="1" id="checkSq3" />
+                    <label for="checkSq3">
+                        <span>普通</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="checkbox" value="1" id="checkSq4" />
+                    <label for="checkSq4">
+                        <span>重要</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="checkbox" value="1" id="checkSq5" />
+                    <label for="checkSq5">
+                        <span>非常重要</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="qa-wrapper">
+            <div class="q-wrapper">
+                A5您認為未來臺南市新市政中心區位在以下「帶動區域均衡」考量面向中，其重要性為何？
+            </div>
+            @*<div class="a-wrapper"></div>*@
+        </div>
+        <div class="qa-wrapper">
+            <div class="q-wrapper">
+                鄰近現有國道、快速道路交流道系統及省道等公路系統
+            </div>
+            <div class="a-wrapper">
+                <div class="option-wrapper">
+                    <input type="checkbox" value="1" id="checkSq6" />
+                    <label for="checkSq6">
+                        <span>非常不重要</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="checkbox" value="1" id="checkSq7" />
+                    <label for="checkSq7">
+                        <span>不重要</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="checkbox" value="1" id="checkSq8" />
+                    <label for="checkSq8">
+                        <span>普通</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="checkbox" value="1" id="checkSq9" />
+                    <label for="checkSq9">
+                        <span>重要</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="checkbox" value="1" id="checkSq10" />
+                    <label for="checkSq10">
+                        <span>非常重要</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="qa-section-wrapper">
+        <h3 class="section-title">第二部分：其他重要評估指標</h3>
+        <div class="qa-wrapper">
+            <div class="q-wrapper">
+                B2除已公佈十大評估指標外，您認為還有其他評估指標需被納入考量？請於下表填寫，並說明指標定義及需納入原因。
+            </div>
+            <div class="a-wrapper">
+                <label class="col-xs-12" for="textarea1">
+                    <span>評估指標一</span>
+                </label>
+                <div class="col-xs-12">
+                    <textarea name="textarea1" id="textarea1" placeholder="您的回答"></textarea>
+                    <label class="col-xs-12"></label>
+                </div>
+                <label class="col-xs-12" for="textarea2">
+                    <span>指標定義</span>
+                </label>
+                <div class="col-xs-12">
+                    <textarea name="textarea2" id="textarea2" placeholder="您的回答"></textarea>
+                    <label class="col-xs-12"></label>
+                </div>
+                <label class="col-xs-12" for="textarea3">
+                    <span>納入原因</span>
+                </label>
+                <div class="col-xs-12">
+                    <textarea name="textarea3" id="textarea3" placeholder="您的回答"></textarea>
+                    <label class="col-xs-12"></label>
+                </div>
+            </div>
+    </section>
+    <section class="qa-section-wrapper">
+        <h3 class="section-title">第三部分：其他建議</h3>
+        <div class="qa-wrapper">
+            <div class="q-wrapper">
+                C1有關臺南新市政中心的其他建議，請填寫於下方空格中。
+            </div>
+
+            <div class="a-wrapper">
+                <div class="col-xs-12">
+                    <textarea name="" placeholder="您的回答"></textarea>
+                    <label class="col-xs-12"></label>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="qa-section-wrapper">
+        <h3 class="section-title">第四部分：個人基本資料</h3>
+        <div class="qa-wrapper">
+            <div class="q-wrapper">
+                性別
+            </div>
+            <div class="a-wrapper">
+                <div class="option-wrapper">
+                    <input type="radio" value="1" name="sexSql1" id="sexSql11" />
+                    <label for="sexSql11">
+                        <span>男</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="radio" value="2" name="sexSql1" id="sexSql12" />
+                    <label for="sexSql12">
+                        <span>女</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="qa-wrapper">
+            <div class="q-wrapper">
+                年齡
+            </div>
+            <div class="a-wrapper">
+                <label>
+                    <input type="text" value="" id="" placeholder="您的回答" />
+                    <label class="col-xs-12"></label>
+                    <span>歲</span>
+                </label>
+            </div>
+        </div>
+        <div class="qa-wrapper">
+            <div class="q-wrapper">
+                職業
+            </div>
+            <div class="a-wrapper">
+                <div class="option-wrapper">
+                    <input type="radio" value="1" name="radioSql1" id="radioSql11" />
+                    <label for="radioSql11">
+                        <span>學生</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="radio" value="2" name="radioSql1" id="radioSql12" />
+                    <label for="radioSql12">
+                        <span>軍公教</span>
+                    </label>
+                </div>
+                <div class="option-wrapper">
+                    <input type="radio" value="3" name="radioSql1" id="radioSql13" class="other-option"/>
+                    <label for="radioSql13">
+                        <span>其他</span>
+                    </label> 
+                </div>
+                <input type="text" value="" id="" placeholder="您的回答" />
+                <label class="col-xs-12"></label>
+
+            </div>
+        </div>
+    </section>
+    <div class="col-xs-12 text-center">
+        <input type="reset" value="清除重填" class="qa-btn gray" />
+        <input id="submitBtn" type="submit" value="送出問卷" class="qa-btn" href="#afterSubmitBox"/>
+    </div>
+</div>
+
+<div id="afterSubmitBox" class="cover" style="display: none;">
+    <p>感謝您的填寫。</p>
+    <div class="col-xs-12">
+        <input type="button" value="返回公民論壇" class="qa-btn" onclick="location.href='@Url.Action("../Forum")'" />
+        @*<input type="button" value="問卷結果" class="qa-btn" />*@
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.fancybox.min.js")"></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script>
+        var adaptiveHeight = function (element, baserows) {
+            var po = parseInt(element.css('padding-top')) + parseInt(element.css('padding-bottom'));
+            var baseLineHeight = parseInt(element.css('line-height'));
+            var baseHeight = baseLineHeight * baserows;
+            element.height(baseHeight);
+            var scrollval = element[0].scrollHeight;
+
+            element.height(scrollval - po);
+        };
+        var adaptiveTextarea = function (sel, baserows, callback) {
+            sel.bind('input propertychange', function (e) {
+                adaptiveHeight($(this), baserows);
+                if (callback) callback(e);
+            });
+
+            adaptiveHeight(sel, baserows);
+        };
+
+        adaptiveTextarea($('textarea'), 1);
+
+        var $submitBtn = $('#submitBtn');
+        $submitBtn.click(function () {
+            $submitBtn.fancybox({
+                'hideOnContentClick': true,
+                'modal': true
+            });
+        })
+
+        $(function() {
+            var $qaWrapper = $('.qa-wrapper');
+            $qaWrapper.each(function (i) {
+                var noAnswerOption = $qaWrapper.eq(i).find('.a-wrapper').length;
+                if (!noAnswerOption) $qaWrapper.eq(i).addClass('no-answer');
+            })
+        })
+
+        
+
+
+        
+    </script>
+    
+    
+}

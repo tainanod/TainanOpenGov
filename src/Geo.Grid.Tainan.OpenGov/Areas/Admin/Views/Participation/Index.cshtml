@@ -1,0 +1,81 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.Participation
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>市政參與</h2>
+
+@*資料篩選*@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @Html.ActionLink("新增市政參與議題", "Create", "Participation", new { Area = "Admin" }, new { @class = "btn btn-primary pull-right" })
+        <h4>資料篩選</h4>
+    </div>
+</div>
+
+@*論壇清單*@
+<div id="dvList"></div>
+
+@*popup 對話框*@
+@Html.Partial("_ModalFrame")
+
+@section styles
+{
+    <link href="@Url.Content("~/Content/PagedList.css")" rel="stylesheet" type="text/css" />
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        var nowPage = 1;
+        $(function () {
+            ShowList();
+        });
+
+        function ShowList(page) {
+            page = page || 1;
+            nowPage = page;
+            var url = "@Url.Action("PartialList", "Participation")?page=" + page;
+            ShowPartial(url, "dvList", function () {
+                $('#dvList .pagination li a').each(function (i, item) {
+                    var hyperLinkUrl = $(item).attr('href');
+                    if (typeof hyperLinkUrl !== 'undefined' && hyperLinkUrl !== false) {
+                        var pageNumber = GetUrlPara('page', hyperLinkUrl);
+                        $(item).attr('href', '#').click(function (event) {
+                            event.preventDefault();
+                            $(event.target).attr('href');
+                            ShowList(pageNumber);
+                        });
+                    }
+                });
+            });
+        }
+        function DeleteForum(id) {
+            if (!confirm('確認要移除此市政參與議題?')) {
+                return;
+            }
+            DoAjaxPost('@Url.Action("Remove", "Participation")/' + id, null, function (result) {
+                if (result.Success) {
+                    $.notify("市政參與議題已移除!", "success");
+                    ShowList(nowPage);
+                } else {
+                    $.notify(result.Message, "error");
+                }
+            });
+        }
+        function Mothball(id) {
+            DoAjaxPost('@Url.Action("Mothball", "Participation")/' + id, null, function (result) {
+                if (result.Success) {
+                    ShowList(nowPage);
+                }
+            });
+        }
+        function ShowExportDialog(id) {
+            var url = "@Url.Action("PartialExport", "Participation")/" + id;
+            $('#modalFrameTitle').html('市政參與議題資料匯出');
+            $('#frameModal').attr("src", url);
+            $('#dvModalFrame').modal({ show: true });
+        }
+    </script>
+}
+

@@ -1,0 +1,13 @@
+﻿@{
+    Layout = null;
+    string controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+}
+
+<ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+    <li role="presentation" class="@(controllerName == "showcase" ? "active" : "")">
+        <a href="@Url.Action("Index","ShowCase")">應用展示</a>
+    </li>
+    <li role="presentation" class="@(controllerName == "dataset" ? "active" : "")">
+        <a href="@Url.Action("Index","DataSet")">資料目錄</a>
+    </li>
+</ul>

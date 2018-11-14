@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{95A226CB-5DC8-4EAB-B5D3-12538AEB37FF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Geo.Grid.Tainan.OpenGov.Entity</RootNamespace>
+    <AssemblyName>Geo.Grid.Tainan.OpenGov.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CsvHelper, Version=7.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.7.1.0\lib\net45\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GeoJSON.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoJSON.Net.1.1.64\lib\net45\GeoJSON.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activity.cs" />
+    <Compile Include="AllowanceSource.cs" />
+    <Compile Include="Allowance.cs" />
+    <Compile Include="AnonymousClick.cs" />
+    <Compile Include="DistrictOffice.cs" />
+    <Compile Include="Engineering.cs" />
+    <Compile Include="EngineeringLog.cs" />
+    <Compile Include="JsonViewModel\PublicSchedule.cs" />
+    <Compile Include="Participation.cs" />
+    <Compile Include="ParticipationActivity.cs" />
+    <Compile Include="ParticipationAnonymousClick.cs" />
+    <Compile Include="ParticipationDiscuss.cs" />
+    <Compile Include="ParticipationDocument.cs" />
+    <Compile Include="ParticipationDocumentExt.cs" />
+    <Compile Include="ParticipationHyperlink.cs" />
+    <Compile Include="ParticipationTag.cs" />
+    <Compile Include="PublicScheduleVm.cs" />
+    <Compile Include="ViewModel\AllowanceQueryVm .cs" />
+    <Compile Include="ViewModel\AllowanceSourceVm.cs" />
+    <Compile Include="ViewModel\AllowanceJsonVm.cs" />
+    <Compile Include="ViewModel\AllowanceVm.cs" />
+    <Compile Include="ViewModel\ApiPackage.cs" />
+    <Compile Include="ViewModel\ApiPackageResult.cs" />
+    <Compile Include="ViewModel\Api\ApiActivityVm.cs" />
+    <Compile Include="ViewModel\Api\ApiDiscussCreateVm.cs" />
+    <Compile Include="ViewModel\Participation\ApiParticipationDetailVm.cs" />
+    <Compile Include="ViewModel\Participation\ApiParticipationDiscussDetailVm.cs" />
+    <Compile Include="ViewModel\Api\ApiDiscussDetailVm.cs" />
+    <Compile Include="ViewModel\Participation\ApiParticipationDiscussVm.cs" />
+    <Compile Include="ViewModel\Api\ApiDiscussVm.cs" />
+    <Compile Include="ViewModel\Api\ApiForumDetailVm.cs" />
+    <Compile Include="AspNetRoles.cs" />
+    <Compile Include="AspNetUserClaims.cs" />
+    <Compile Include="AspNetUserLogins.cs" />
+    <Compile Include="AspNetUsers.cs" />
+    <Compile Include="AuditableEntityNew.cs" />
+    <Compile Include="AuditableEntity.cs" />
+    <Compile Include="Banner.cs" />
+    <Compile Include="Card.cs" />
+    <Compile Include="CityTown.cs" />
+    <Compile Include="Common\PageResult.cs" />
+    <Compile Include="Common\Result.cs" />
+    <Compile Include="DataSetUnit.cs" />
+    <Compile Include="DataSet.cs" />
+    <Compile Include="DataSetExtension.cs" />
+    <Compile Include="DataSetHistory.cs" />
+    <Compile Include="DataSetType.cs" />
+    <Compile Include="Dictionary\VerifyType.cs" />
+    <Compile Include="Discuss.cs" />
+    <Compile Include="Document.cs" />
+    <Compile Include="DocumentExt.cs" />
+    <Compile Include="Enumeration\ActivityType.cs" />
+    <Compile Include="Enumeration\CardColor.cs" />
+    <Compile Include="Enumeration\CardType.cs" />
+    <Compile Include="Enumeration\DocType.cs" />
+    <Compile Include="Enumeration\ForumType.cs" />
+    <Compile Include="Enumeration\PhotoSize.cs" />
+    <Compile Include="Enumeration\QstAnsType.cs" />
+    <Compile Include="Enumeration\QuestGatherColorEnum.cs" />
+    <Compile Include="Enumeration\SysRoles.cs" />
+    <Compile Include="Forum.cs" />
+    <Compile Include="Hyperlink.cs" />
+    <Compile Include="Interface\IAuditableEntity.cs" />
+    <Compile Include="Interface\IResult.cs" />
+    <Compile Include="MdCheck.cs" />
+    <Compile Include="MdQuestNecessaryRel.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="ShowCase.cs" />
+    <Compile Include="ShowCaseUrl.cs" />
+    <Compile Include="ViewModel\Admin\BannerVm.cs" />
+    <Compile Include="ViewModel\Admin\DataSetHistory.cs" />
+    <Compile Include="ViewModel\Admin\DataSetTypeVm.cs" />
+    <Compile Include="ViewModel\Admin\DataSetVm.cs" />
+    <Compile Include="ViewModel\Admin\DiscussVm.cs" />
+    <Compile Include="ViewModel\Admin\ForumVm.cs" />
+    <Compile Include="ViewModel\Admin\GuidNameVm.cs" />
+    <Compile Include="ViewModel\Admin\IdNameVm.cs" />
+    <Compile Include="ViewModel\Admin\MenuVm.cs" />
+    <Compile Include="ViewModel\Admin\RoleVm.cs" />
+    <Compile Include="ViewModel\Admin\SearchVm.cs" />
+    <Compile Include="ViewModel\Admin\PageNameVm.cs" />
+    <Compile Include="ViewModel\Admin\ShowCaseVm.cs" />
+    <Compile Include="ViewModel\Admin\TagVm.cs" />
+    <Compile Include="ViewModel\Admin\VoteFillUserExcelVm.cs" />
+    <Compile Include="ViewModel\Admin\VoteGatherVm.cs" />
+    <Compile Include="ViewModel\Admin\VoteVm.cs" />
+    <Compile Include="ViewModel\Api\ApiForumVm.cs" />
+    <Compile Include="ViewModel\Api\ApiQuestGatherVm.cs" />
+    <Compile Include="ViewModel\Api\ApiQuestInfoVm.cs" />
+    <Compile Include="ViewModel\Api\ApiSubForumDetailVm.cs" />
+    <Compile Include="ViewModel\Api\ApiSubForumVm.cs" />
+    <Compile Include="ViewModel\Api\ApiYoutubeVm.cs" />
+    <Compile Include="ViewModel\BannerVm.cs" />
+    <Compile Include="ViewModel\CardListVm.cs" />
+    <Compile Include="ViewModel\CardVm.cs" />
+    <Compile Include="ViewModel\CityTownVm.cs" />
+    <Compile Include="ViewModel\CityVm.cs" />
+    <Compile Include="ViewModel\Api\ApiDataSetDetailVm.cs" />
+    <Compile Include="ViewModel\Api\ApiDataSetVm.cs" />
+    <Compile Include="ViewModel\Common\SearchVm.cs" />
+    <Compile Include="ViewModel\DataSet\DataSetDetailVm.cs" />
+    <Compile Include="ViewModel\DataSet\DataSetHistoryVm.cs" />
+    <Compile Include="ViewModel\DataSet\DataSetTypeVm.cs" />
+    <Compile Include="ViewModel\DataSet\DataSetVm.cs" />
+    <Compile Include="ViewModel\DataSet\PageNameVm.cs" />
+    <Compile Include="ViewModel\DataSet\ShowCaseVm.cs" />
+    <Compile Include="ViewModel\DiscussSearchVm.cs" />
+    <Compile Include="ViewModel\Engineering\EngineeringCsvMap.cs" />
+    <Compile Include="ViewModel\Engineering\EngineeringDetailVm.cs" />
+    <Compile Include="ViewModel\Engineering\EngineeringQueryVm.cs" />
+    <Compile Include="ViewModel\Engineering\EngineeringCsvVm.cs" />
+    <Compile Include="ViewModel\Engineering\EngineeringVm.cs" />
+    <Compile Include="ViewModel\Engineering\EngineeringLogVm.cs" />
+    <Compile Include="ViewModel\GuidNameVm.cs" />
+    <Compile Include="ViewModel\IntNameVm.cs" />
+    <Compile Include="ViewModel\MdUploadVm.cs" />
+    <Compile Include="ViewModel\PageNameVm.cs" />
+    <Compile Include="ViewModel\Participation\ApiParticipationVm.cs" />
+    <Compile Include="ViewModel\Participation\ParticipationDiscussSearchVm.cs" />
+    <Compile Include="ViewModel\Participation\ParticipationDataVm.cs" />
+    <Compile Include="ViewModel\Participation\ParticipationVm.cs" />
+    <Compile Include="ViewModel\Participation\ParticipationActivityVm.cs" />
+    <Compile Include="ViewModel\Participation\ParticipationDiscussVm.cs" />
+    <Compile Include="ViewModel\Participation\ParticipationDocumentVm.cs" />
+    <Compile Include="ViewModel\Participation\ParticipationHyperlinkVm.cs" />
+    <Compile Include="ViewModel\Participation\ParticipationTagVm.cs" />
+    <Compile Include="ViewModel\PhotoNewVm.cs" />
+    <Compile Include="ViewModel\QuestCreateSetItemVm.cs" />
+    <Compile Include="ViewModel\QuestFillUserExcelVm.cs" />
+    <Compile Include="ViewModel\QuestGatherExamineVm.cs" />
+    <Compile Include="ViewModel\QuestGatherExcelFillVm.cs" />
+    <Compile Include="ViewModel\QuestGatherExcelVm.cs" />
+    <Compile Include="ViewModel\QuestGatherInfoVm.cs" />
+    <Compile Include="ViewModel\QuestGatherVm.cs" />
+    <Compile Include="ViewModel\QuestNecessaryRelChangeVm.cs" />
+    <Compile Include="ViewModel\QuestNecessaryRelVm.cs" />
+    <Compile Include="ViewModel\QuestSaveVm.cs" />
+    <Compile Include="ViewModel\QuestSetItemChooseVm.cs" />
+    <Compile Include="ViewModel\SearchVm.cs" />
+    <Compile Include="ViewModel\SeqNameVm.cs" />
+    <Compile Include="ViewModel\Api\ApiShowCaseVm.cs" />
+    <Compile Include="ViewModel\ShowCase\PageNameVm.cs" />
+    <Compile Include="ViewModel\ShowCase\ShowCaseCreateVm.cs" />
+    <Compile Include="ViewModel\ShowCase\ShowCaseDetailVm.cs" />
+    <Compile Include="ViewModel\ShowCase\ShowCaseVm.cs" />
+    <Compile Include="ViewModel\ShowCase\UserVm.cs" />
+    <Compile Include="ViewModel\TownVm.cs" />
+    <Compile Include="MdFillQuest.cs" />
+    <Compile Include="MdQuestInfo.cs" />
+    <Compile Include="MdQuestion.cs" />
+    <Compile Include="MdQuestionGroup.cs" />
+    <Compile Include="MdQuestSetItem.cs" />
+    <Compile Include="Photo.cs" />
+    <Compile Include="PhotoExt.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tag.cs" />
+    <Compile Include="ViewModel\ActivityVm.cs" />
+    <Compile Include="ViewModel\AspNetUserVm.cs" />
+    <Compile Include="ViewModel\DiscussVm.cs" />
+    <Compile Include="ViewModel\DocumentVm.cs" />
+    <Compile Include="ViewModel\ForumVm.cs" />
+    <Compile Include="ViewModel\HyperlinkVm.cs" />
+    <Compile Include="ViewModel\IdName.cs" />
+    <Compile Include="ViewModel\PhotoVm.cs" />
+    <Compile Include="ViewModel\PostQuestFillVm.cs" />
+    <Compile Include="ViewModel\QuestGroupVm.cs" />
+    <Compile Include="ViewModel\QuestInfoVm.cs" />
+    <Compile Include="ViewModel\QuestQuestionVm.cs" />
+    <Compile Include="ViewModel\QuestSetItemVm.cs" />
+    <Compile Include="ViewModel\RssEntity.cs" />
+    <Compile Include="ViewModel\TagVm.cs" />
+    <Compile Include="ViewModel\TnodDataset.cs" />
+    <Compile Include="ViewModel\TnodMayor.cs" />
+    <Compile Include="ViewModel\UploadDoc.cs" />
+    <Compile Include="ViewModel\VoteBasicGroupVm.cs" />
+    <Compile Include="ViewModel\VoteGatherVm.cs" />
+    <Compile Include="ViewModel\VoteSaveVm.cs" />
+    <Compile Include="ViewModel\VoteVm.cs" />
+    <Compile Include="Vote.cs" />
+    <Compile Include="VoteBasic.cs" />
+    <Compile Include="VoteBasicGroup.cs" />
+    <Compile Include="VoteCheck.cs" />
+    <Compile Include="VoteFillBasic.cs" />
+    <Compile Include="VoteFillOption.cs" />
+    <Compile Include="VoteOption.cs" />
+    <Compile Include="WaitingMail.cs" />
+    <Compile Include="Youtube.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>此專案參照此電腦中缺少的  NuGet 套件。啟用「NuGet 套件還原」以便下載。如需詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的檔案為 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

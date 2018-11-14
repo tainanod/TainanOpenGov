@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geo.Grid.Tainan.OpenGov", "Geo.Grid.Tainan.OpenGov\Geo.Grid.Tainan.OpenGov.csproj", "{D2C9215D-BF02-4EFC-B6FE-66C5838A132B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestProjs", "TestProjs", "{7A5E3CA1-4AB5-46EE-BC98-575DE0455C74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geo.Grid.Tainan.OpenGov.Service", "Geo.Grid.Tainan.OpenGov.Service\Geo.Grid.Tainan.OpenGov.Service.csproj", "{692FD7E9-87AC-4D1A-BCE1-51BF6FA151A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geo.Grid.Tainan.OpenGov.Dal", "Geo.Grid.Tainan.OpenGov.Dal\Geo.Grid.Tainan.OpenGov.Dal.csproj", "{D72F3FAE-804B-4EC0-BFD0-51AF0BD875E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geo.Grid.Tainan.OpenGov.Entity", "Geo.Grid.Tainan.OpenGov.Entity\Geo.Grid.Tainan.OpenGov.Entity.csproj", "{95A226CB-5DC8-4EAB-B5D3-12538AEB37FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geo.Grid.Tainan.OpenGov.EfCodeFirst", "Geo.Grid.Tainan.OpenGov.EfCodeFirst\Geo.Grid.Tainan.OpenGov.EfCodeFirst.csproj", "{87DFDCBF-290E-426E-8E46-525ABBAEFB09}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A981F73A-8723-4031-B0DE-07D566C75B1F}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F508B315-4F31-4A44-A789-91EED99E9757}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{5942B5E4-B5D0-458E-85D7-FE217AFE1550}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geo.Grid.Tainan.OpenGov.DbModel.CodeFirst", "Geo.Grid.Tainan.OpenGov.DbModel.CodeFirst\Geo.Grid.Tainan.OpenGov.DbModel.CodeFirst.csproj", "{FA8124DD-70EF-4A0E-87F7-436CE05BA538}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Geo.Grid.Tainan.OpenGov.DbModel", "Geo.Grid.Tainan.OpenGov.DbModel\Geo.Grid.Tainan.OpenGov.DbModel.sqlproj", "{479AE50C-5E86-455C-8B6F-47AA9A426C8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2C9215D-BF02-4EFC-B6FE-66C5838A132B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C9215D-BF02-4EFC-B6FE-66C5838A132B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C9215D-BF02-4EFC-B6FE-66C5838A132B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C9215D-BF02-4EFC-B6FE-66C5838A132B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{692FD7E9-87AC-4D1A-BCE1-51BF6FA151A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{692FD7E9-87AC-4D1A-BCE1-51BF6FA151A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{692FD7E9-87AC-4D1A-BCE1-51BF6FA151A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{692FD7E9-87AC-4D1A-BCE1-51BF6FA151A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D72F3FAE-804B-4EC0-BFD0-51AF0BD875E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D72F3FAE-804B-4EC0-BFD0-51AF0BD875E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D72F3FAE-804B-4EC0-BFD0-51AF0BD875E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D72F3FAE-804B-4EC0-BFD0-51AF0BD875E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95A226CB-5DC8-4EAB-B5D3-12538AEB37FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95A226CB-5DC8-4EAB-B5D3-12538AEB37FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95A226CB-5DC8-4EAB-B5D3-12538AEB37FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95A226CB-5DC8-4EAB-B5D3-12538AEB37FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87DFDCBF-290E-426E-8E46-525ABBAEFB09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87DFDCBF-290E-426E-8E46-525ABBAEFB09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87DFDCBF-290E-426E-8E46-525ABBAEFB09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87DFDCBF-290E-426E-8E46-525ABBAEFB09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA8124DD-70EF-4A0E-87F7-436CE05BA538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA8124DD-70EF-4A0E-87F7-436CE05BA538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA8124DD-70EF-4A0E-87F7-436CE05BA538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA8124DD-70EF-4A0E-87F7-436CE05BA538}.Release|Any CPU.Build.0 = Release|Any CPU
+		{479AE50C-5E86-455C-8B6F-47AA9A426C8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{479AE50C-5E86-455C-8B6F-47AA9A426C8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{479AE50C-5E86-455C-8B6F-47AA9A426C8A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{479AE50C-5E86-455C-8B6F-47AA9A426C8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{479AE50C-5E86-455C-8B6F-47AA9A426C8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{479AE50C-5E86-455C-8B6F-47AA9A426C8A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{87DFDCBF-290E-426E-8E46-525ABBAEFB09} = {7A5E3CA1-4AB5-46EE-BC98-575DE0455C74}
+		{FA8124DD-70EF-4A0E-87F7-436CE05BA538} = {5942B5E4-B5D0-458E-85D7-FE217AFE1550}
+		{479AE50C-5E86-455C-8B6F-47AA9A426C8A} = {5942B5E4-B5D0-458E-85D7-FE217AFE1550}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {971C826E-C344-4FD7-BB21-CDC2846EA4E6}
+	EndGlobalSection
+EndGlobal

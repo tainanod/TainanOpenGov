@@ -1,0 +1,75 @@
+﻿@using Geo.Grid.Tainan.OpenGov.Entity.Enumeration
+@model Geo.Grid.Tainan.OpenGov.Entity.Forum
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var mainForumId = ViewBag.ForumId;
+}
+<div class="pull-right">
+    <a class="btn btn-primary" href="@Url.Action("Index", "SubForum", new {id =mainForumId, Area="admin"})">
+        <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>
+        返回子議題清單
+    </a>
+</div>
+<h2>編輯子議題</h2>
+<input id="hidForumId" type="hidden" value="@Url.RequestContext.RouteData.Values["id"]" />
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <div class="tabbable" role="tabpanel">
+
+            <div role="tabpanel" class="tab-pane active pad20" id="訊息管理">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+
+                        @Html.HiddenFor(model => model.ForumId)
+
+                        @Html.EditorFor(model => model.Category)
+
+                        @Html.EditorFor(model => model.Holder)
+
+                        @Html.EditorFor(model => model.Subject)
+
+                        @Html.EditorFor(model => model.Description)
+
+                        @Html.EditorFor(model => model.OpenDate)
+
+                        @Html.EditorFor(model => model.CloseDate)
+
+
+                        <div class="form-group" style="display:none">
+                            <label class="control-label col-md-2">上傳附件</label>
+                            <div class="col-md-10">
+                                <input type="file" name="files" multiple />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="更新" class="btn btn-primary" />
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_ModalFrame")
+
+@section scripts
+{
+    <script type="text/javascript">
+        function ShowModal(title, url) {
+            $('#modalFrameTitle').html(title);
+            $('#frameModal').attr("src", url);
+            $('#dvModalFrame').modal({ show: true });
+        }
+    </script>
+}

@@ -1,0 +1,115 @@
+﻿@using Geo.Grid.Tainan.OpenGov.Entity
+@using Geo.Grid.Tainan.OpenGov.Entity.Enumeration
+@using Microsoft.AspNet.Identity
+@model Geo.Grid.Tainan.OpenGov.Entity.Forum
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main">
+    @if (Model.Photo.Any())
+    {
+        <img src="/resource/photo/@Model.Photo.First().PhotoId?size=4" class="detail-photo">
+    }
+    <div class="social">
+        主辦單位&nbsp;@Model.Holder
+        <div class="addthis_native_toolbox "><span>@*分享至*@</span></div>
+        <br class="clearfix">
+    </div>
+    <h1 class="detail-title"><i></i>@Model.Subject</h1>
+    <div class="time">
+        <span>發佈於 <b>@Model.OpenDate.ToString("yyyy/MM/dd")</b></span>
+        @*<span>截止時間 <b>@Model.CloseDate.ToString("yyyy/MM/dd")</b></span>*@
+        @*<div class="over">
+            討論剩餘時間 <b>@Math.Ceiling((Model.CloseDate - DateTime.Now).TotalDays)</b> 天
+        </div>*@
+    </div>
+    <div class="content">
+        @Html.Raw(Model.Description.Replace("\n", "<br/>"))
+        <ul class="btn">
+            <li class="icon1">@Model.Discuss.Count(x => x.IsEnabled) 則回應</li>
+            @*<li class="icon2">91 關注</li>*@
+            <li class="icon3" style="display: none;"><a href="#">關注</a></li>
+        </ul>
+    </div>
+    <div id="資料公開" class="link">
+        <b class="main_title">相關連結</b>
+        <ul class="link">
+            @foreach (var item in Model.Hyperlink.Where(x => x.IsEnabled))
+            {
+                <li><a href="@item.Url" target="_blank">@item.Title</a></li>
+            }
+        </ul>
+    </div>
+    <div class="link">
+        <b class="main_title">文件下載</b>
+        <ul class="link down">
+            @foreach (var item in Model.Document.Where(x => x.IsEnabled))
+            {
+                <li><a href="/Resource/Document/@item.DocumentId" target="_blank">@item.FileName &nbsp;&nbsp;<span>更新日期 @item.CreatedDate.ToString("yyyy/MM/dd")</span></a></li>
+            }
+        </ul>
+    </div>
+ 
+    <div id="發表意見" class="discuss">
+        <b class="main_title">共同討論</b>
+        <input type="hidden" id="ForumId" name="ForumId" value="@Model.ForumId" />
+        @if (User.Identity.IsAuthenticated)
+        {
+            var user = ViewBag.User as AspNetUsers;
+            <div class="send" style="text-align: center;">
+                <span class="img"><img src="@user.ImageUrl" /></span>
+                <form action="/Suggest/AddMessage/@Model.ForumId" method="post">
+
+                    <textarea id="Message" name="Message" placeholder="加入討論"></textarea>
+                    <img id="imgLoading" src="/Content/geo/loading/default.gif" alt="loading" style="width: 48px; display: none;" />
+                    <button type="button" id="btnPost"> 以 @user.NickName 身份發文 </button>
+                </form>
+                <br class="clearfix">
+            </div>
+        }
+        else
+        {
+            <div class="send">
+                <form>
+                    <button type="button" id="btnLogin">登入後參與討論</button>
+                </form>
+                <br class="clearfix">
+            </div>
+        }
+        <div id="dvDiscuss"></div>
+
+
+        @*<a class="activitybox" href="#dvActivityBox" ><span>開始時間</span>標題</a>*@
+    </div>
+</div>
+
+<div class="activity" id="dvActivityBox" style="display: none;">
+    <a href="javascript:;" onclick=" $.fancybox.close(); " class="delete"><img src="/Content/geo/img/delete.png" /></a>
+    <span class="activity-title"><img src="/Content/geo/img/icon2.png">&nbsp;<span id="ActivityTitle"></span></span>
+    <div class="activity-content">
+
+        <p>&nbsp;&nbsp;日期&nbsp;&nbsp;</p>
+        <span id="actDate"></span>
+        <p>&nbsp;&nbsp;時間&nbsp;&nbsp;</p>
+        <span id="actTime"></span>
+        <p>&nbsp;&nbsp;地點&nbsp;&nbsp;</p>
+        <span id="actLocation">水利署</span>
+        <p>&nbsp;&nbsp;說明&nbsp;&nbsp;</p>
+        <span id="actDescription"></span>
+        <p>&nbsp;&nbsp;附件下載&nbsp;&nbsp;</p>
+        <div id="dvAttachment">
+
+        </div>
+    </div>
+    <!--<a class="addcalender" href="#">加入行事曆</a>-->
+</div>
+
+@section styles{
+    <link href="~/Content/jquery.fancybox.min.css" rel="stylesheet" />
+}
+@section scripts
+{
+    <script src="~/Scripts/jquery.fancybox.min.js"></script>
+    <script src="~/Scripts/geo/suggest-detail.min.js"></script>
+}

@@ -1,0 +1,281 @@
+﻿
+@*@{
+    Layout = null;
+}*@
+@*<div id="">
+        <h3>A List</h3>
+        <draggable v-model="list" class="dragArea" v-bind:options="{group:'people'}">
+            <div v-for="element in list">【{{element.sort}}】{{element.name}}</div>
+        </draggable>
+    
+        <h3>B List</h3>
+    <draggable v-model="list2" class="dragArea" v-bind:options="{group:'people'}">
+        <div v-for="element in list2">【{{element.sort}}】{{element.name}}</div>
+    </draggable>
+    
+    
+    <div class="normal">
+        <h2>List 1 v-for</h2>
+        <div>
+            <div v-for="(element,i) in list">{{element.name}}【Old：{{element.sort}}】  (New：{{i+1}})</div>
+        </div>
+
+        <h2>List 2 v-for</h2>
+        <div>
+            <div v-for="(element,i) in list2">{{element.name}} 【Old：{{element.sort}}】 (New：{{i+1}}</div>
+        </div>
+    </div>
+</div>*@
+    <main id="qoo">
+        <div class="home">
+            <div class="normal">
+                <h2>List 1 v-for</h2>
+                <div>
+                    <div v-for="(element,i) in list">{{element.name}}【Old：{{element.sort}}】  (New：{{i+1}})</div>
+                </div>
+
+                <h2>List 2 v-for</h2>
+                <div>
+                    <div v-for="(element,i) in list2">{{element.name}} 【Old：{{element.sort}}】 (New：{{i+1}})</div>
+                </div>
+                <h2>List 3 v-for</h2>
+                <div>
+                    <div v-for="(element,i) in list3">{{element.name}} 【Old：{{element.sort}}】 (New：{{i+1}})</div>
+                </div>
+            </div>
+            
+
+            <draggable v-model="list" class="group-card-wrapper brown" v-bind:options="{group:'people'}">
+                @*<div class="single-card-wrapper" v-for="(element,i) in list">
+                    <div class="title-card">
+                        <img src="@Url.Content("~/Content/geo/img/icon3.png")">{{element.sort}}
+                    </div>
+                    <div class="content-card">
+                        {{element.name}}
+                    </div>
+                </div>*@
+                
+                <transition-group name="list-complete">
+                    <div v-for="(element, i) in list" v-bind:key="element.name" class="list-complete-item single-card-wrapper">
+                        <div class="title-card">
+                            <img src="@Url.Content("~/Content/geo/img/icon3.png")">{{element.sort}}
+                        </div>
+                        <div class="content-card">
+                            {{element.name}}
+                        </div>
+                    </div>
+                </transition-group>
+            </draggable>
+            
+            <draggable v-model="list2" class="group-card-wrapper red" v-bind:options="{group:'people'}">
+                <transition-group name="list-complete">
+                    <div v-for="(element, i) in list2" v-bind:key="element.name" class="list-complete-item single-card-wrapper">
+                        <div class="title-card">
+                            <img src="@Url.Content("~/Content/geo/img/icon3.png")">{{element.sort}}
+                        </div>
+                        <div class="content-card">
+                            {{element.name}}
+                        </div>
+                    </div>
+                </transition-group>
+            </draggable>
+            
+            <draggable v-model="list3" class="group-card-wrapper yellow" v-bind:options="{group:'people'}">
+                <transition-group name="list-complete">
+                    <div v-for="(element, i) in list3" v-bind:key="element.name" class="list-complete-item single-card-wrapper">
+                        <div class="title-card">
+                            <img src="@Url.Content("~/Content/geo/img/icon3.png")">{{element.sort}}
+                        </div>
+                        <div class="content-card">
+                            {{element.name}}
+                        </div>
+                    </div>
+                </transition-group>
+            </draggable>
+            
+           
+            @*<div class="group-card-wrapper brown">
+                <div class="single-card-wrapper">
+                    <div class="title-card"><img src="@Url.Content("~/Content/geo/img/icon3.png")">&nbsp;
+                    </div>
+                    <div class="content-card">
+
+                    </div>
+                </div>
+            </div>*@
+            @*<div class="group-card-wrapper red">
+                <div class="single-card-wrapper">
+                    <div class="title-card"><img src="@Url.Content("~/Content/geo/img/icon4.png")"> Open 1999
+                    </div>
+                    <a href="http://1999.tainan.gov.tw" target="_blank" class="img"><img src="@Url.Content("~/Content/geo/img/big-icon1.png")"></a>
+                </div>
+                <div class="single-card-wrapper">
+                    <div class="title-card"><img src="@Url.Content("~/Content/geo/img/icon5.png")"> 管線圖資
+                    </div>
+                    <a href="http://diggis.tainan.gov.tw/TNRoad/gmap_new/index.asp?flag=1&todayWork=1" target="_blank" class="img"><img src="@Url.Content("~/Content/geo/img/big-icon2.png")"></a>
+                </div>
+                <div class="single-card-wrapper">
+                    <div class="title-card"><i class="fa fa-rocket" aria-hidden="true" style="font-size: 1.6em"></i> 野生台南
+                    </div>
+                    <div class="content-card">
+                        <ul id="ulShowcase" class="ul-list-card">
+                            <li class="li-loading"> <img src="@Url.Content("~/Content/geo/loading/hourglass.svg")"></li>
+                            <li class="home-showcase-li">
+                                <figure class="home-showcase-wrapper">
+                                    <img ng-src="{{vm.target.PhotoUrl}}" alt="{{vm.target.Title}}"/>
+                                    <figcaption>
+                                        <a href="@Url.Action("Detail", "ShowCase")/{{vm.target.CaseId}}" title="{{vm.target.Title}}">
+                                            <h1>{{vm.target.Title}}</h1>
+                                        </a>
+                                        <p>{{vm.target.Contents}}</p>
+                                    </figcaption>
+                                </figure>
+                            </li>
+                            <li class="no-li" style="display: none;">
+                                <div class="no" style="line-height: 42px">
+                                    <i class="icon2"></i>近期尚無 <span>應用展示</span>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="@Url.Action("Index", "ShowCase")" class="more">更多</a>
+                    </div>
+                </div>
+                
+            </div>*@
+            @*<div class="group-card-wrapper yellow">
+                <div class="single-card-wrapper">
+                    <div class="title-card"><img src="@Url.Content("~/Content/geo/img/icon7.png")"> 重大會議
+                    </div>
+                    <div id="dvYoutube" class="geo9content">
+                        <div class="no">
+                            <i class="icon1"></i>近期尚無<span>重大會議直播</span>
+                        </div>
+                    </div>
+                    <a href="https://www.youtube.com/channel/UC0HatHjMX8Oo60tILcOnK0g" target="_blank" class="more">更多</a>
+                </div>
+                <div  class="single-card-wrapper">
+                    <div class="title-card"><img src="@Url.Content("~/Content/geo/img/icon8.png")"> 公民論壇
+                    </div>
+                    <div class="content-card">
+                        <ul id="ulForum" class="ul-list-card">
+                            <li class="li-loading"> <img src="@Url.Content("~/Content/geo/loading/hourglass.svg")"></li>
+                        </ul>
+                        @Html.ActionLink("更多", "index", "forum", null, new {@class = "more"})
+
+                    </div>
+                </div>
+                <div  class="single-card-wrapper">
+                    <div class="title-card"><img src="@Url.Content("~/Content/geo/img/icon9.png")"> 市政提案
+                    </div>
+                    <div class="content-card">
+                        <div id="dvSuggest" class="no">
+                            <i class="icon2"></i>近期尚無<span>市政提案</span>
+                        </div>
+                        @Html.ActionLink("更多", "Index", "Suggest", null, new {@class = "more"})
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </main>
+    
+    @section styles{
+    <style>
+        .normal {
+            background-color: #D9FBE5;
+        }
+
+        .drag {
+            background-color: green;
+        }
+        .list-complete-item {
+          /*padding: 4px;
+          margin-top: 4px;
+          border: solid 1px;*/
+          transition: all 1s;
+        }
+
+        .list-complete-enter, .list-complete-leave-active {
+          opacity: 0;
+        }
+    </style>
+    }
+
+@section scripts{
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/vue-resource.js"></script>
+    <script src="~/Scripts/Sortable.js"></script>
+    <script src="~/Scripts/vuedraggable.js"></script>
+
+    <script type="text/javascript">
+    new Vue({
+        el: '#qoo',
+        data: {
+            list: [
+                { name: 'Foo',sort:1, color: 'red' },
+                { name: 'Bar',sort:2, color: 'green' },
+                { name: 'Baz',sort:3, color: 'blue' },
+                { name: 'Qoo',sort:4, color: 'red' },
+                { name: 'Goo',sort:5, color: 'red' },
+                { name: 'Hoo',sort:6, color: 'green' },
+                { name: 'Coo',sort:7, color: 'red' },
+                { name: 'Koo',sort:8, color: 'blue' },
+                { name: 'Loo',sort:9, color: 'green' },
+                { name: 'poo',sort:10, color: 'blue' }
+            ],
+            list2: [
+                { name: 'A', color: 'red', sort: 1 },
+                { name: 'B', color: 'green', sort: 2 },
+                { name: 'C', color: 'blue', sort: 3 },
+                { name: 'E', color: 'red', sort: 4 },
+                { name: 'F', color: 'green', sort: 5 },
+                { name: 'G', color: 'red', sort: 6 },
+                { name: 'H', color: 'blue', sort: 7 },
+                { name: 'I', color: 'green', sort: 8 },
+                { name: 'J', color: 'blue', sort: 9 },
+                //{ name: 'D', color: 'red', sort: 10 },
+            ],
+
+            list3: [
+                { name: 'A3', color: 'red', sort: 1 },
+                { name: 'B3', color: 'green', sort: 2 },
+                { name: 'C3', color: 'blue', sort: 3 },
+                { name: 'E３', color: 'red', sort: 4 },
+                { name: 'F３', color: 'green', sort: 5 },
+                { name: 'G３', color: 'red', sort: 6 },
+                { name: 'H３', color: 'blue', sort: 7 },
+                //{ name: 'I３', color: 'green', sort: 8 },
+                //{ name: 'J３', color: 'blue', sort: 9 },
+               // { name: 'D３', color: 'red', sort: 10 },
+            ]
+        },
+        methods: {
+            onUpdate: function(event) {
+                console.log(event.target.id)
+                this.list.splice(event.newIndex, 0, this.list.splice(event.oldIndex, 1)[0])
+            },
+            onUpdate2: function(event) {
+                console.log(event)
+                this.list2.splice(event.newIndex, 0, this.list2.splice(event.oldIndex, 1)[0])
+            },
+            getClass: function(idx) {
+                //console.log(idx%3);
+
+                var pa = idx % 3;
+
+                if (pa === 0) {
+                    return "red";
+                }
+
+                return (pa) === 1 ? "green" : "blue";
+            }
+        },
+        components: {
+            
+        }
+    });
+    </script>
+}
+
+
+
+

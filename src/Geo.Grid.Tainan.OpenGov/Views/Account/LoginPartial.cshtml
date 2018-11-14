@@ -1,0 +1,19 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Models.ApplicationUser
+
+@{
+    var url = (Request.Path != null && Request.Path.Contains("admin") ? Request.Path : Request.ApplicationPath);
+}
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "login" }))
+    {
+        @Html.AntiForgeryToken()
+        TempData["returnUrl"] = @Request.Path;
+        <a href="javascript:document.getElementById('logoutForm').submit();" class="login">@Model.NickName | <i class="Log_out">登出</i></a>
+    }
+}
+else
+{
+    <a href="@Url.Action("Login", "Account", new { ReturnUrl = url })" class="login">登入 <span>LOGIN</span></a>
+}

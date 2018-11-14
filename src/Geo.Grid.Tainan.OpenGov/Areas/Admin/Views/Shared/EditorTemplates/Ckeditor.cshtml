@@ -1,0 +1,18 @@
+﻿@model String
+@{
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();
+    htmlAttributes.Add("class", "control-label");
+
+    IDictionary<string, object> htmlAttributes2 = new Dictionary<string, object>();
+    htmlAttributes2.Add("class", "ckeditor");
+    var path = Request.Url.GetLeftPart(UriPartial.Authority);
+
+    string id = ViewData.ModelMetadata.PropertyName;
+}
+
+<div class="control-group">
+    @Html.Label("", htmlAttributes)
+    <div class="field">
+        @Html.TextArea("", ViewData.TemplateInfo.FormattedModelValue.ToString(), htmlAttributes2)
+    </div>
+</div>

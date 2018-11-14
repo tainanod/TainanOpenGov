@@ -1,0 +1,276 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestQuestionVm
+
+@{
+    ViewBag.Title = "編輯題目";
+    var relData = ViewData["relData"] as List<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestNecessaryRelVm>;
+}
+@functions{
+    public string GetAnsTypeStr(int ansType)
+    {
+        return Enum.GetName(typeof(Geo.Grid.Tainan.OpenGov.Entity.Enumeration.QstAnsType), ansType);
+    }
+}
+
+@section styles{
+    <style>
+        .no-wrap {
+            display: inline-block;
+        }
+
+        span.blk {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+}
+
+
+@Html.ActionLink("返回題目", "GroupIndex", "Question", new { Area = "admin", id = ViewData["infoId"] }, new { @class = "btn btn-primary pull-right" })
+<h2>編輯題目</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    <input type="hidden" id="QstId" name="QstId" value="@Model.QstId" />
+    <div id="myNeed">&nbsp;</div>
+    <table class="table1" width="100%">
+        <tr>
+            <th class="w130">題目</th>
+            <td><input type="text" class="form-control" required style="height:150px" value="@Model.QstQuestion" name="QstQuestion" /></td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>題型</th>
+            <td>
+                <text>@GetAnsTypeStr(Model.QstAnsType)</text>
+                <input type="hidden" name="QstAnsType" value="@Model.QstAnsType" />
+            </td>
+            @*<td>
+                    <select class="form-control w150" name="QstAnsType" onchange="AnsTypeChange(this)">
+                        <option selected value="0">請選擇</option>
+                        <option @(Model.QstAnsType == 1 ? "selected" : "") value="1">單選(含是非)</option>
+                        <option @(Model.QstAnsType == 2 ? "selected" : "") value="2">複選</option>
+                        <option @(Model.QstAnsType == 3 ? "selected" : "") value="3">問答</option>
+                        <option @(Model.QstAnsType == 4 ? "selected" : "") value="4">多重問答</option>
+                    </select>
+                </td>*@
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr id="itemTr" @(Model.QstAnsType == 3 ? "style=display:none" : "")>
+            <th valign="top">答案</th>
+            <td>
+                @foreach (var set in Model.QuestSetItemVms)
+                {
+                    <span class='blk'>
+                        <input type="hidden" name="setItemID" value="@set.SetId" />
+                        <input type='text' name='setItem' class='form-control no-wrap w215' value='@set.SetDesc' />
+                        <input type='button' class='btn btn-danger btn-sm' value='x' onclick='DeleteItem(this)' />
+                        <select class='group w215 form-control no-wrap' onchange='GetQuestion(this)' name='needGroup' xx="@set.SetId"></select>
+                        <select class='question w215 form-control no-wrap' style='display:none' name='needQuestion' xx="@set.SetId"></select>
+                    </span>
+                }
+                <span>
+                    <input type="text" class="form-control no-wrap w215" />
+                    <input type="button" class="btn btn-default btn-sm" style="font-weight:bolder" value="+" onclick="AddItem(this)" />
+                </span>
+                <span style="color:red;">增加答案請務必按+</span>
+            </td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>是否為必答</th>
+            <td><input type="checkbox" id="chkNeed" name="IsRequired" @(Model.IsRequired ? "checked" : "") value="true" /><label class="control-label" for="chkNeed">此題目為必填</label></td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th></th>
+            <td>
+                <input type="button" value="Update" onclick="submitClick()" class="btn btn-primary" />
+                <input type="submit" id="btnSubmit" style="display:none" />
+            </td>
+        </tr>
+    </table>
+}
+
+@section scripts{
+
+    <script>
+        var ddlData = "";
+        function submitClick() {
+            if (!$('[name="QstAnsType"]').val()) {
+                alert('請選擇題型');
+                return;
+            }
+
+            //
+            var myNeed = $('#myNeed'),
+                $html = '';
+            myNeed.html('');
+
+            $('.group').each(function (i, v) {
+                var $val = v.value,
+                    $setId = $('input[name="setItemID"]').eq(i).val(),
+                    $needId = $('.question').eq(i).val();
+                $html += '<input type="hidden" name="needVm[' + i + '].SetId" value="' + $setId + '" />';
+                $html += '<input type="hidden" name="needVm[' + i + '].GroupId" value="' + $val + '" />';
+                $html += '<input type="hidden" name="needVm[' + i + '].NeedId" value="' + $needId + '" />';
+            });
+            myNeed.html($html);           
+            $('#btnSubmit').click();
+        }
+
+        $(function () {
+            $('.group').html('<option selected value="">請選擇</option>')
+            $('.question').html('<option selected value="">請選擇</option>');
+            $.get('@Url.Action("Edit/Rel", "Api/Question", new { id = Model.QstId, Area = "" })', function (result) {
+                ddlData = result;
+                for (var i in ddlData) {
+                    $('.group').append('<option value="' + ddlData[i].GroupId + '">' + ddlData[i].GroupTitle + '</option>');
+                }
+            });
+
+            @if (relData != null)
+            {
+                foreach(var data in relData)
+                {
+                    <text>
+            var p = $('input:hidden[name="setItemID"][value="@data.SetId"]').parent();
+            p.find('.group').val('@data.GroupId');
+            GetQuestion(p.find('.group'));
+            //setTimeout(function () { p.find('.question').val('@data.QuestionId'); },300);
+            p.find('.question').val('@data.QuestionId');
+            </text>
+                }
+            }
+
+
+            hideRel(@Model.QstAnsType);
+        });
+
+        $(window).load(function () {
+            //選中
+            GetQuestionChanage();
+        });
+
+        function GetQuestionChanage() {
+            $.get('@Url.Action("Edit/RelChange", "Api/Question", new { id = Model.QstId, Area = "" })', function (result) {
+                result.map(function (v, i) {
+                    if (v.GroupId != null) {
+
+                        //先把後面的題目加進去
+                        var item = $.grep(ddlData, function (d) { return d.GroupId === v.GroupId });
+                        if (item.length) {
+                            var questions = item[0].MdQuestions,
+                                $question = $('.question[xx="' + v.SetId + '"]');
+                            for (var i in questions) {
+                                $question.append('<option value="' + questions[i].QstId + '">' + questions[i].QstQuestion + '</option>');
+                            }
+                            $question.show();
+                        }
+
+                        //題組-chanage
+                        $('.group[xx="' + v.SetId + '"]').children().each(function () {
+                            if ($(this).val() == v.GroupId) {
+                                $(this).attr("selected", "true");
+                            }
+                        });
+
+                        //題目-change
+                        if (v.QuestionId != null) {
+                            $('.question[xx="' + v.SetId + '"]').children().each(function () {
+                                if ($(this).val() == v.QuestionId) {
+                                    $(this).attr("selected", "true");
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        }
+
+        function GetQuestion(sender) {
+            var questDDL = $(sender).parent().find('.question');
+            questDDL.html('<option selected value="">請選擇</option>');
+            var id = $(sender).val();
+
+            if (id) {
+                questDDL.show();
+                var item = $.grep(ddlData, function (d) { return d.GroupId === id });
+                if (item.length) {
+                    var questions = item[0].MdQuestions;
+                    for (var i in questions) {
+                        questDDL.append('<option value="' + questions[i].QstId + '">' + questions[i].QstQuestion + '</option>');
+                    }
+                }
+                else {
+                    console.log('Javascript:GetQuestion Error');
+                }
+            }
+            else {
+                questDDL.hide();
+            }
+
+            hideRel(@Model.QstAnsType);
+        }
+
+        function AddItem(sender) {
+            var parent = $(sender).parent();
+            var txt = parent.find('input:text').val();
+            if (!txt) {
+                alert('選項不可為空白');
+                return;
+            }
+
+            var data = {
+                id: $('#QstId').val(),
+                name: txt
+            };
+
+            $.post('@Url.Action("Edit/SetItem/Save", "Api/Question", new { area = ""})', data, function (result) {
+                parent.find('input:text').val(null);
+                parent.before(ItemTemplate(result.ID, txt));
+                var group = parent.prev().find('.group');
+                for (var i in ddlData) {
+                    group.append('<option value="' + ddlData[i].GroupId + '">' + ddlData[i].GroupTitle + '</option>');
+                }
+            }, "json");
+        }
+
+        function ItemTemplate(id, txt) {
+            return "<span class='blk'><input type='text' name='setItem' class='form-control no-wrap w215' value='" + txt + "'/>"
+                + "<input type='button'class='btn btn-danger btn-sm  new' style='margin-left:4px;' value='x' onclick='DeleteItem(this)' />"
+                + "<select class='group w215 form-control no-wrap' style='margin-left:4px;' onchange='GetQuestion(this)' name='needGroup' xx='" + id + "'><option selected value=''>請選擇</option></select>"
+                + "<select class='question w215 form-control no-wrap' style='margin-left:4px;display:none' name='needQuestion' xx='" + id + "'><option selected value=''>請選擇</option></select>"
+                + "<input type='hidden' name='setItemID' value='" + id + "'></span>";
+        }
+
+        function DeleteItem(sender) {
+            if (confirm('刪除已存在的選項會連帶刪除已經填過問卷紀錄，請問要繼續嗎?')) {
+                var i = $(sender).parent().find('input[name=setItemID]').val();
+                
+                $.post('@Url.Action("Edit/SetItem/Remove","Api/Question",new { area = ""})?id=' + i, function (result) {
+                    if (result.Success) {
+                        $(sender).parent().remove();
+                    }
+                });
+            }
+            //if ($(sender).hasClass('new')) {
+            //    $(sender).parent().remove();
+            //}
+            //else {
+            //    if (confirm('刪除已存在的選項會連帶刪除已經填過問卷紀錄，請問要繼續嗎?')) {
+            //        $(sender).parent().remove();
+            //    }
+            //}
+        }
+
+        function hideRel(ansType) {
+            if (ansType === 1) {
+                $('#itemTr .blk .group').show();
+            }
+            else {
+                $('#itemTr .blk .group,#itemTr .blk .question').hide();
+            }
+        }
+    </script>
+}

@@ -1,0 +1,72 @@
+﻿@{
+    var key = ViewBag.key as Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.SearchVm;
+}
+
+<h2>API類別管理</h2>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="container-fluid form-group">
+            <div style="display:inline-block; width:75%;">
+                <h4>資料篩選</h4>
+            </div>
+            <div style="display:inline-block;">
+                @Html.ActionLink("API類別管理", "Index", "DataSetType", null, new { @class = "btn btn-success" })
+                @Html.ActionLink("新增API", "Create", null, new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dvList">&nbsp;</div>
+
+@*popup 對話框*@
+<div id="dvModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+<div id="myLaterImg" style="display:none;">
+    <img src="@Url.Content("~/Areas/Admin/Content/images/later.gif")" />
+</div>
+@section styles
+{
+    <link href="@Url.Content("~/Content/PagedList.css")" rel="stylesheet" type="text/css" />
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/geo/GeoFunc.js")"></script>
+    <script src="@Url.Content("~/Scripts/notify.min.js")"></script>
+
+    @if (TempData["msgErr"] != null)
+    {
+        <script type="text/javascript">
+            $(function () {
+                $.notify(@TempData["msgErr"].ToString(), "error");
+            });
+        </script>
+    }
+
+    <script type="text/javascript">
+        $(function () {
+            blockList();
+        })
+
+        function blockList() {
+            var $this = $('#dvList'),
+                $laterImg = $('#myLaterImg').html();
+            $this.html($laterImg);
+            $.post('@Url.Action("_AjaxIndex")', function (result) {
+                $this.html(result);
+            });
+        }
+
+        //刪除
+        function blockRemove(nId){
+            if (confirm('確認刪除？')){
+                $.post('@Url.Action("Remove")', { id: nId }, function (result) {
+                    if (result.Success) {
+                        blockList();
+                    }
+                });
+            }
+        }
+    </script>
+}
+

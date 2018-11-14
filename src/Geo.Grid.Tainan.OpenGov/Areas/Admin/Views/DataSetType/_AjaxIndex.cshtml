@@ -1,0 +1,60 @@
+﻿@model IPagedList<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.DataSetTypeVm>
+@{
+    Layout = null;
+    var key = ViewBag.key as Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.SearchVm;
+}
+
+<div id="collapse4" class="body">
+    <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
+        <caption class="text-right">
+           @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions
+           {
+               DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+               DisplayLinkToLastPage = PagedListDisplayMode.Never,
+               DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+               DisplayLinkToNextPage = PagedListDisplayMode.Never,
+               DisplayLinkToIndividualPages = false,
+               DisplayItemSliceAndTotal = true,
+               ItemSliceAndTotalFormat = "顯示: {0} ~ {1} , 共 {2}"
+           })
+        </caption>
+        <tr>
+            <th class="col-w-2 text-center">@Html.DisplayNameFor(x => x.First().Title)</th>
+            <td class="col-w-2 text-center">排序</td>
+            <th class="col-w-2 text-center">@Html.DisplayNameFor(x => x.First().CreatedDate)</th>
+            <th class="col-w-2 text-center">&nbsp;</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">@item.Title</td>
+                <td class="text-center">
+                    <input type="button" onclick="blockUp('@item.TypeId')" class="btn btn-default btn-sm" value="升" />
+                    <input type="button" onclick="blockDown('@item.TypeId')" class="btn btn-default btn-sm" value="降" />
+                </td>
+                <td class="text-center">@item.CreatedDate.ToString("yyyy/MM/dd hh:mm")</td>
+                <td class="text-center">
+                    <a href="@Url.Action("Edit", new { id = item.TypeId })" class="btn btn-primary">編輯</a>
+                    <a href="#" class="btn btn-danger" onclick="blockRemove('@item.TypeId')">刪除</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="container-fluid">
+    <div class="col-md-9 col-lg-9 text-center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, KeyWord = key.KeyWord }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+    <div class="col-md-3 col-lg-3 text-left">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions
+   {
+       DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+       DisplayLinkToLastPage = PagedListDisplayMode.Never,
+       DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+       DisplayLinkToNextPage = PagedListDisplayMode.Never,
+       DisplayLinkToIndividualPages = false,
+       DisplayPageCountAndCurrentLocation = true,
+       PageCountAndCurrentLocationFormat = "第 {0} 頁 / 共 {1} 頁"
+   })
+    </div>
+</div>

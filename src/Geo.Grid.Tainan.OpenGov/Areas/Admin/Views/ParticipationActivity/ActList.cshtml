@@ -1,0 +1,62 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<Geo.Grid.Tainan.OpenGov.Entity.ParticipationActivity>
+
+<div class="container-fluid">
+    <table class="table table-bordered table-striped table-hover">
+        <caption class="text-right">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions
+       {
+           DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+           DisplayLinkToLastPage = PagedListDisplayMode.Never,
+           DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+           DisplayLinkToNextPage = PagedListDisplayMode.Never,
+           DisplayLinkToIndividualPages = false,
+           DisplayItemSliceAndTotal = true,
+           ItemSliceAndTotalFormat = "顯示: {0} ~ {1} , 共 {2}"
+       })
+        </caption>
+        <tr>
+            <th>主題名稱</th>
+            <th class="w130">日期</th>
+            <th>地點</th>
+            <th style="width: 100px">附件</th>
+            <th class="w130">&nbsp;</th>
+        </tr>
+        @{foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.Subject</td>
+                    <td>@item.HoldDate</td>
+                    <td>@item.Location</td>
+                    <td>
+                        <input type="button" class="btn btn-success btn-sm" value="管理 (@item.ParticipationDocuments.Where(x=>x.IsEnabled).ToList().Count())" onclick="OnDocument('@item.ActivityId');" />
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-primary btn-sm" value="編輯" onclick="OnEdit('@item.ActivityId'); " />
+                        <input type="button" class="btn btn-danger btn-sm" value="刪除" onclick="DeleteActivity('@item.ActivityId'); " />
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<div class="container-fluid">
+    <div class="col-md-9 col-lg-9 text-center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+    <div class="col-md-3 col-lg-3 text-left">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions
+   {
+       DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+       DisplayLinkToLastPage = PagedListDisplayMode.Never,
+       DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+       DisplayLinkToNextPage = PagedListDisplayMode.Never,
+       DisplayLinkToIndividualPages = false,
+       DisplayPageCountAndCurrentLocation = true,
+       PageCountAndCurrentLocationFormat = "第 {0} 頁 / 共 {1} 頁"
+   })
+    </div>
+</div>

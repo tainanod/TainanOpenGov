@@ -1,0 +1,297 @@
+﻿<main id="app" >
+    <div id="homePhotoWrapper" class="homephoto">
+        <a v-bind:href="x.WebUrl" v-bind:title="x.Title" v-for="x in banners" >
+            <img v-bind:src="x.PhotoUrl" v-bind:alt="x.Title"/>
+        </a>
+        <figure v-for="x in banners" v-bind:title="x.Title" ng-else>
+            <img v-bind:src="x.PhotoUrl" v-bind:alt="x.Title" />
+        </figure>
+    </div>
+    @* ng-attr-target="{{(x.Target) ? '_blank' : '_self'}}" ng-if="x.WebUrl" *@
+    @Html.Partial("_Loading")
+    <div class="home">
+        <draggable v-model="q.Cards" class="group-card-wrapper " v-bind:class="getCardClass(q.Color)" v-bind:options="{group:'card'}" v-for="(q,i) in querys" v-cloak>
+            <transition-group name="list-complete">
+                <div v-for="(card, i) in q.Cards" v-bind:key="card.CardId" class="list-complete-item single-card-wrapper">
+                    <div class="title-card">
+                        @*<img src="@Url.Content("~/Content/geo/img/icon3.png")">*@
+                        <img v-bind:src="getIconUrl(card)">
+                        <h1 class="title-card-wrapper" v-html="card.Title"></h1>
+
+                        @*<div v-if="card.IsDelete">
+                <a href="#" v-on:click="onDelete" title="刪除卡片">
+                    <img src="@Url.Content("~/Content/geo/img/delete.png")">
+                </a>
+            </div>*@
+
+                        @* 編輯內文 *@
+                        @*<div v-if="card.IsDelete">
+                <a href="#popUpEditCardContent" class="mayorbox" v-on:click="onEditContent(card)" title="編輯內文">
+                    <img src="@Url.Content("~/Content/geo/img/btn-icon1.png")">
+                </a>
+            </div>*@
+                        @* 編輯卡片 *@
+                        @*<div v-if="card.IsDelete">
+                <a href="#popUpEditCard" class="mayorbox" v-on:click="onEdit(card)" title="編輯卡片">
+                    <img src="@Url.Content("~/Content/geo/img/btn-icon1.png")">
+                </a>
+            </div>*@
+
+                    </div>
+                    @* 政府資料 *@
+                    <div class="content-card" v-if="card.Type == 1">
+                        <ul id="ulTnod" class="ul-list-card">
+                            <li v-for="tnod in tnods">
+                                <a v-bind:href="getTnodUrl(tnod.Name)" target="_blank">
+                                    <i v-bind:class="getTnodClass(tnod.FileType)">{{tnod.FileType}}</i>{{tnod.Title}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @* 行程公開 *@
+                    <div class="content-card" v-else-if="card.Type==2">
+                        <ul id="ulMayor" class="ul-list-card">
+                            <li v-for="top5Mayor in top5Mayors">
+                                <a class="mayorbox" href="#dvMayorbox" v-on:click="onTop5MayorClick(top5Mayor._id)"><span>{{dateConvert(top5Mayor.開始日期,'MM/DD')}}</span>{{top5Mayor.標題}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    @* 警報告示 *@
+                    <div class="content-card" v-else-if="card.Type==3">
+                        <ul id="ulRss" class="ul-list-card">
+                            <li class="geo9content" v-if="top5Rss.length==0">
+                                <div class="no" style="line-height: 42px">
+                                    <i class="icon2"></i>近期尚無<span>災害警報</span>
+                                </div>
+                            </li>
+                            <li v-else v-for="rss in top5Rss">
+                                <a v-bind:href="rss.Link" target="_blank"><span>{{dateConvert(rss.PubDate,'MM/DD')}}</span>&nbsp; {{rss.Title}}</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    @* 1999 *@
+                    <div v-else-if="card.Type==4">
+                        <a href="http://1999.tainan.gov.tw" target="_blank" class="img"><img src="@Url.Content("~/Content/geo/img/big-icon1.png")"></a>
+                    </div>
+
+                    @* 管線圖資 *@
+                    <div v-else-if="card.Type==5">
+                        <a href="http://diggis.tainan.gov.tw/TNRoad/gmap_new/index.asp?flag=1&todayWork=1" target="_blank" class="img"><img src="@Url.Content("~/Content/geo/img/big-icon2.png")"></a>
+                    </div>
+
+                    @* 野生台南 *@
+                    <div class="content-card" v-else-if="card.Type==6">
+                        <ul id="ulShowcase" class="ul-list-card">
+                            <li class="li-loading" v-if="showCase==undefined">
+                                <img src="@Url.Content("~/Content/geo/loading/hourglass.svg")">
+                            </li>
+                            <li class="home-showcase-li">
+                                <figure class="home-showcase-wrapper">
+                                    <img v-bind:src="showCase.PhotoUrl" v-bind:alt="showCase.Title" />
+                                    <figcaption>
+                                        <a v-bind:href="getShowCaseUrl(showCase.CaseId)" v-bind:title="showCase.Title">
+                                            <h1>{{showCase.Title}}</h1>
+                                        </a>
+                                        <p>{{showCase.Contents}}</p>
+                                    </figcaption>
+                                </figure>
+                            </li>
+                            <li class="no-li" style="display: none;">
+                                <div class="no" style="line-height: 42px">
+                                    <i class="icon2"></i>近期尚無 <span>應用展示</span>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="@Url.Action("Index", "ShowCase")" target="_blank" class="more">更多</a>
+                    </div>
+
+                    @* 重大會議 *@
+                    <div v-else-if="card.Type==7">
+                        <div id="dvYoutube" class="geo9content">
+                            <div class="no">
+                                <i class="icon1"></i>近期尚無<span>重大會議直播</span>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/channel/UC0HatHjMX8Oo60tILcOnK0g" target="_blank" class="more">更多</a>
+                    </div>
+
+                    @* 公民論壇 *@
+                    <div class="content-card" v-else-if="card.Type==8">
+                        <ul id="ulForum" class="ul-list-card">
+                            <li class="li-loading" v-if="forum.length==0"> <img src="@Url.Content("~/Content/geo/loading/hourglass.svg")"></li>
+                            <li v-for="f in forum">
+                                <span class="subject-title">{{f.Category}}</span>
+                                <a class="link-title" v-bind:href="getForumUrl(f)" target="_blank">{{f.Subject}}</a>
+                            </li>
+                        </ul>
+                        @Html.ActionLink("更多", "index", "forum", null, new { @class = "more" })
+                    </div>
+
+                    @* 市政參與 *@
+                    <div class="content-card" v-else-if="card.Type==10">
+                        <ul id="ulParticipation" class="ul-list-card">
+                            <li class="li-loading" v-if="participation.length==0"> <img src="@Url.Content("~/Content/geo/loading/hourglass.svg")"></li>
+                            <li v-for="f in participation">
+                                <span class="subject-title">{{f.Category}}</span>
+                                <a class="link-title" v-bind:href="getParticipationUrl(f)" target="_blank">{{f.Subject}}</a>
+                            </li>
+                        </ul>
+                        @Html.ActionLink("更多", "index", "participation", null, new { @class = "more" })
+                    </div>
+
+                    @* 市政提案 *@
+                    <div class="content-card" v-else-if="card.Type==9">
+                        <div id="dvSuggest">
+                            <div v-if="suggest.length==0">
+                                <i class="icon2"></i>近期尚無<span>市政提案</span>
+                            </div>
+
+                            <ul v-for="s in suggest">
+
+                                <li><a v-bind:href="getSuggestUrl(s)" target="_blank">{{s.Subject}}</a></li>
+                                <li class="number">累積 <span>{{s.DiscussCount}}</span> 筆討論</li>
+                            </ul>
+                        </div>
+                        @Html.ActionLink("更多", "Index", "Suggest", null, new { @class = "more" })
+                    </div>
+
+                    <div class="content-card" v-else >
+                        <div v-html="card.Contents">
+
+                        </div>
+                        <a v-show="card.WebUrl" v-bind:href="card.WebUrl" target="_blank" class="more">更多</a>
+                    </div>
+                </div>
+            </transition-group>
+        </draggable>
+
+    </div>
+</main>
+
+<div class="cover" id="dvMayorbox" style="display: none;">
+    <a href="javascript:;" onclick="$.fancybox.close();" class="delete"><img src="@Url.Content("~/Content/geo/img/delete.png")" /></a>
+    <span class="covertitle"><img src="@Url.Content("~/Content/geo/img/icon2.png")">&nbsp;<span id="mayorTitle"></span></span>
+    <div class="coverleft">
+        <div id="map_canvas" style="width:380px; height:300px"></div>
+    </div>
+
+    <div class="coverright">
+        <p>
+            行程事由<br />
+            <span id="mayorEvent">仁德區塗庫仔排水周邊截流改善工程現勘</span>
+        </p>
+        @*<p>日期時間</p><span id="mayorTime">2015/04/10 上午09:00:00~上午10:00:00</span>*@
+        <p>
+            起始時間<br />
+            <span id="startMayorTime"></span>
+        </p>
+        <p>
+            結束時間<br />
+            <span id="endMayorTime"></span>
+        </p>
+        <p>
+            主辦單位<br />
+            <span id="mayorHolder">水利署</span>
+        </p>
+        <p>
+            行程地點<br />
+            <span id="mayorLocation">仁德滯洪地(近仁德四街)</span>
+        </p>
+    </div>
+    <!--<a class="addcalender" href="#">加入行事曆</a>-->
+</div>
+
+
+@section styles{
+    <link href="@Url.Content("~/Content/jquery.fancybox.min.css")" rel="stylesheet" />
+
+    <style>
+        .normal {
+            background-color: #D9FBE5;
+        }
+
+        .drag {
+            background-color: green;
+        }
+
+        .list-complete-item {
+            /*padding: 4px;
+        margin-top: 4px;
+        border: solid 1px;*/
+            transition: all 1s;
+        }
+
+        .list-complete-enter, .list-complete-leave-active {
+            opacity: 0;
+        }
+    </style>
+}
+
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.fancybox.min.js"></script>
+
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&key=AIzaSyDIqhhEQWpF2ZElLVkkwWsCAABV4Fx1qCc"></script>
+    @*<script async defer src="https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyDIqhhEQWpF2ZElLVkkwWsCAABV4Fx1qCc"></script>*@
+
+    @*<script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>*@
+    <script src="@Url.Content("~/Content/geo/slick/slick.min.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/geo/home-index.min.js")"></script>*@
+    <script src="@Url.Content("~/Scripts/geo/home-index.js")"></script>
+
+    <script src="~/Scripts/geo/GeoFunc.js"></script>
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/vue-resource.js"></script>
+    <script src="~/Scripts/geo/component/mixinMethod.js"></script>
+    <script src="~/Scripts/Sortable.js"></script>
+    <script src="~/Scripts/vuedraggable.js"></script>
+
+
+    <script src="~/Scripts/geo/Home/index.js"></script>
+
+    <script>
+
+        var $window = $(window);
+
+        $('#imgLoading').show();
+
+        $(".mayorbox").fancybox({
+            'modal': true
+        });
+
+
+        function forumTagPosition() {
+            $('#ulForum>li').each(function (i) {
+                var forumLiWidth = $('#ulForum>li').eq(i).width();
+                var forumSubjectTitleWidth = $('.subject-title').eq(i).width() + 10;
+                var forumLinkWrapperWidth = forumLiWidth - forumSubjectTitleWidth;
+
+                $('.link-title-wrapper').width(forumLinkWrapperWidth);
+
+                var $questionTag = $('.question-tag').eq(i);
+                var tagWidth = $questionTag.width();
+                var forumLinkTitleWidth = $('.link-title').eq(i).width() + 40;
+
+
+                if ((forumLinkWrapperWidth - forumLinkTitleWidth) < tagWidth && $questionTag.prev().prop('tagName') !== 'BR') {
+                    $questionTag.before('<br>');
+                } else if ((forumLinkWrapperWidth - forumLinkTitleWidth) > tagWidth && $questionTag.prev().prop('tagName') == 'BR') {
+                    $questionTag.prev().remove();
+                }
+
+            })
+
+        }
+
+        $window.load(function() {
+            forumTagPosition();
+            $window.resize(function() {
+                forumTagPosition();
+            });
+
+        });
+    </script>
+
+}

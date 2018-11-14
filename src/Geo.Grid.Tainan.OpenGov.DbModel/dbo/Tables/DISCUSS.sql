@@ -1,0 +1,49 @@
+CREATE TABLE [dbo].[DISCUSS] (
+    [DISCUSS_ID]   UNIQUEIDENTIFIER DEFAULT (newsequentialid()) NOT NULL,
+    [FORUM_ID]     UNIQUEIDENTIFIER NOT NULL,
+    [USER_ID]      NVARCHAR (128)   NOT NULL,
+    [UPPER_ID]     UNIQUEIDENTIFIER NULL,
+    [MESSAGE]      NVARCHAR (4000)  NOT NULL,
+    [IS_ENABLED]   BIT              NOT NULL,
+    [CREATED_BY]   NVARCHAR (100)   NOT NULL,
+    [CREATED_DATE] DATETIME         NOT NULL,
+    [UPDATE_BY]    NVARCHAR (100)   NOT NULL,
+    [UPDATE_DATE]  DATETIME         NOT NULL,
+    [IS_TOP]       BIT              DEFAULT ((0)) NOT NULL,
+    CONSTRAINT [PK_dbo.DISCUSS] PRIMARY KEY CLUSTERED ([DISCUSS_ID] ASC),
+    CONSTRAINT [FK_dbo.DISCUSS_dbo.AspNetUsers_USER_ID] FOREIGN KEY ([USER_ID]) REFERENCES [dbo].[AspNetUsers] ([Id]),
+    CONSTRAINT [FK_dbo.DISCUSS_dbo.FORUM_FORUM_ID] FOREIGN KEY ([FORUM_ID]) REFERENCES [dbo].[FORUM] ([FORUM_ID])
+);
+
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_USER_ID]
+    ON [dbo].[DISCUSS]([USER_ID] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_FORUM_ID]
+    ON [dbo].[DISCUSS]([FORUM_ID] ASC);
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_Description', @value = N'置頂', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = N'DISCUSS', @level2type = N'COLUMN', @level2name = N'IS_TOP';
+

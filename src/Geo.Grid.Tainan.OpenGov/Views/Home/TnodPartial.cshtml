@@ -1,0 +1,7 @@
+﻿@model List<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.TnodDataset>
+@foreach (var m in Model)
+{
+var color = m.FileType.StartsWith("x", StringComparison.CurrentCultureIgnoreCase) ? "green" : "red";
+<li><a href="http://data.tainan.gov.tw/dataset/@m.Name" target="_blank"><i class="@color">@m.FileType</i>@m.Title</a></li>
+}
+

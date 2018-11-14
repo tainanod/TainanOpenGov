@@ -1,0 +1,66 @@
+﻿@{
+    string propertyName = ViewData.ModelMetadata.PropertyName;
+    string controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+    string id = ViewData.ModelMetadata.PropertyName;
+    var data = ViewData[id] as List<string>;
+    int i = 0;
+}
+<style type="text/css">
+    #blockImageDemoList {
+        margin-bottom: 5%;
+    }
+
+    .blockFileList .form-group .thumbnail {
+        width: 150px;
+        height: 150px;
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>
+
+<div class="blockFileList">
+    <div class="form-group">
+        <label class="control-label col-lg-2">多圖片管理</label>
+        <div class="col-lg-6">
+            <input type="file" xx="@propertyName" accept="image/*" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-2">&nbsp;</label>
+        <div id="blockImageDemoList" class="col-lg-10">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                @foreach (var item in data)
+                {
+                    i = data.IndexOf(item);
+                    <div class="fileinput-preview thumbnail blockImgUrl" data-trigger="fileinput">
+                        <a href="@Url.Action("Detail", "Photo", new { area = "", id = item })" target="_blank" id="block_href_@(propertyName)">
+                            <img id="block_src_@(propertyName)" src="@Url.Action("Detail", "Photo", new { area = "", id = item })" width="150" height="150" />
+                        </a>
+                        <div class="caption">
+                            <p style="width:150px; margin-left:60%;" class="blockImgDel"><a class="btn btn-primary" style="cursor:pointer;">刪除</a></p>
+                            <input type="hidden" name="@(propertyName)[@i]" value="@item" class="blockImgId" />
+                        </div>
+                    </div>
+                }
+                <div id="blockImg" class="fileinput-preview thumbnail" data-trigger="fileinput" @(data.FirstOrDefault() != null ? "style=display:none;" : "")>
+                    <img src="@Url.Content("~/Areas/Admin/Content/uploadify/150x150.png")" width="150" height="150" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="blockImgHtmlDemo" style="display:none;">
+        <div class="fileinput-preview thumbnail {imgClass}" data-trigger="fileinput">
+            <a href="{blockImg}" target="_blank">
+                <img src="{blockImg}" width="150" height="150" />
+            </a>
+            <div class="caption">
+                <p style="width:150px; margin-left:60%;" class="{imgDel}"><a class="btn btn-primary" style="cursor:pointer;">刪除</a></p>
+                <input type="hidden" name="@(propertyName)[{imgNumber}]" value="{blockImgName}" class="{imgId}" />
+            </div>
+        </div>
+    </div>
+
+</div>
+

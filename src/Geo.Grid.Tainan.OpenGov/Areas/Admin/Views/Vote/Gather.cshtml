@@ -1,0 +1,225 @@
+﻿@model IQueryable<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.VoteGatherVm>
+@{
+    ViewBag.Title = "投票結果管理";
+    var basicData = ViewBag.basicData as IQueryable<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.VoteGatherVm>;
+}
+
+<h2>投票結果管理</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @Html.ActionLink("匯出報表", "Excel", new { id = Model.FirstOrDefault().PageId }, new { @class = "btn btn-success pull-right", @target = "_blank" })
+        @Html.ActionLink("←返回投票", "Index", new { id = Model.FirstOrDefault().ForumId }, new { @class = "btn btn-primary pull-right", style = "margin-right:10px" })
+        <h4>@Model.FirstOrDefault().Title</h4>
+    </div>
+</div>
+<span>總人次：@Model.FirstOrDefault().Counts</span>
+<div id="qList">
+    <div class="container-fluid">
+        <table class="table table-bordered table-striped table-hover">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>@Html.Raw(item.Title)</th>
+                </tr>
+                <tr>
+                    <td>
+                        @if (item.Categories.FirstOrDefault() != null)
+                        {
+                            <div id="blockChartDiv_@item.PageId" style="width:600px; height:400px; float:left;">
+                                <div id="blockChart_@item.PageId" style="min-width: 600px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                            <div style="width:200px; margin:30% 0 0 10%;display:inline-block;">
+                                <select class="form-control blockChart" xx="@item.PageId" yy="" style="margin-bottom:10px;">
+                                    <option value="column">長條圖</option>
+                                    <option value="bar">橫條圖</option>
+                                    <option value="pie">圓餅圖</option>
+                                    <option value="line">曲線圖</option>
+                                </select>
+                                <select class="form-control blockChartNum" xx="@item.PageId" yy="">
+                                    <option value="1">投票數</option>
+                                    <option value="2">百分比</option>
+                                    <option value="3">投票數(百分比)</option>
+                                </select>
+                            </div>
+                        }
+                        else
+                        {
+                            <div style="height:200px;">&nbsp;</div>
+                        }
+                    </td>
+                </tr>
+            }
+            <tr>
+                <th>填寫資料統計</th>
+            </tr>
+            @foreach (var item in basicData)
+            {
+                <tr>
+                    <th>@Html.Raw(item.Title)</th>
+                </tr>
+                <tr>
+                    <td>
+                        @if (item.Categories.FirstOrDefault() != null)
+                        {
+                            <div id="blockChartDiv_@item.PageId" style="width:600px; height:400px; float:left;">
+                                <div id="blockChart_@item.PageId" style="min-width: 600px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                            <div style="width:200px; margin:30% 0 0 10%;display:inline-block;">
+                                <select class="form-control blockChart" xx="@item.PageId" yy="basic" style="margin-bottom:10px;">
+                                    <option value="column">長條圖</option>
+                                    <option value="bar">橫條圖</option>
+                                    <option value="pie">圓餅圖</option>
+                                    <option value="line">曲線圖</option>
+                                </select>
+                                <select class="form-control blockChartNum" xx="@item.PageId" yy="basic">
+                                    <option value="1">投票數</option>
+                                    <option value="2">百分比</option>
+                                    <option value="3">投票數(百分比)</option>
+                                </select>
+                            </div>
+                        }
+                        else
+                        {
+                            <div style="height:200px;">&nbsp;</div>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="//code.highcharts.com/stock/highstock.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.get('@Url.Action("Gather", "Api/Vote", new { id = Model.FirstOrDefault().PageId, Area = "" })', function (result) {
+                getChartResult(result, 'column', 1);
+            });
+
+            $.get('@Url.Action("Gather/Basic", "Api/Vote", new { id = Model.FirstOrDefault().PageId, Area = "" })', function (result) {
+                getChartResult(result, 'column', 1);
+            });
+
+            //圖表
+            $(document).on('change', '.blockChart', function () {
+                var $qid = $(this).attr('xx'),
+                    $basic = $(this).attr('yy');
+                getChartDetail($qid,$basic);
+            });
+
+            //數據
+            $(document).on('change', '.blockChartNum', function () {
+                var $qid = $(this).attr('xx'),
+                    $basic = $(this).attr('yy');
+                getChartDetail($qid,$basic);
+            });
+        });
+
+        //單筆
+        function getChartDetail($qid,$basic) {
+            var $chartVal = $('select.blockChart[xx="' + $qid + '"] option:selected').val(),
+                $numVal = $('select.blockChartNum[xx="' + $qid + '"] option:selected').val();
+
+            var chart = $('#blockChart_' + $qid).highcharts();
+            var seriesLength = chart.series.length;
+            for (var i = seriesLength - 1; i > -1; i--) {
+                chart.series[i].remove();
+            }
+            if ($basic == ""){
+                $.get('@Url.Action("Gather","Api/Vote",new { Area = ""})/' + $qid, function (result) {
+                    getChartResult(result, $chartVal, $numVal);
+                });
+            }else{
+                $.get('@Url.Action("Gather/BasicDetail","Api/Vote",new { Area = "", id = Model.FirstOrDefault().PageId })?groupId=' + $qid, function (result) {
+                    getChartResult(result, $chartVal, $numVal);
+                });
+            }
+            
+        }
+
+        //數據&百分比數值
+        function getChartResultFormatter($chartVal,$x, $y, $numVal) {            
+            var numString = $y;
+            if ($numVal == 2) {
+                numString = Highcharts.numberFormat(($y / @(Model.FirstOrDefault().Counts)) * 100, 1) + '%';
+            } else if ($numVal == 3) {
+                numString = $y + '/' + Highcharts.numberFormat(($y / @(Model.FirstOrDefault().Counts)) * 100, 1) + '%';
+            }
+            return ($chartVal == "pie" ? $x+":":"")+ numString;
+        }
+
+        //統計圖表
+        function getChartResult(result, $chartVal, $numVal) {
+            result.forEach(function (jsonResult) {
+                if (jsonResult.Categories.length > 0) {
+                    var $categories = jsonResult.Categories,
+                        $series = jsonResult.Series;
+                    $total = jsonResult.Counts;
+                    $counts = $series.reduce(function (a, b) { return a + b.y; }, 0);
+                    $('#blockChart_' + jsonResult.PageId).highcharts({
+                        chart: {
+                            type: $chartVal
+                        },
+                        title: {
+                            text: ''
+                        },
+                        subtitle: {
+                            text: ''
+                        },
+                        xAxis: {
+                            categories: $categories
+                        },
+                        yAxis: {
+                            title: {
+                                text: ''
+                            }
+                        },
+                        legend:{
+                            enabled:false
+                        },
+                        plotOptions: {
+                            column: {
+                                dataLabels: {
+                                    enabled: true,
+                                    formatter: function () {
+                                        return getChartResultFormatter($chartVal,this.point.options.PageName, this.point.options.y, $numVal);
+                                    }
+                                }
+                            },
+                            bar: {
+                                dataLabels: {
+                                    enabled: true,
+                                    formatter: function () {
+                                        return getChartResultFormatter($chartVal,this.point.options.PageName, this.point.options.y, $numVal);
+                                    }
+                                }
+                            },
+                            pie: {
+                                dataLabels: {
+                                    enabled: true,
+                                    formatter: function () {
+                                        return getChartResultFormatter($chartVal,this.point.options.PageName, this.point.options.y, $numVal);
+                                    }
+                                }
+                            },
+                            line: {
+                                dataLabels: {
+                                    enabled: true,
+                                    formatter: function () {
+                                        return getChartResultFormatter($chartVal,this.point.options.PageName, this.point.options.y, $numVal);
+                                    }
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '',
+                            data: $series
+                        }]
+                    });
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "市政監督";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/bootstrap-datetimepicker.min.css")" rel="stylesheet" />
+}
+
+    <div class="main" ng-app="app" ng-controller="engineeringController" ng-cloak>
+        <h1 class="hidden">@ViewBag.Title</h1>
+        <h1 class="clear-title-style">
+            <img src="@Url.Content("~/Content/geo/img/ic_title_engineer.png")" />
+            @ViewBag.Title
+        </h1>
+
+        <main role="tabpanel">
+            <div class="tab-content pd-1">
+                <div role="tabpanel" class="tab-pane active">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <section class="card-wrapper">
+                                <div>
+                                    <div class="search-wrapper" style="width:300px; display:inline-block; margin-bottom: 0">
+                                        <input class="form-control" type="text" value="" placeholder="請填寫完整或部份工程名稱" ng-model="query.keyword" ng-enter="queryMap()" />
+                                    </div>
+                                    <button class="btn qa-btn" type="button" style="padding-right:4px;" ng-click="queryMap(query)">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="btn qa-btn adv-btn" ng-click="toggleAdv()">
+                                        進階搜尋
+                                        <i class="fa" ng-class="{'fa-caret-up': vm.isOpenAdv, 'fa-caret-down':!vm.isOpenAdv}" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div id="advanceSearchWrapper" class="form-horizontal dotted-line" ng-show="vm.isOpenAdv">
+                                    <div class="row">
+                                        <label class="control-label col-sm-2">行政區</label>
+                                        <div class="col-sm-4 mg-b-1">
+                                            <select class="form-control" ng-model="query.town">
+                                                <option value="{{t.Code}}" ng-repeat="t in vm.townList">{{t.Name}}</option>
+                                            </select>
+                                        </div>
+                                        <label class="control-label col-sm-2">工程類別</label>
+                                        <div class="col-sm-4 mg-b-1">
+                                            <select class="form-control" ng-model="query.category">
+                                                <option value="">全部</option>
+                                                <option value="{{c.Code}}" ng-repeat="c in vm.categoryList">{{c.Name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="control-label col-sm-2">工程進度</label>
+                                        <div class="col-sm-4 mg-b-1">
+                                            <select class="form-control" ng-model="query.progressText">
+                                                <option value="{{p.Code}}" ng-repeat="p in vm.progressTextList">{{p.Name}}</option>
+                                            </select>
+                                        </div>
+                                        <label class="control-label col-sm-2">工程狀態</label>
+                                        <div class="col-sm-4 mg-b-1">
+                                            <select class="form-control" ng-model="query.status">
+                                                <option value="">全部</option>
+                                                <option value="{{s.Code}}" ng-repeat="s in vm.statusList">{{s.Name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="control-label col-sm-2">
+                                            工程經費(萬元)
+                                        </label>
+                                        <div class="col-sm-8 mg-b-1">
+                                            <div class="input-group custom-input-group">
+                                                <input type="number" class="form-control" value="" ng-model="query.amountMin" min="0" />
+                                                <span class="input-group-addon">~</span>
+                                                <input type="number" class="form-control" value="" ng-model="query.amountMax" min="0" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="control-label col-sm-2">
+                                            開工日期
+                                        </label>
+                                        <div class="col-sm-8 mg-b-1">
+                                            @*<div class="form-group">
+                                                <div class='input-group date' id='datetimepicker1'>
+                                                    <input type='text' class="form-control" ng-model="query.startDate" ng-change="setStartDate()"/>
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>*@
+                                            <div class="input-group custom-input-group">
+                                                <input type="date" lang="zh-Hant_zh-Hant-TW" class="form-control" value="" ng-model="query.startDate" />
+                                                <span class="input-group-addon">~</span>
+                                                <input type="date" class="form-control" value="" ng-model="query.endDate" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-right">
+                                            <button type="button" class="btn qa-btn gray" ng-click="clear()">清除條件</button>
+                                            <button type="button" class="btn qa-btn" ng-click="advQueryMap()">查詢</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <div class="search-result-wrapper">
+
+                                @Html.Partial("_Loading")
+
+                                <div id="googleMap"></div>
+                                <p style="padding:.5em">※本系統資料非即時更新，最新進度請洽採購稽核小組</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src="@Url.Content("~/Scripts/nodep-date-input-polyfill.dist.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/moment.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/moment-with-locales.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap-datetimepicker.min.js")"></script>*@
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIqhhEQWpF2ZElLVkkwWsCAABV4Fx1qCc"></script>
+    <script src='@Url.Content("~/Scripts/App/Engineering/engineering.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Engineering/engineering.service.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Engineering/engineering.controller.js")'></script>
+    <script>
+        var map, marker, infoWindow;
+        //$(function () {
+        //    var dateConfig = {
+        //        locale: 'zh-tw',
+        //        icons: {
+        //            time: "fa fa-clock-o",
+        //            date: "fa fa-calendar",
+        //            up: "fa fa-arrow-up",
+        //            down: "fa fa-arrow-down"
+        //        },
+        //        format: 'YYYY-MM-DD'
+        //    };
+
+
+        //    $('#datetimepicker1').datetimepicker(dateConfig);
+        //})
+    </script>
+}
+

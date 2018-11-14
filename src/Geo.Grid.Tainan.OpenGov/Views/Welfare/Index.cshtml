@@ -1,0 +1,367 @@
+﻿
+@{
+    ViewBag.Title = "公益台南";
+}
+
+<div class="main" ng-app="app" ng-controller="welfareController" ng-cloak>
+    <h1 class="hidden">@ViewBag.Title</h1>
+    <h1 class="clear-title-style">
+        <i class="fa fa-heart" aria-hidden="true"></i>
+        @ViewBag.Title
+    </h1>
+
+    <main role="tabpanel">
+        <!-- Nav tabs -->
+        @Html.Partial("_TabPartial")
+        <!-- Tab panes -->
+        <div class="tab-content pd-1">
+            <div role="tabpanel" class="tab-pane active">
+                <div class="row">
+                    <div class="col-sm-12">                        
+                        <form ng-show="!vm.isAll">
+                            <section class="qa-section-wrapper">
+                                <div class="qa-wrapper">
+                                    <div class="q-wrapper">
+                                        <span class="required">*</span>請問您的戶籍地址於臺南市嗎？
+                                    </div>
+                                    <div class="a-wrapper">
+                                        <div class="col-xs-12">
+                                            <select class="form-control" ng-model="query.liveIn">
+                                                <option value="">請選擇</option>
+                                                <option ng-repeat="t in vm.townList" value="{{t}}">{{t}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-12" ng-show="!query.liveIn && submitted">
+                                            <div class="error light">
+                                                此題為必填。
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="query.liveIn">
+                                    <div class="qa-wrapper" ng-show="query.liveIn !== '未設籍臺南市'">
+                                        <div class="q-wrapper">
+                                            <span class="required">*</span>請問是否在臺南市居住超過183天？
+                                        </div>
+                                        <div class="a-wrapper">
+                                            <div class="option-wrapper">
+                                                <input type="radio" value="是" name="radioSq2" id="radioSq21" ng-model="query.isLiveDays"/>
+                                                <label for="radioSq21">
+                                                    <span>是</span>
+                                                </label>
+                                            </div>
+                                            <div class="option-wrapper">
+                                                <input type="radio" value="否" name="radioSq2" id="radioSq22" ng-model="query.isLiveDays"/>
+                                                <label for="radioSq22">
+                                                    <span>否</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-12" ng-show="!query.isLiveDays && required.isLiveDays && submitted">
+                                                <div class="error light">
+                                                    此題為必填。
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="qa-wrapper">
+                                        <div class="q-wrapper">
+                                            <span class="required">*</span>您的年齡是?
+                                        </div>
+                                        <div class="a-wrapper">
+                                            <div class="col-xs-12 form-inline">
+                                                <input type="number" class="form-control" max="120" min="0" ng-model="query.age"/> 歲
+                                            </div>
+                                            <div class="col-xs-12" ng-show="!query.age && submitted">
+                                                <div class="error light">
+                                                    此題為必填。
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="qa-wrapper">
+                                        <div class="q-wrapper">
+                                            <span class="required">*</span>您是否有子女?
+                                        </div>
+                                        <div class="a-wrapper">
+                                            <div class="option-wrapper">
+                                                <input type="radio" value="true" name="radioSq9" id="radioSq91" ng-model="query.anyChildren"/>
+                                                <label for="radioSq91">
+                                                    <span>是</span>
+                                                </label>
+                                            </div>
+                                            <div class="option-wrapper">
+                                                <input type="radio" value="false" name="radioSq9" id="radioSq92" ng-model="query.anyChildren"/>
+                                                <label for="radioSq92">
+                                                    <span>否</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-12" ng-show="!query.anyChildren && submitted">
+                                                <div class="error light">
+                                                    此題為必填。
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="query.anyChildren==='true'">
+                                        <div class="qa-wrapper">
+                                            <div class="q-wrapper">
+                                                <span class="required">*</span>您共養育幾名子女?
+                                            </div>
+                                            <div class="a-wrapper">
+                                                <div class="option-wrapper">
+                                                    <input type="radio" value="false" name="radioSq8" id="radioSq81" ng-model="query.isChildren" />
+                                                    <label for="radioSq81">
+                                                        <span>1 名</span>
+                                                    </label>
+                                                </div>
+                                                <div class="option-wrapper">
+                                                    <input type="radio" value="true" name="radioSq8" id="radioSq82" ng-model="query.isChildren" />
+                                                    <label for="radioSq82">
+                                                        <span>超過 1 名</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-xs-12" ng-show="!query.isChildren && required.isChildren && submitted">
+                                                    <div class="error light">
+                                                        此題為必填。
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="qa-wrapper" ng-show="query.isChildren==='false'">
+                                            <div class="q-wrapper">
+                                                <span class="required">*</span>其年齡為?
+                                            </div>
+                                            <div class="a-wrapper">
+                                                <div class="col-xs-12 form-inline">
+                                                    <input type="number" class="form-control" max="120" min="0" ng-model="query.childrenAge" /> 歲
+                                                </div>
+                                                <div class="col-xs-12" ng-show="!query.childrenAge && required.childrenAge && submitted">
+                                                    <div class="error light">
+                                                        此題為必填。
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="qa-wrapper" ng-show="query.isChildren==='true'">
+                                            <div class="q-wrapper">
+                                                <span class="required">*</span>其年齡介於幾歲?
+                                            </div>
+                                            <div class="a-wrapper">
+                                                <div class="col-xs-12 form-inline">
+                                                    <input type="number" class="form-control" max="120" min="0" ng-model="query.ageMin" /> 歲 ~
+                                                    <input type="number" class="form-control" max="120" min="0" ng-model="query.ageMax" /> 歲
+                                                </div>
+                                                <div class="col-xs-12" ng-show="!query.ageMin || !query.ageMax && required.ageMin && submitted">
+                                                    <div class="error light">
+                                                        此題為必填。
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="qa-wrapper">
+                                        <div class="q-wrapper">
+                                            請問您是否具備下列特殊身分條件?
+                                        </div>
+                                        <div class="a-wrapper">
+                                            <div class="option-wrapper" ng-repeat="i in vm.identity">
+                                                <input type="checkbox" value="{{i}}" name="checkSq1" id="checkSq1{{$index+1}}" ng-change="changeIdentity(i,0)" ng-model="identity[$index]"/>
+                                                <label for="checkSq1{{$index+1}}">
+                                                    <span>{{i}}</span>
+                                                </label>
+                                            </div>
+                                            @*<div class="option-wrapper">
+                                                <input type="radio" value="低收入戶" name="radioSq4" id="radioSq42" ng-model="query.identity1"/>
+                                                <label for="radioSq42">
+                                                    <span>低收入戶</span>
+                                                </label>
+                                            </div>
+                                            <div class="option-wrapper">
+                                                <input type="radio" value="中低收入戶" name="radioSq4" id="radioSq43" ng-model="query.identity1"/>
+                                                <label for="radioSq43">
+                                                    <span>中低收入戶</span>
+                                                </label>
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                    <div class="qa-wrapper">
+                                        <div class="q-wrapper">
+                                            請問您是否具備下列其他身分條件?
+                                        </div>
+                                        <div class="a-wrapper">
+                                            <div class="option-wrapper" ng-repeat="o in vm.others">
+                                                <input type="checkbox" value="{{o}}" name="checkSq2" id="checkSq2{{$index+1}}" ng-change="changeIdentity(o,1)" ng-model="others[$index]" />
+                                                <label for="checkSq2{{$index+1}}">
+                                                    <span>{{o}}</span>
+                                                </label>
+                                            </div>
+                                            @*<div class="option-wrapper">
+                                                <input type="radio" value="經濟狀況不佳致生活陷於困境者" name="radioSq5" id="radioSq52" ng-model="query.identity2"/>
+                                                <label for="radioSq52">
+                                                    <span>經濟狀況不佳致生活陷於困境者</span>
+                                                </label>
+                                            </div>
+                                            <div class="option-wrapper">
+                                                <input type="radio" value="急難事由生活陷困者" name="radioSq5" id="radioSq53" ng-model="query.identity2"/>
+                                                <label for="radioSq53">
+                                                    <span>急難事由生活陷困者</span>
+                                                </label>
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                    <div class="qa-wrapper">
+                                        <div class="q-wrapper">
+                                            收入條件
+                                        </div>
+                                        <div class="a-wrapper">
+                                            <div class="col-xs-12 form-inline q-wrapper">
+                                                <label for="text1">
+                                                    <span class="required">*</span>
+                                                    <span>請問您全家每人每月收入約多少?(元)</span>
+                                                </label>
+                                                <input type="number" class="form-control" name="text1" id="text1" value="0" min="0" ng-model="query.incomeValue">
+                                                <a href="" id="tooltip1" data-toggle="tooltip" title="家庭總收入平均分配全家人口">說明</a>
+                                                <div ng-show="query.incomeValue===null && submitted">
+                                                    <div class="error light">
+                                                        此題為必填。
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 form-inline q-wrapper">
+                                                <label for="text2">
+                                                    <span class="required">*</span>
+                                                    <span>請問您的動產金額約多少？(元)</span>
+                                                </label>
+                                                <input type="number" class="form-control" name="text2" id="text2" value="0" min="0" ng-model="query.movableValue">
+                                                <a href="" id="tooltip2" data-toggle="tooltip" title="包括存款本金、投資、汽車與有價證券等">說明</a>
+                                                <div ng-show="query.movableValue===null && submitted">
+                                                    <div class="error light">
+                                                        此題為必填。
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 form-inline q-wrapper">
+                                                <label for="text3">
+                                                    <span class="required">*</span>
+                                                    <span>請問您全家不動產總值約多少?(元)</span>
+                                                </label>
+                                                <input type="number" class="form-control" name="text3" id="text3" value="0" min="0" ng-model="query.immovableValue">
+                                                <a href="" id="tooltip3" data-toggle="tooltip" title="包含房屋及土地">說明</a>
+                                                <div ng-show="query.immovableValue===null && submitted">
+                                                    <div class="error light">
+                                                        此題為必填。
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="text-center">
+                                <input id="submitBtn" type="submit" value="查詢適合您的補助項目" class="qa-btn" ng-click="formSubmit()" />
+                            </div>
+                        </form>
+                        <div class="search-wrapper" ng-show="vm.isAll">
+                            <input class="form-control search-input-text" type="text" value="" placeholder="請輸入關鍵字..." ng-model="queryAll.keyword" ng-enter="getListAll(1,pageAll.pageSize,queryAll)"/>
+                            <button class="btn search-btn" type="button" ng-click="getListAll(1,pageAll.pageSize,queryAll)">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="search-result-wrapper">
+                            <form class="form-inline">
+                                每頁顯示
+                                <select class="form-control pageShowItem" ng-model="page.pageSize" ng-options="o for o in vm.optionModel" ng-change="pageChange()" ng-show="!vm.isAll"></select>
+                                <select class="form-control pageShowItem" ng-model="pageAll.pageSize" ng-options="o for o in vm.optionModel" ng-change="pageChangeAll()" ng-show="vm.isAll"></select> 
+                                筆
+                            </form>
+
+                            @Html.Partial("_Loading")
+                            <div class="welfare-result-wrapper">
+                                <div class="alert alert-warning" ng-show="!vm.isAll && vm.list.length">
+                                    以下查詢結果僅供參考，申辦弱勢補助項目仍須依據本府資格審核結果為主。
+                                </div>
+                                <p class="text-right">
+                                    資料來源：
+                                    <a href="http://data.tainan.gov.tw/" title="開新視窗連結至 臺南市政府資料開放平台" target="_blank">臺南市政府資料開放平台</a>
+                                </p>
+                                <table class="table table-striped table-hover table-orange">
+                                    <tr>
+                                        <th class="text-center" width="10%">編號</th>
+                                        <th class="text-center" width="20%">補助名稱</th>
+                                        <th class="text-center" width="25%">應備文件</th>
+                                        <th class="text-center" width="15%">特殊身分條件</th>
+                                        <th class="text-center" width="15%">收件單位</th>
+                                        <th class="text-center" width="15%">聯繫方式</th>
+                                    </tr>
+                                    <tr ng-repeat="x in vm.list" ng-show="!vm.isAll">
+                                        <td class="text-center">{{x.AllowanceCode}}</td>
+                                        <td>
+                                            <a href="" ng-click="goDetail(x.AllowanceId)" title="{{x.Name}}">
+                                                {{x.Name}}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p ng-bind-html="x.Docs | trust"></p>
+                                        </td>
+                                        <td>{{x.Identity1 + ((x.Identity1 && x.Identity2)?'、':'') + x.Identity2}}</td>
+                                        <td>
+                                            {{x.Receiver}}
+                                        </td>
+                                        <td>{{x.Contact}}</td>
+                                    </tr>
+                                    <tr ng-repeat="x in vm.listAll" ng-show="vm.isAll">
+                                        <td class="text-center">{{x.AllowanceCode}}</td>
+                                        <td>
+                                            <a href="" ng-click="goDetail(x.AllowanceId)" @*title="{{x.Name}}"*@ ng-bind-html="x.Name | trust">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p ng-bind-html="x.Docs | trust"></p>
+                                        </td>
+                                        <td>{{x.Identity1 + ((x.Identity1 && x.Identity2)?'、':'') + x.Identity2}}</td>
+                                        <td>
+                                            {{x.Receiver}}
+                                        </td>
+                                        <td>{{x.Contact}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-push-8 col-md-4">
+                                    <div class="text-center mg-tb-1" style="font-size: .9em;" ng-show="!vm.isAll">
+                                        資料筆數:{{page.totalRecord}} 總頁數:{{page.totalPages}} 目前頁數{{page.currentPage}}
+                                    </div>
+                                    <div class="text-center mg-tb-1" style="font-size: .9em;" ng-show="vm.isAll">
+                                        資料筆數:{{pageAll.totalRecord}} 總頁數:{{pageAll.totalPages}} 目前頁數{{pageAll.currentPage}}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-pull-4 col-md-8">
+                                    <uib-pagination style="vertical-align:middle" boundary-links="true" items-per-page="page.pageSize" max-size="10" total-items="page.totalRecord" ng-model="page.currentPage" class="pagination-sm" previous-text="上一頁" next-text="下一頁" first-text="第一頁" last-text="最後頁" ng-change="pageChange()" ng-show="!vm.isAll"></uib-pagination>
+                                    <uib-pagination style="vertical-align:middle" boundary-links="true" items-per-page="pageAll.pageSize" max-size="10" total-items="pageAll.totalRecord" ng-model="pageAll.currentPage" class="pagination-sm" previous-text="上一頁" next-text="下一頁" first-text="第一頁" last-text="最後頁" ng-change="pageChangeAll()" ng-show="vm.isAll"></uib-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Welfare/welfare.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Welfare/welfare.service.js?v2")'></script>
+    <script src='@Url.Content("~/Scripts/App/Welfare/welfare.controller.js?v4")'></script>
+    <script>
+        $('#imgLoading').show();
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        })
+    </script>
+}

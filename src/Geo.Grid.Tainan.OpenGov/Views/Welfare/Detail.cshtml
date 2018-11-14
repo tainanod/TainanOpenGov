@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "公益台南";
+}
+
+@section styles {
+    <link href="~/Content/ol.css" rel="stylesheet" />
+    <link href="~/Content/Grid.MapFusion.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: #fff;
+        }
+    </style>
+}
+
+<div class="main" ng-app="app" ng-controller="welfareController" ng-init="allowanceId='@(Url.RequestContext.RouteData.Values["id"])'" ng-cloak>
+    <h1 class="hidden">@(ViewBag.Title)</h1>
+    <h1 class="clear-title-style">
+        <i class="fa fa-heart" aria-hidden="true"></i>
+        @ViewBag.Title
+    </h1>
+
+    <main role="tabpanel">
+
+        <div class="tab-content pd-1">
+            <div role="tabpanel" class="tab-pane active">
+
+                <div class="row">
+                    <div class="col-md-2 col-md-push-10 text-right form-inline">
+                        <button class="btn btn-info btn-sm form-control" style="color: #fff;" ng-click="goBack()"><i class="fa fa-arrow-left" aria-hidden="true"></i> 返回</button>
+                    </div>
+                    <h2 class="col-md-10 col-md-pull-2 detail-title">{{vm.detail.Name}}</h2>
+                </div>
+
+                @Html.Partial("_Loading")
+
+                <div class="row" ng-show="vm.detail">
+                    <div class="col-md-12 form-horizontal">
+                        <div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">補助對象年齡上限</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.AgeMax ? vm.detail.AgeMax : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">補助對象年齡下限</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.AgeMin ? vm.detail.AgeMin : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">設籍條件</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.LiveIn ? vm.detail.LiveIn : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">居住日數是否需大於183日</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.IsLiveDays ? vm.detail.IsLiveDays : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">特殊身分1</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.Identity1 ? vm.detail.Identity1 : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">特殊身分2</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.Identity2 ? vm.detail.Identity2 : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">收入條件(每人每戶)</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.IncomeValue ? '小於 ' + moneyFormat(vm.detail.IncomeValue) + ' 元' : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">動產條件(每人)</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.MovableValue ? '小於 ' + moneyFormat(vm.detail.MovableValue) + ' 元' : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">不動產條件(每人)</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.ImmovableValue ? '小於 ' + moneyFormat(vm.detail.ImmovableValue) + ' 元' : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">其他條件</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.Others ? vm.detail.Others : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">應備文件</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text" ng-bind-html="(vm.detail.Docs ? vm.detail.Docs : '無') | trust">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">收件/洽辦單位</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.Receiver ? vm.detail.Receiver : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">聯繫方式</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.Contact ? vm.detail.Contact : '無'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 col-md-3 control-label label-custom">相關連結</label>
+                                <div class="col-xs-8 col-sm-10 col-md-9">
+                                    <div class="form-control form-control-text" ng-if="vm.detail.MoreInfo">
+                                        <a href="{{vm.detail.MoreInfo}}" target="_blank" title="開新視窗連結至 臺南市政府社會局官網">臺南市政府社會局官網</a>
+                                    </div>
+                                    <div class="form-control form-control-text" ng-if="!vm.detail.MoreInfo">
+                                        無
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <section class="data-info-wrapper">
+                            <h3><i class="fa fa-map" aria-hidden="true"></i> 收件單位地圖</h3>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">
+                                        請選擇收件單位
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" ng-model="vm.selectOfficeId" ng-change="setMarkerCenter(vm.selectOfficeId)">
+                                            <option value="">請選擇</option>
+                                            <option ng-repeat="d in vm.districtOffice" value="{{d.OfficeId}}">{{d.Name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+                <div id="googleMap"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/ol-debug.js")'></script>
+    <script src='@Url.Content("~/Scripts/geo/Grid.MapFusion.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Welfare/welfare.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Welfare/welfare.service.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Welfare/welfare.detail.controller.js?v2")'></script>
+    <script>
+        $('#imgLoading').show();
+
+        var map, marker, infoWindow;
+
+    </script>
+}
+

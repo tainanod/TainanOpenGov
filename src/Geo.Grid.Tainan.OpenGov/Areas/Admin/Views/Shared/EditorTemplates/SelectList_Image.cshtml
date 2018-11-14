@@ -1,0 +1,55 @@
+﻿@{
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();
+    htmlAttributes.Add("class", "control-label");
+
+    IDictionary<string, object> htmlAttributes2 = new Dictionary<string, object>();
+    htmlAttributes2.Add("class", "form-control");
+
+
+    string id = ViewData.ModelMetadata.PropertyName;
+    string val = ViewData.TemplateInfo.FormattedModelValue.ToString();
+
+    List<SelectListItem> ListItems = new List<SelectListItem>();
+    var gData = ViewData[id + "_WH"] as IQueryable<GRiD.CURE.ISTM_FCU.Model.Data_Group>;
+
+}
+<div class="control-group">
+    @Html.Label("", htmlAttributes)
+    <div class="controls">
+        @if (ViewData[id] != null)
+        {
+            @Html.DropDownList("", (IEnumerable<SelectListItem>)ViewData[id], "請選擇-", htmlAttributes2)
+        }
+        else
+        {
+            @Html.DropDownList("", ListItems, "請選擇", htmlAttributes2)
+        }
+    </div>
+</div>
+
+@if (gData != null)
+{
+    <div style="display:none;">
+        <span class="block_chk_wh">&nbsp;</span>
+        @foreach (var item in gData)
+        {
+            <span class="block_chk_wh">@item.WidthHeight</span>
+        }
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var i = $('#@(id) option:selected').index();   
+        block_chk_wh(i);
+        $('#@(id)').change(function () {          
+            i = $(this).find('option:selected').index();
+            block_chk_wh(i);
+        });
+    });
+
+    function block_chk_wh(i) {
+        var detail = $('.block_chk_wh').eq(i).html();
+        $('.block_img_wh').html('選擇上傳 - ' + detail);
+    }
+</script>

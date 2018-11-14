@@ -1,0 +1,14 @@
+﻿@model Boolean
+
+@{
+    //Model.HasValue ? Model : 0
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();
+    htmlAttributes.Add("class", "control-label col-md-2");   
+}
+
+<div class="form-group">
+    @Html.Label("", htmlAttributes)
+    <div class="col-md-10">
+        @Html.CheckBox("", Model ? true : false)
+    </div>
+</div>

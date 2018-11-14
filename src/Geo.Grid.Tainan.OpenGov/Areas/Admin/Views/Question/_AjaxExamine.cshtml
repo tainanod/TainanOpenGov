@@ -1,0 +1,62 @@
+﻿@model IPagedList<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestGatherExamineVm>
+@{
+    Layout = null;
+    var key = ViewBag.key as Geo.Grid.Tainan.OpenGov.Entity.ViewModel.SearchVm;
+}
+
+<div id="collapse4" class="body">
+    <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
+        <caption class="text-right">
+            @Html.PagedListPager(Model, page => Url.Action("Examine", new { page = page }), new PagedListRenderOptions
+       {
+
+           DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+           DisplayLinkToLastPage = PagedListDisplayMode.Never,
+           DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+           DisplayLinkToNextPage = PagedListDisplayMode.Never,
+           DisplayLinkToIndividualPages = false,
+           DisplayItemSliceAndTotal = true,
+           ItemSliceAndTotalFormat = "顯示: {0} ~ {1} , 共 {2}"
+       })
+
+        </caption>
+
+        <tr>
+            <th class="col-w-2 text-center">暱稱</th>
+            <td class="col-w-2 text-center">eMail</td>
+            <th class="col-w-15 text-center">填寫時間</th>
+            <th class="col-w-2">&nbsp;</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">@item.UserNickName</td>
+                <td class="text-center">@item.UserEmail</td>
+                <td class="text-center">@item.CreateTime.ToString("yyyy/MM/dd hh:mm")</td>
+                <td class="text-center">
+                    <a href="@Url.Action("Detail", new { id = item.InfoId, userId = item.MdFillUserEmail })" target="_blank" class="btn btn-primary">檢視</a>
+                    <a href="@Url.Action("ExamineRemove", new { id = item.InfoId, userId = item.MdFillUserEmail })" class="btn btn-danger" onclick="if (!confirm('確定刪除？')) { return false;}">刪除</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="container-fluid">
+        <div class="col-md-9 col-lg-9 text-center">
+            @Html.PagedListPager(Model, page => Url.Action("Examine", new { page = page, keyword = key.KeyWord }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+        </div>
+        <div class="col-md-3 col-lg-3 text-left">
+            @Html.PagedListPager(Model, page => Url.Action("Examine", new { page = page }), new PagedListRenderOptions
+   {
+       DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+       DisplayLinkToLastPage = PagedListDisplayMode.Never,
+       DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+       DisplayLinkToNextPage = PagedListDisplayMode.Never,
+       DisplayLinkToIndividualPages = false,
+       DisplayPageCountAndCurrentLocation = true,
+       PageCountAndCurrentLocationFormat = "第 {0} 頁 / 共 {1} 頁"
+   })
+        </div>
+    </div>
+
+</div>

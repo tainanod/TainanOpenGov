@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "統計結果";
+}
+
+@section styles {
+    <style>
+        .homephoto {
+            display: none;
+        }
+    </style>
+}
+
+<div class="container" ng-app="app" ng-controller="gatherController" ng-init="voteId='@Url.RequestContext.RouteData.Values["id"]'" ng-cloak>
+    @*<h2 class="gather-title">{{vm.gatherArr.Title}} @(ViewBag.Title)</h2>*@
+    <p class="tag">總人次：{{vm.gatherArr[0].Counts}}</p>
+    @Html.Partial("_Loading")
+    <section class="qa-section-wrapper clearfix" ng-repeat="x in vm.gatherArr">
+        <h3 class="section-title">{{x.Title}}</h3>
+        <p>填寫說明：</p>
+        <div class="qa-wrapper">
+            @*<div class="q-wrapper">
+                {{vm.gatherArr.Title}}
+            </div>*@
+            <div class="a-wrapper">
+                <div id="blockChartDiv_{{x.PageId}}" style="width:100%; height:400px; float:left;">
+                    <div id="blockChart_{{x.PageId}}" style="width:100%; height: 400px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="qa-section-wrapper" ng-show="vm.basicArr.length > 0">
+        <h3 class="section-title">填寫資料統計</h3>
+        <div class="qa-wrapper" ng-repeat="x in vm.basicArr">
+            <div class="q-wrapper">
+                {{x.Title}}
+            </div>
+            <div class="a-wrapper">
+                <div id="blockChartDiv_{{x.PageId}}" style="width:100%; height:400px; float:left;">
+                    <div id="blockChart_{{x.PageId}}" style="width:100%; height: 400px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+@section scripts{
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Vote/vote.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Vote/gather.service.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Vote/gather.controller.js")'></script>
+    <script type="text/javascript" src="//code.highcharts.com/stock/highstock.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#imgLoading').show();
+        })
+    </script>
+}

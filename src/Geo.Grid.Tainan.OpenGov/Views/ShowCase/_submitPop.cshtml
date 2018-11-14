@@ -1,0 +1,138 @@
+﻿@{
+    Layout = null;
+}
+
+<!-- Modal -->
+<div class="modal fade modal-custom" id="submitPop" tabindex="-1" role="dialog" aria-labelledby="submitPopLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content" novalidate>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <h4 class="modal-title" id="submitPopLabel">創新應用成果投稿</h4>
+            </div>
+            <div class="modal-body form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-2"><span class="red">*</span>成果名稱</label>
+                    <div class="col-md-10">
+                        <input type="text" value="" class="form-control" ng-model="vm.submitForm.title"/>
+                    </div>
+                    <div class="col-md-10 col-md-push-2" ng-show="!vm.submitForm.title && submitted">
+                        <div class="error">
+                            成果名稱為必填
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"><span class="red">*</span>創作者</label>
+                    <div class="col-md-10">
+                        <input type="text" value="" class="form-control" ng-model="vm.submitForm.creator"/>
+                    </div>
+                    <div class="col-md-10 col-md-push-2" ng-show="!vm.submitForm.creator && submitted">
+                        <div class="error">
+                            創作者為必填
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"><span class="red">*</span>連絡E-Mail</label>
+                    <div class="col-md-10">
+                        <input type="email" value="" class="form-control" ng-model="vm.submitForm.userEmail" placeholder="連絡E-Mail" />
+                    </div>
+                    <div class="col-md-10 col-md-push-2" ng-show="!vm.submitForm.userEmail && submitted">
+                        <div class="error">
+                            連絡E-Mail格式錯誤
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"><span class="red">*</span>應用簡介</label>
+                    <div class="col-md-10">
+                        <textarea class="form-control" rows="3" ng-model="vm.submitForm.introduce"></textarea>
+                    </div>
+                    <div class="col-md-10 col-md-push-2" ng-show="!vm.submitForm.introduce && submitted">
+                        <div class="error">
+                            應用簡介為必填
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">相關連結</label>
+                    <div class="col-md-4 mg-t-5">
+                        <input type="text" value="" class="form-control" placeholder="連結名稱" ng-model="vm.linkKeyIn.title"/>
+                    </div>
+                    <div class="col-md-6 mg-t-5">
+                        <div class="input-group">
+                            <input type="url" value="" class="form-control" placeholder="http:// or https://" ng-model="vm.linkKeyIn.content"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" style="color: #fff;" title="新增" ng-click="addLink()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-10 col-md-push-2" ng-show="!vm.isValidLink">
+                        <div class="error">
+                            連結名稱 與 連結位址 皆為必填 或 有誤。
+                        </div>
+                    </div>
+                    <div class="col-md-10 col-md-push-2">
+                        <ol class="mg-t-5">
+                            <li class="input-group mg-t-5" ng-repeat="x in vm.submitForm.links">
+                                <a href="{{x.content}}" title="開新視窗 {{x.title}}" target="_blank" class="form-control blue">{{x.title}}</a>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-danger" type="button" style="color: #fff;" title="刪除" ng-click="deleteLink($index)"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                </span>
+                            </li>
+                            @*<li class="input-group mg-t-5">
+                                <a href="#" title="開新視窗 iOS下載位置" target="_blank" class="form-control blue">iOS下載位置</a>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-danger" type="button" style="color: #fff;" title="刪除"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                </span>
+                            </li>*@
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">應用資料集</label>
+                    <div class="col-md-10">
+                        <oi-select style="float:left;width:100%" ng-model="vm.selectedTag" oi-options="tag.PageName for tag in vm.tagList" oi-select-options="{closeList: false}" multiple placeholder="標籤"></oi-select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2"><span class="red">*</span>主題圖片</label>
+                    <div class="col-md-10">
+                        <button class="btn btn-sm btn-danger" ng-show="vm.submitForm.appImg" style="color: #fff;" ng-click="removeImg(1)">取消圖片</button>
+                        <label class="" for="appFile">
+                            <span class="btn btn-sm btn-primary" style="color: #fff;" ng-show="!vm.submitForm.appImg">上傳圖片</span>
+                            <span class="fileRemind">{{vm.appImgFileRemind}}</span>
+                        </label>
+                        <input class="hidden" type="file" id="appFile"  accept="image/gif, image/jpeg, image/png" title="要隱藏" fileread="vm.submitForm.appImg"/>
+                    </div>
+                    <div class="col-md-10 col-md-push-2" ng-show="!vm.submitForm.appImg && submitted">
+                        <div class="error">
+                            主題圖片為必填，格式僅限.GIF檔、.JPG檔、.PNG檔。
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">成果圖片</label>
+                    <div class="col-md-10">
+                        <button class="btn btn-sm btn-danger" ng-show="vm.submitForm.demoImgs" style="color: #fff;" ng-click="removeImg(2)">取消圖片</button>
+                        <label class="" for="resultFile">
+                            <span class="btn btn-sm btn-primary" style="color: #fff;" ng-show="!vm.submitForm.demoImgs">上傳圖片</span>
+                            <span class="fileRemind">{{vm.demoImgsFileRemind}}</span>
+                        </label>
+                        <input class="hidden" type="file" id="resultFile" accept="image/gif, image/jpeg, image/png" title="要隱藏" multiple="multiple" fileread="vm.submitForm.demoImgs"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="border-color: #ccc;">取消</button>
+                <button type="submit" class="btn btn-warning" style="color: #fff;" ng-click="caseFormSubmit()">送出</button>
+            </div>
+        </form>
+    </div>
+</div>

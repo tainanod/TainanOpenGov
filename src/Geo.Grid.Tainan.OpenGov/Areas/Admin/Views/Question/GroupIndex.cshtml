@@ -1,0 +1,90 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestInfoVm
+
+@{
+    ViewBag.Title = "群組";
+}
+
+<h2>問卷題目管理</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+
+        @Html.ActionLink("新增題組", "GroupCreate", "Question", new { Area = "Admin", id=Model.InfoId }, new { @class = "btn btn-success pull-right " })
+        @Html.ActionLink("返回問卷", "Index", "Question", new { Area = "Admin", id = Model.ForumId }, new { @class = "btn btn-primary pull-right", style = "margin-right:10px" })
+
+        <h4>@Model.InfoTitle</h4>
+    </div>
+</div>
+
+<div id="qList"></div>
+
+
+@section scripts{
+    <script>
+        (function () {
+            PageInit();
+        })();
+
+        function PageInit() {
+            var url = '@Url.Action("PartialGroupIndex",null,new { Area="Admin"})';
+            ShowPartial(url, "qList", null, { id: '@Model.InfoId' });
+        }
+
+
+
+        /*Partial View內的排序功能調用方法*/
+        function ChangeSort(id,type,up) {
+            if (!id || !type) {
+                return;
+            }
+            var url = '@Url.Content("~/api/question/changesort")';
+
+            $.get(url, { id: id, t: type, up: up }, function (ret) {
+
+                if (ret.Success) {
+                    PageInit();
+                }
+                else {
+                    console.log("Sorting Error");
+                }
+            });
+        }
+
+        /*Partial View內的刪除群組*/
+        function DeleteGroup(groupId) {
+            if (!confirm('確認刪除題組?')) {
+                return;
+            }
+
+            var url = '@Url.Content("~/api/question/deletegroup")';
+
+            $.get(url, { id: groupId }, function (ret) {
+                if (ret.Success) {
+                    PageInit();
+                }
+                else {
+                    console.log("Delete Group Error");
+                }
+            });
+
+        }
+
+        /*Partial View內的題目刪除*/
+        function DeleteQuestion(qstId) {
+            if (!confirm('確定刪除題目?')) {
+                return;
+            }
+
+            var url = '@Url.Content("~/api/question/deletequestion")';
+
+            $.get(url, { id: qstId }, function (ret) {
+                if (ret.Success) {
+                    PageInit();
+                }
+                else {
+                    console.log("Delete Question Error");
+                }
+            });
+        }
+    </script>    
+}

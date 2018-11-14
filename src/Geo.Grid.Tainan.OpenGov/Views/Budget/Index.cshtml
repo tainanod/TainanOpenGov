@@ -1,0 +1,403 @@
+﻿
+@{
+    ViewBag.Title = "臺南市政府歷年預算資料";
+}
+
+@*<div class="main" ng-app="app" ng-controller="budgetController" ng-cloak>
+    <h1 class="hidden">@ViewBag.Title</h1>
+    <h1 class="clear-title-style">
+        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+        @ViewBag.Title
+    </h1>
+
+    <main role="tabpanel">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <select class="form-control mg-b-1" ng-model="vm.currentKind" ng-change="changeCurrentKind()">
+                    <option value="{{k.code}}" ng-repeat="k in vm.kindModal">{{k.name}}</option>
+                </select>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <select class="form-control mg-b-1" ng-model="vm.currentYear" ng-change="changeCurrentYear()">
+                    <option value="{{y.code}}" ng-repeat="y in vm.yearModal">{{y.name}}</option>
+                </select>
+            </div>
+        </div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+            <li role="presentation" ng-repeat="c in vm.chartModal" ng-class="vm.currentChartName === c.code ? 'active' : ''">
+                <a href="" ng-click="switchChartName(c.code)">{{c.name}}</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content pd-1">
+            <div role="tabpanel" class="tab-pane active">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="chart-wrapper">
+                            @Html.Partial("_Loading")
+                            <iframe id="chartIframe" ng-src="{{vm.currentChartUrl | trustUrl}}" width="100%" height="600" border="0" frameborder="0" seamless="on" style="border: 0px; margin: 0px; padding: 0px;" ng-if="vm.currentChartUrl" ng-style="{height: vm.iframeHeight}"></iframe>
+                        </div>
+                        <div class="search-result-wrapper">
+                            <form class="form-inline mg-tb-1">
+                                每頁顯示
+                                <select class="form-control pageShowItem" ng-model="page.pageSize" ng-options="o for o in vm.optionModel" ng-change="pageChange()"></select>
+                                筆
+                            </form>
+                            <table class="table table-striped table-hover table-orange">
+                                <tr>
+                                    <th width="10%">
+                                        年度
+                                        <span ng-show="page.colName !== 'nian_du.nian_du'" ng-click="setSort('nian_du.nian_du', 'desc')" class="pull-right"><i class="fa fa-sort"></i></span>
+                                        <span ng-show="page.orderby ==='desc' && page.colName === 'nian_du.nian_du'" ng-click="setSort('nian_du.nian_du', 'asc')" class="pull-right"><i class="fa fa-sort-desc"></i></span>
+                                        <span ng-show="page.orderby ==='asc' && page.colName === 'nian_du.nian_du'" ng-click="setSort('nian_du.nian_du', 'desc')" class="pull-right"><i class="fa fa-sort-asc"></i></span>
+                                    </th>
+                                    <th width="15%">
+                                        款
+                                        <span ng-if="vm.currentKind === 'tainan01'">
+                                            <span ng-show="page.colName !== 'sui_ru_lai_yuan_bian_hao.kuan'" ng-click="setSort('sui_ru_lai_yuan_bian_hao.kuan', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'sui_ru_lai_yuan_bian_hao.kuan'" ng-click="setSort('sui_ru_lai_yuan_bian_hao.kuan', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'sui_ru_lai_yuan_bian_hao.kuan'" ng-click="setSort('sui_ru_lai_yuan_bian_hao.kuan', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                        <span ng-if="vm.currentKind !== 'tainan01'">
+                                            <span ng-show="page.colName !== 'zui_gao_ji_bian_hao.kuan'" ng-click="setSort('zui_gao_ji_bian_hao.kuan', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'zui_gao_ji_bian_hao.kuan'" ng-click="setSort('zui_gao_ji_bian_hao.kuan', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'zui_gao_ji_bian_hao.kuan'" ng-click="setSort('zui_gao_ji_bian_hao.kuan', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                    </th>
+                                    <th width="20%">
+                                        項
+                                        <span ng-if="vm.currentKind === 'tainan01'">
+                                            <span ng-show="page.colName !== 'zhu_guan_ji_guan_bian_hao.xiang'" ng-click="setSort('zhu_guan_ji_guan_bian_hao.xiang', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'zhu_guan_ji_guan_bian_hao.xiang'" ng-click="setSort('zhu_guan_ji_guan_bian_hao.xiang', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'zhu_guan_ji_guan_bian_hao.xiang'" ng-click="setSort('zhu_guan_ji_guan_bian_hao.xiang', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                        <span ng-if="vm.currentKind !== 'tainan01'">
+                                            <span ng-show="page.colName !== 'di_er_ji_bian_hao.xiang'" ng-click="setSort('di_er_ji_bian_hao.xiang', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'di_er_ji_bian_hao.xiang'" ng-click="setSort('di_er_ji_bian_hao.xiang', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'di_er_ji_bian_hao.xiang'" ng-click="setSort('di_er_ji_bian_hao.xiang', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                    </th>
+                                    <th width="15%">
+                                        目
+                                        <span ng-if="vm.currentKind === 'tainan01'">
+                                            <span ng-show="page.colName !== 'sui_ru_lei_bie_bian_hao.mu'" ng-click="setSort('sui_ru_lei_bie_bian_hao.mu', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'sui_ru_lei_bie_bian_hao.mu'" ng-click="setSort('sui_ru_lei_bie_bian_hao.mu', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'sui_ru_lei_bie_bian_hao.mu'" ng-click="setSort('sui_ru_lei_bie_bian_hao.mu', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                        <span ng-if="vm.currentKind !== 'tainan01'">
+                                            <span ng-show="page.colName !== 'di_san_ji_bian_hao.mu'" ng-click="setSort('di_san_ji_bian_hao.mu', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'di_san_ji_bian_hao.mu'" ng-click="setSort('di_san_ji_bian_hao.mu', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'di_san_ji_bian_hao.mu'" ng-click="setSort('di_san_ji_bian_hao.muu', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                    </th>
+                                    <th width="15%" ng-if="vm.currentKind !== 'tainan03' && vm.currentKind !== 'tainan04'">
+                                        節
+                                        <span ng-if="vm.currentKind === 'tainan01'">
+                                            <span ng-show="page.colName !== 'sui_ru_xiang_mu_bian_hao.jie'" ng-click="setSort('sui_ru_xiang_mu_bian_hao.jie', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'sui_ru_xiang_mu_bian_hao.jie'" ng-click="setSort('sui_ru_xiang_mu_bian_hao.jie', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'sui_ru_xiang_mu_bian_hao.jie'" ng-click="setSort('sui_ru_xiang_mu_bian_hao.jie', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                        <span ng-if="vm.currentKind !== 'tainan01'">
+                                            <span ng-show="page.colName !== 'di_si_ji_bian_hao.jie'" ng-click="setSort('di_si_ji_bian_hao.jie', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'di_si_ji_bian_hao.jie'" ng-click="setSort('di_si_ji_bian_hao.jie', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'di_si_ji_bian_hao.jie'" ng-click="setSort('di_si_ji_bian_hao.jie', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                    </th>
+                                    <th width="25%">
+                                        本年度預算數(仟元)
+                                        <span ng-show="page.colName !== 'ben_nian_du_yu_suan_shu'" ng-click="setSort('ben_nian_du_yu_suan_shu', 'desc')" class="pull-right">
+                                            <i class="fa fa-sort"></i>
+                                        </span>
+                                        <span ng-show="page.orderby ==='desc' && page.colName === 'ben_nian_du_yu_suan_shu'" ng-click="setSort('ben_nian_du_yu_suan_shu', 'asc')" class="pull-right">
+                                            <i class="fa fa-sort-desc"></i>
+                                        </span>
+                                        <span ng-show="page.orderby ==='asc' && page.colName === 'ben_nian_du_yu_suan_shu'" ng-click="setSort('ben_nian_du_yu_suan_shu', 'desc')" class="pull-right">
+                                            <i class="fa fa-sort-asc"></i>
+                                        </span>
+                                    </th>
+                                </tr>
+                                <tr ng-repeat="x in vm.list">
+                                    <td class="text-center">{{x["nian_du.nian_du"]}}</td>
+                                    <td>{{x["sui_ru_lai_yuan_bian_hao.kuan"] || x["zui_gao_ji_bian_hao.kuan"]}}</td>
+                                    <td>{{x["zhu_guan_ji_guan_bian_hao.xiang"] || x["di_er_ji_bian_hao.xiang"]}}</td>
+                                    <td>{{x["sui_ru_lei_bie_bian_hao.mu"] || x["di_san_ji_bian_hao.mu"]}}</td>
+                                    <td ng-if="vm.currentKind !== 'tainan03' && vm.currentKind !== 'tainan04'">{{x["sui_ru_xiang_mu_bian_hao.jie"] || x["di_si_ji_bian_hao.jie"]}}</td>
+                                    <td class="text-right">{{moneyFormat(x.ben_nian_du_yu_suan_shu)}}</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-push-8 col-md-4">
+                                <div class="text-center mg-tb-1" style="font-size: .9em;">
+                                    資料筆數:{{page.totalRecord}} 總頁數:{{page.totalPages}} 目前頁數{{page.currentPage}}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-pull-4 col-md-8">
+                                <uib-pagination style="vertical-align:middle" boundary-links="true" items-per-page="page.pageSize" max-size="10" total-items="page.totalRecord" ng-model="page.currentPage" class="pagination-sm" previous-text="上一頁" next-text="下一頁" first-text="第一頁" last-text="最後頁" ng-change="pageChange()"></uib-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>*@
+
+<div class="main" ng-app="app" ng-controller="budgetController" ng-cloak>
+    <h1 class="hidden">@ViewBag.Title</h1>
+    <h1 class="clear-title-style">
+        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+        @ViewBag.Title
+    </h1>
+
+    <main role="tabpanel">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <select class="form-control mg-b-1" ng-model="vm.currentKind" ng-change="changeCurrentKind()">
+                    <option value="{{k.code}}" ng-repeat="k in vm.kindModal">{{k.name}}</option>
+                </select>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <select class="form-control mg-b-1" ng-model="vm.currentYear" ng-change="changeCurrentYear()">
+                    <option value="{{y.code}}" ng-repeat="y in vm.yearModal">{{y.name}}</option>
+                </select>
+            </div>
+        </div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+            <li role="presentation" ng-repeat="c in vm.chartModal" ng-class="vm.currentChartName === c.code ? 'active' : ''">
+                <a href="" ng-click="switchChartName(c.code)">{{c.name}}</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content pd-1">
+            <div role="tabpanel" class="tab-pane active">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="chart-wrapper">
+                            @Html.Partial("_Loading")
+                            <iframe id="chartIframe" ng-src="{{vm.currentChartUrl | trustUrl}}" width="100%" height="600" border="0" frameborder="0" seamless="on" style="border: 0px; margin: 0px; padding: 0px;" ng-if="vm.currentChartUrl" ng-style="{height: vm.iframeHeight}"></iframe>
+                        </div>
+                        <div class="search-result-wrapper">
+                            <form class="form-inline mg-tb-1">
+                                每頁顯示
+                                <select class="form-control pageShowItem" ng-model="page.pageSize" ng-options="o for o in vm.optionModel" ng-change="pageChange()"></select>
+                                筆
+                            </form>
+                            <table class="table table-striped table-hover table-orange">
+                                <tr>
+                                    <th width="10%">
+                                        年度
+                                        <span ng-show="page.colName !== 'nian_du.nian_du'" ng-click="setSort('nian_du.nian_du', 'desc')" class="pull-right"><i class="fa fa-sort"></i></span>
+                                        <span ng-show="page.orderby ==='desc' && page.colName === 'nian_du.nian_du'" ng-click="setSort('nian_du.nian_du', 'asc')" class="pull-right"><i class="fa fa-sort-desc"></i></span>
+                                        <span ng-show="page.orderby ==='asc' && page.colName === 'nian_du.nian_du'" ng-click="setSort('nian_du.nian_du', 'desc')" class="pull-right"><i class="fa fa-sort-asc"></i></span>
+                                    </th>
+                                    <th width="15%">
+                                        款
+                                        <span ng-if="vm.currentKind === 'taiana01'">
+                                            <span ng-show="page.colName !== 'sui_ru_lai_yuan_bian_hao.kuan'" ng-click="setSort('sui_ru_lai_yuan_bian_hao.kuan', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'sui_ru_lai_yuan_bian_hao.kuan'" ng-click="setSort('sui_ru_lai_yuan_bian_hao.kuan', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'sui_ru_lai_yuan_bian_hao.kuan'" ng-click="setSort('sui_ru_lai_yuan_bian_hao.kuan', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                        <span ng-if="vm.currentKind !== 'taiana01'">
+                                            <span ng-show="page.colName !== 'zui_gao_ji_bian_hao.kuan'" ng-click="setSort('zui_gao_ji_bian_hao.kuan', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'zui_gao_ji_bian_hao.kuan'" ng-click="setSort('zui_gao_ji_bian_hao.kuan', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'zui_gao_ji_bian_hao.kuan'" ng-click="setSort('zui_gao_ji_bian_hao.kuan', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                    </th>
+                                    <th width="20%">
+                                        項
+                                        <span ng-if="vm.currentKind === 'taiana01'">
+                                            <span ng-show="page.colName !== 'zhu_guan_ji_guan_bian_hao.xiang'" ng-click="setSort('zhu_guan_ji_guan_bian_hao.xiang', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'zhu_guan_ji_guan_bian_hao.xiang'" ng-click="setSort('zhu_guan_ji_guan_bian_hao.xiang', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'zhu_guan_ji_guan_bian_hao.xiang'" ng-click="setSort('zhu_guan_ji_guan_bian_hao.xiang', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                        <span ng-if="vm.currentKind !== 'taiana01'">
+                                            <span ng-show="page.colName !== 'di_er_ji_bian_hao.xiang'" ng-click="setSort('di_er_ji_bian_hao.xiang', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'di_er_ji_bian_hao.xiang'" ng-click="setSort('di_er_ji_bian_hao.xiang', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'di_er_ji_bian_hao.xiang'" ng-click="setSort('di_er_ji_bian_hao.xiang', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                    </th>
+                                    <th width="15%">
+                                        目
+                                        <span ng-if="vm.currentKind === 'taiana01'">
+                                            <span ng-show="page.colName !== 'sui_ru_lei_bie_bian_hao.mu'" ng-click="setSort('sui_ru_lei_bie_bian_hao.mu', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'sui_ru_lei_bie_bian_hao.mu'" ng-click="setSort('sui_ru_lei_bie_bian_hao.mu', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'sui_ru_lei_bie_bian_hao.mu'" ng-click="setSort('sui_ru_lei_bie_bian_hao.mu', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                        <span ng-if="vm.currentKind !== 'taiana01'">
+                                            <span ng-show="page.colName !== 'di_san_ji_bian_hao.mu'" ng-click="setSort('di_san_ji_bian_hao.mu', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'di_san_ji_bian_hao.mu'" ng-click="setSort('di_san_ji_bian_hao.mu', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'di_san_ji_bian_hao.mu'" ng-click="setSort('di_san_ji_bian_hao.muu', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                    </th>
+                                    <th width="15%" ng-if="vm.currentKind !== 'tainan03' && vm.currentKind !== 'taiana04'">
+                                        節
+                                        <span ng-if="vm.currentKind === 'taiana01'">
+                                            <span ng-show="page.colName !== 'sui_ru_xiang_mu_bian_hao.jie'" ng-click="setSort('sui_ru_xiang_mu_bian_hao.jie', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'sui_ru_xiang_mu_bian_hao.jie'" ng-click="setSort('sui_ru_xiang_mu_bian_hao.jie', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'sui_ru_xiang_mu_bian_hao.jie'" ng-click="setSort('sui_ru_xiang_mu_bian_hao.jie', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                        <span ng-if="vm.currentKind !== 'taiana01'">
+                                            <span ng-show="page.colName !== 'di_si_ji_bian_hao.jie'" ng-click="setSort('di_si_ji_bian_hao.jie', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='desc' && page.colName === 'di_si_ji_bian_hao.jie'" ng-click="setSort('di_si_ji_bian_hao.jie', 'asc')" class="pull-right">
+                                                <i class="fa fa-sort-desc"></i>
+                                            </span>
+                                            <span ng-show="page.orderby ==='asc' && page.colName === 'di_si_ji_bian_hao.jie'" ng-click="setSort('di_si_ji_bian_hao.jie', 'desc')" class="pull-right">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </span>
+                                        </span>
+                                    </th>
+                                    <th width="25%">
+                                        本年度預算數(仟元)
+                                        <span ng-show="page.colName !== 'ben_nian_du_yu_suan_shu'" ng-click="setSort('ben_nian_du_yu_suan_shu', 'desc')" class="pull-right">
+                                            <i class="fa fa-sort"></i>
+                                        </span>
+                                        <span ng-show="page.orderby ==='desc' && page.colName === 'ben_nian_du_yu_suan_shu'" ng-click="setSort('ben_nian_du_yu_suan_shu', 'asc')" class="pull-right">
+                                            <i class="fa fa-sort-desc"></i>
+                                        </span>
+                                        <span ng-show="page.orderby ==='asc' && page.colName === 'ben_nian_du_yu_suan_shu'" ng-click="setSort('ben_nian_du_yu_suan_shu', 'desc')" class="pull-right">
+                                            <i class="fa fa-sort-asc"></i>
+                                        </span>
+                                    </th>
+                                </tr>
+                                <tr ng-repeat="x in vm.list">
+                                    <td class="text-center">{{x["nian_du.nian_du"]}}</td>
+                                    <td>{{x["sui_ru_lai_yuan_bian_hao.kuan"] || x["zui_gao_ji_bian_hao.kuan"]}}</td>
+                                    <td>{{x["zhu_guan_ji_guan_bian_hao.xiang"] || x["di_er_ji_bian_hao.xiang"]}}</td>
+                                    <td>{{x["sui_ru_lei_bie_bian_hao.mu"] || x["di_san_ji_bian_hao.mu"]}}</td>
+                                    <td ng-if="vm.currentKind !== 'tainan03' && vm.currentKind !== 'taiana04'">{{x["sui_ru_xiang_mu_bian_hao.jie"] || x["di_si_ji_bian_hao.jie"]}}</td>
+                                    <td class="text-right">{{moneyFormat(x.ben_nian_du_yu_suan_shu)}}</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-push-8 col-md-4">
+                                <div class="text-center mg-tb-1" style="font-size: .9em;">
+                                    資料筆數:{{page.totalRecord}} 總頁數:{{page.totalPages}} 目前頁數{{page.currentPage}}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-pull-4 col-md-8">
+                                <uib-pagination style="vertical-align:middle" boundary-links="true" items-per-page="page.pageSize" max-size="10" total-items="page.totalRecord" ng-model="page.currentPage" class="pagination-sm" previous-text="上一頁" next-text="下一頁" first-text="第一頁" last-text="最後頁" ng-change="pageChange()"></uib-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Budget/budget.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Budget/budget.service.js?v3")'></script>
+    <script src='@Url.Content("~/Scripts/App/Budget/budget.controller.js?v3")'></script>
+    <script>
+        $('#imgLoading').show();
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        })
+    </script>
+}
+

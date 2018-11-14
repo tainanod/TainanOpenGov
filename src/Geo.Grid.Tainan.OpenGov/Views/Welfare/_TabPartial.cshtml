@@ -1,0 +1,13 @@
+﻿@{
+    Layout = null;
+    //string controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+}
+
+<ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+    <li role="presentation" ng-class="vm.isAll?'':'active'">
+        <a href="" ng-click="switchTab(false)">弱勢條件篩選</a>
+    </li>
+    <li role="presentation" ng-class="vm.isAll?'active':''">
+        <a href="" ng-click="switchTab(true)">弱勢補助項目一覽表</a>
+    </li>
+</ul>

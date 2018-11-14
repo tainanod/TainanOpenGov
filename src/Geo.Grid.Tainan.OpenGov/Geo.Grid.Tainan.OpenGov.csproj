@@ -1,0 +1,1746 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D2C9215D-BF02-4EFC-B6FE-66C5838A132B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Geo.Grid.Tainan.OpenGov</RootNamespace>
+    <AssemblyName>Geo.Grid.Tainan.OpenGov</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Geo.Grid.Tainan.OpenGov.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="AntiXssLibrary">
+      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\AntiXssLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc">
+      <HintPath>..\packages\Autofac.Mvc5.3.3.3\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML">
+      <HintPath>..\packages\ClosedXML.0.76.0\lib\net40-client\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CsQuery, Version=1.3.3.249, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Mvc">
+      <HintPath>..\packages\Elmah.MVC.2.1.1\lib\net40\Elmah.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="en-html2enml, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\evernote-cloud-sdk-windows.1.0.8\lib\net40\en-html2enml.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Evernote, Version=1.0.5377.16918, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\evernote-cloud-sdk-windows.1.0.8\lib\net40\Evernote.dll</HintPath>
+    </Reference>
+    <Reference Include="EvernoteOAuthNet, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\evernote-cloud-sdk-windows.1.0.8\lib\net40\EvernoteOAuthNet.dll</HintPath>
+    </Reference>
+    <Reference Include="EvernoteSDK, Version=1.0.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\evernote-cloud-sdk-windows.1.0.8\lib\net40\EvernoteSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Forloop.HtmlHelpers, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Forloop.HtmlHelpers.1.2.0.0\lib\net45\Forloop.HtmlHelpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Geo.Grid.Common, Version=2.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Geo.Grid.Common.2.1.8\lib\Geo.Grid.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Geo.Grid.Common.XmlSerializers, Version=2.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Geo.Grid.Common.2.1.8\lib\Geo.Grid.Common.XmlSerializers.dll</HintPath>
+    </Reference>
+    <Reference Include="Geo.Grid.Jwt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Geo.Grid.Jwt.1.1.0\lib\Geo.Grid.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="GeoJSON.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoJSON.Net.1.1.64\lib\net45\GeoJSON.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="GeoJSON.Net.Contrib.MsSqlSpatial, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoJSON.Net.Contrib.MsSqlSpatial.0.3.1\lib\net45\GeoJSON.Net.Contrib.MsSqlSpatial.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary">
+      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=1.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.1.1.4\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.1.4\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.1.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.1.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog.Extended, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Extended.4.0.0.1\lib\net45-full\NLog.Extended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Web.4.5.1\lib\net35\NLog.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.ArcGISOnline, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.ArcGISOnline.2.15.1\lib\net45\Owin.Security.Providers.ArcGISOnline.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Asana, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Asana.2.15.1\lib\net45\Owin.Security.Providers.Asana.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Backlog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Backlog.2.15.1\lib\net45\Owin.Security.Providers.Backlog.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Baidu, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Baidu.2.15.1\lib\net45\Owin.Security.Providers.Baidu.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.BattleNet, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.BattleNet.2.15.1\lib\net45\Owin.Security.Providers.BattleNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Bitbucket, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Bitbucket.2.15.1\lib\net45\Owin.Security.Providers.Bitbucket.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Box, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Box.2.15.1\lib\net45\Owin.Security.Providers.Box.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Buffer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Buffer.2.15.1\lib\net45\Owin.Security.Providers.Buffer.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Cosign, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Cosign.2.15.1\lib\net45\Owin.Security.Providers.Cosign.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.DeviantArt, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.DeviantArt.2.15.1\lib\net45\Owin.Security.Providers.DeviantArt.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Discord, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Discord.2.15.1\lib\net45\Owin.Security.Providers.Discord.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.DoYouBuzz, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.DoYouBuzz.2.15.1\lib\net45\Owin.Security.Providers.DoYouBuzz.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Dropbox, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Dropbox.2.15.1\lib\net45\Owin.Security.Providers.Dropbox.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.EVEOnline, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.EVEOnline.2.15.1\lib\net45\Owin.Security.Providers.EVEOnline.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Evernote, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Evernote.2.15.1\lib\net45\Owin.Security.Providers.Evernote.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Fitbit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Fitbit.2.15.1\lib\net45\Owin.Security.Providers.Fitbit.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Flickr, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Flickr.2.15.1\lib\net45\Owin.Security.Providers.Flickr.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Foursquare, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Foursquare.2.15.1\lib\net45\Owin.Security.Providers.Foursquare.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Geni, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Geni.2.15.1\lib\net45\Owin.Security.Providers.Geni.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.GitHub, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.GitHub.2.15.1\lib\net45\Owin.Security.Providers.GitHub.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Gitter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Gitter.2.15.1\lib\net45\Owin.Security.Providers.Gitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.GooglePlus, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.GooglePlus.2.15.1\lib\net45\Owin.Security.Providers.GooglePlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.HealthGraph, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.HealthGraph.2.15.1\lib\net45\Owin.Security.Providers.HealthGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Imgur, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Imgur.2.15.1\lib\net45\Owin.Security.Providers.Imgur.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Instagram, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Instagram.2.15.1\lib\net45\Owin.Security.Providers.Instagram.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.LinkedIn, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.LinkedIn.2.15.1\lib\net45\Owin.Security.Providers.LinkedIn.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.MyHeritage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.MyHeritage.2.15.1\lib\net45\Owin.Security.Providers.MyHeritage.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Onshape, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Onshape.2.15.1\lib\net45\Owin.Security.Providers.Onshape.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.OpenID, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.OpenID.2.15.1\lib\net45\Owin.Security.Providers.OpenID.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.OpenIDBase, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.OpenIDBase.2.1.1\lib\net45\Owin.Security.Providers.OpenIDBase.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Orcid, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Orcid.2.15.1\lib\net45\Owin.Security.Providers.Orcid.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.PayPal, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.PayPal.2.15.1\lib\net45\Owin.Security.Providers.PayPal.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Reddit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Reddit.2.15.1\lib\net45\Owin.Security.Providers.Reddit.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Salesforce, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Salesforce.2.15.1\lib\net45\Owin.Security.Providers.Salesforce.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Shopify, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Shopify.2.15.1\lib\net45\Owin.Security.Providers.Shopify.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Slack, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.SlackProvider.2.15.1\lib\net45\Owin.Security.Providers.Slack.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.SoundCloud, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.SoundCloud.2.15.1\lib\net45\Owin.Security.Providers.SoundCloud.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Spotify, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Spotify.2.15.1\lib\net45\Owin.Security.Providers.Spotify.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.StackExchange, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.StackExchange.2.15.1\lib\net45\Owin.Security.Providers.StackExchange.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Steam, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Steam.2.15.1\lib\net45\Owin.Security.Providers.Steam.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.TripIt, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.TripIt.2.15.1\lib\net45\Owin.Security.Providers.TripIt.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Twitch, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Twitch.2.15.1\lib\net45\Owin.Security.Providers.Twitch.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Untappd, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Untappd.2.15.1\lib\net45\Owin.Security.Providers.Untappd.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Vimeo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Vimeo.2.15.1\lib\net45\Owin.Security.Providers.Vimeo.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.VisualStudio, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.VisualStudio.2.15.1\lib\net45\Owin.Security.Providers.VisualStudio.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.VKontakte, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.VKontakte.2.15.1\lib\net45\Owin.Security.Providers.VKontakte.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Wargaming, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Wargaming.2.15.1\lib\net45\Owin.Security.Providers.Wargaming.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.WordPress, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.WordPress.2.15.1\lib\net45\Owin.Security.Providers.WordPress.dll</HintPath>
+    </Reference>
+    <Reference Include="OWin.Security.Providers.WSO2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.WSO2.2.15.1\lib\net45\OWin.Security.Providers.WSO2.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Xing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Xing.2.15.1\lib\net45\Owin.Security.Providers.Xing.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Yahoo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Yahoo.2.15.1\lib\net45\Owin.Security.Providers.Yahoo.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.Yammer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1328b8c16b108c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.Yammer.2.15.1\lib\net45\Owin.Security.Providers.Yammer.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PreMailer.Net, Version=1.2.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PreMailer.Net.1.2.7\lib\net40\PreMailer.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=2.4.1.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.4.1\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SgmlReaderDll, Version=1.8.11.0, Culture=neutral, PublicKeyToken=46b2db9ca481831b, processorArchitecture=MSIL">
+      <HintPath>..\packages\SgmlReader.1.8.11\lib\4.0\SgmlReaderDll.dll</HintPath>
+    </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.1.4\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="Thrift, Version=0.8.0.16918, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\evernote-cloud-sdk-windows.1.0.8\lib\net40\Thrift.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AutofacConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\ElmahHandledErrorLoggerFilter.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\ScheduleConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\SwaggerConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ParticipationActivityController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ActivityController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ParticipationDiscussController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EngineeringController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BannerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DataSetHistoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ParticipationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SharedController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ShowCaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DataSetController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DataSetTypeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DiscussController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ForumController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KnowledgeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuestionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubForumController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SuggestController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ParticipationTagController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TagController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TestController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AllowanceController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VideoController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VoteController.cs" />
+    <Compile Include="Common\DateTimeExtension.cs" />
+    <Compile Include="Common\ExportExcelResult.cs" />
+    <Compile Include="Common\StringExtension.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\ParticipationDiscussController.cs" />
+    <Compile Include="Controllers\Api\ParticipationController.cs" />
+    <Compile Include="Controllers\ParticipationHyperlinkController.cs" />
+    <Compile Include="Controllers\ParticipationActivityController.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\Api\ActivityController.cs" />
+    <Compile Include="Controllers\Api\AllowanceController.cs" />
+    <Compile Include="Controllers\Api\BannerController.cs" />
+    <Compile Include="Controllers\Api\EngineeringController.cs" />
+    <Compile Include="Controllers\Api\CardController.cs" />
+    <Compile Include="Controllers\Api\CityTownController.cs" />
+    <Compile Include="Controllers\Api\DataSetController.cs" />
+    <Compile Include="Controllers\Api\DiscussController.cs" />
+    <Compile Include="Controllers\Api\ForumController.cs" />
+    <Compile Include="Controllers\Api\QuestionController.cs" />
+    <Compile Include="Controllers\Api\RssController.cs" />
+    <Compile Include="Controllers\Api\ShowCaseController.cs" />
+    <Compile Include="Controllers\Api\TnodController.cs" />
+    <Compile Include="Controllers\Api\TokenController.cs" />
+    <Compile Include="Controllers\Api\VideoController.cs" />
+    <Compile Include="Controllers\Api\VoteController.cs" />
+    <Compile Include="Controllers\Api\WorkshopController.cs" />
+    <Compile Include="Controllers\BudgetController.cs" />
+    <Compile Include="Controllers\DataSetController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ParticipationController.cs" />
+    <Compile Include="Controllers\ForumController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HyperlinkController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\ResourceController.cs" />
+    <Compile Include="Controllers\ShowCaseController.cs" />
+    <Compile Include="Controllers\SuggestController.cs" />
+    <Compile Include="Controllers\EngineeringController.cs" />
+    <Compile Include="Controllers\VoteController.cs" />
+    <Compile Include="Controllers\WaitingMailController.cs" />
+    <Compile Include="Controllers\WelfareController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Tasks\SaveDiscussMailAdmin.cs" />
+    <Compile Include="Tasks\SendMail.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\ForumQuestionEmail.html" />
+    <Content Include="App_Data\ForumVoteEmail.html" />
+    <Content Include="App_Data\ForumReplyAdmin.html" />
+    <Content Include="App_Data\ForumReply.html" />
+    <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="Areas\Admin\Content\chosen\chosen-sprite%402x.png" />
+    <Content Include="Areas\Admin\Content\chosen\chosen-sprite.png" />
+    <Content Include="Areas\Admin\Content\chosen\chosen.css" />
+    <Content Include="Areas\Admin\Content\chosen\chosen.jquery.js" />
+    <Content Include="Areas\Admin\Content\chosen\chosen.jquery.min.js" />
+    <Content Include="Areas\Admin\Content\chosen\chosen.min.css" />
+    <Content Include="Areas\Admin\Content\editorMd\css\editormd.css" />
+    <Content Include="Areas\Admin\Content\editorMd\css\editormd.logo.css" />
+    <Content Include="Areas\Admin\Content\editorMd\css\editormd.logo.min.css" />
+    <Content Include="Areas\Admin\Content\editorMd\css\editormd.min.css" />
+    <Content Include="Areas\Admin\Content\editorMd\css\editormd.preview.css" />
+    <Content Include="Areas\Admin\Content\editorMd\css\editormd.preview.min.css" />
+    <Content Include="Areas\Admin\Content\editorMd\fonts\editormd-logo.svg" />
+    <Content Include="Areas\Admin\Content\editorMd\fonts\fontawesome-webfont.svg" />
+    <Content Include="Areas\Admin\Content\editorMd\images\loading%402x.gif" />
+    <Content Include="Areas\Admin\Content\editorMd\images\loading%403x.gif" />
+    <Content Include="Areas\Admin\Content\editorMd\images\loading.gif" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-favicon-16x16.ico" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-favicon-24x24.ico" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-favicon-32x32.ico" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-favicon-48x48.ico" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-favicon-64x64.ico" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-114x114.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-120x120.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-144x144.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-16x16.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-180x180.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-240x240.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-24x24.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-320x320.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-32x32.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-48x48.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-57x57.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-64x64.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-72x72.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\editormd-logo-96x96.png" />
+    <Content Include="Areas\Admin\Content\editorMd\images\logos\vi.png" />
+    <Content Include="Areas\Admin\Content\editorMd\js\editormd.amd.js" />
+    <Content Include="Areas\Admin\Content\editorMd\js\editormd.amd.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\js\editormd.js" />
+    <Content Include="Areas\Admin\Content\editorMd\js\editormd.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addons.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\comment\comment.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\comment\continuecomment.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\dialog\dialog.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\dialog\dialog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\display\fullscreen.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\display\fullscreen.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\display\panel.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\display\placeholder.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\display\rulers.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\edit\closebrackets.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\edit\closetag.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\edit\continuelist.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\edit\matchbrackets.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\edit\matchtags.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\edit\trailingspace.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\fold\brace-fold.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\fold\comment-fold.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\fold\foldcode.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\fold\foldgutter.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\fold\foldgutter.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\fold\indent-fold.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\fold\markdown-fold.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\fold\xml-fold.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\hint\anyword-hint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\hint\css-hint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\hint\html-hint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\hint\javascript-hint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\hint\show-hint.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\hint\show-hint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\hint\sql-hint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\hint\xml-hint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\lint\coffeescript-lint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\lint\css-lint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\lint\javascript-lint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\lint\json-lint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\lint\lint.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\lint\lint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\lint\yaml-lint.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\merge\merge.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\merge\merge.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\mode\loadmode.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\mode\multiplex.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\mode\multiplex_test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\mode\overlay.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\mode\simple.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\runmode\colorize.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\runmode\runmode-standalone.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\runmode\runmode.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\runmode\runmode.node.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\scroll\annotatescrollbar.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\scroll\scrollpastend.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\scroll\simplescrollbars.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\scroll\simplescrollbars.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\search\match-highlighter.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\search\matchesonscrollbar.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\search\matchesonscrollbar.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\search\search.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\search\searchcursor.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\selection\active-line.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\selection\mark-selection.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\selection\selection-pointer.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\tern\tern.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\tern\tern.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\tern\worker.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\addon\wrap\hardwrap.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\codemirror.min.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\codemirror.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\lib\codemirror.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\lib\codemirror.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\modes.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\apl\apl.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\apl\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\asterisk\asterisk.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\asterisk\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\clike\clike.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\clike\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\clike\scala.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\clojure\clojure.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\clojure\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\cobol\cobol.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\cobol\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\coffeescript\coffeescript.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\coffeescript\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\commonlisp\commonlisp.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\commonlisp\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\css\css.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\css\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\css\less.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\css\less_test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\css\scss.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\css\scss_test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\css\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\cypher\cypher.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\cypher\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\dart\dart.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\dart\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\diff\diff.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\diff\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\django\django.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\django\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\dockerfile\dockerfile.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\dockerfile\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\dtd\dtd.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\dtd\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\dylan\dylan.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\dylan\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\d\d.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\d\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\ebnf\ebnf.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\ebnf\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\ecl\ecl.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\ecl\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\eiffel\eiffel.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\eiffel\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\erlang\erlang.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\erlang\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\forth\forth.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\forth\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\fortran\fortran.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\fortran\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\gas\gas.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\gas\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\gfm\gfm.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\gfm\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\gfm\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\gherkin\gherkin.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\gherkin\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\go\go.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\go\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\groovy\groovy.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\groovy\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\haml\haml.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\haml\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\haml\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\haskell\haskell.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\haskell\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\haxe\haxe.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\haxe\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\htmlembedded\htmlembedded.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\htmlembedded\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\htmlmixed\htmlmixed.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\htmlmixed\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\http\http.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\http\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\idl\idl.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\idl\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\jade\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\jade\jade.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\javascript\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\javascript\javascript.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\javascript\json-ld.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\javascript\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\javascript\typescript.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\jinja2\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\jinja2\jinja2.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\julia\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\julia\julia.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\kotlin\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\kotlin\kotlin.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\livescript\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\livescript\livescript.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\lua\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\lua\lua.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\markdown\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\markdown\markdown.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\markdown\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\meta.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\mirc\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\mirc\mirc.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\mllike\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\mllike\mllike.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\modelica\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\modelica\modelica.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\nginx\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\nginx\nginx.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\ntriples\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\ntriples\ntriples.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\octave\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\octave\octave.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\pascal\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\pascal\pascal.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\pegjs\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\pegjs\pegjs.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\perl\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\perl\perl.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\php\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\php\php.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\php\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\pig\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\pig\pig.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\properties\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\properties\properties.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\puppet\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\puppet\puppet.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\python\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\python\python.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\q\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\q\q.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\rpm\changes\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\rpm\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\rpm\rpm.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\rst\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\rst\rst.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\ruby\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\ruby\ruby.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\ruby\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\rust\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\rust\rust.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\r\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\r\r.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\sass\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\sass\sass.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\scheme\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\scheme\scheme.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\shell\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\shell\shell.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\shell\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\sieve\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\sieve\sieve.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\slim\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\slim\slim.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\slim\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\smalltalk\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\smalltalk\smalltalk.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\smartymixed\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\smartymixed\smartymixed.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\smarty\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\smarty\smarty.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\solr\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\solr\solr.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\soy\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\soy\soy.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\sparql\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\sparql\sparql.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\spreadsheet\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\spreadsheet\spreadsheet.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\sql\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\sql\sql.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\stex\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\stex\stex.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\stex\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\stylus\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\stylus\stylus.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\tcl\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\tcl\tcl.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\textile\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\textile\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\textile\textile.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\tiddlywiki\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\tiddlywiki\tiddlywiki.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\tiddlywiki\tiddlywiki.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\tiki\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\tiki\tiki.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\tiki\tiki.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\toml\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\toml\toml.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\tornado\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\tornado\tornado.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\turtle\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\turtle\turtle.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\vbscript\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\vbscript\vbscript.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\vb\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\vb\vb.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\velocity\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\velocity\velocity.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\verilog\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\verilog\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\verilog\verilog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\xml\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\xml\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\xml\xml.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\xquery\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\xquery\test.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\xquery\xquery.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\yaml\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\yaml\yaml.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\z80\index.html" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\mode\z80\z80.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\3024-day.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\3024-night.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\ambiance-mobile.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\ambiance.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\base16-dark.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\base16-light.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\blackboard.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\cobalt.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\colorforth.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\eclipse.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\elegant.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\erlang-dark.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\lesser-dark.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\mbo.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\mdn-like.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\midnight.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\monokai.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\neat.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\neo.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\night.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\paraiso-dark.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\paraiso-light.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\pastel-on-dark.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\rubyblue.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\solarized.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\the-matrix.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\tomorrow-night-bright.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\tomorrow-night-eighties.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\twilight.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\vibrant-ink.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\xq-dark.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\xq-light.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\theme\zenburn.css" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\flowchart.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\jquery.flowchart.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\marked.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\prettify.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\raphael.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\sequence-diagram.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\underscore.min.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\code-block-dialog\code-block-dialog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\emoji-dialog\emoji-dialog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\goto-line-dialog\goto-line-dialog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\help-dialog\help-dialog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\html-entities-dialog\html-entities-dialog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\image-dialog\image-dialog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\link-dialog\link-dialog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\plugin-template.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\preformatted-text-dialog\preformatted-text-dialog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\reference-link-dialog\reference-link-dialog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\table-dialog\table-dialog.js" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\test-plugin\test-plugin.js" />
+    <Content Include="Areas\Admin\Content\images\later.gif" />
+    <Content Include="Areas\Admin\Content\js\adminPhoto.js" />
+    <Content Include="Areas\Admin\Content\select2\css\select2.css" />
+    <Content Include="Areas\Admin\Content\select2\css\select2.min.css" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\ar.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\az.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\bg.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\ca.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\cs.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\da.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\de.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\el.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\en.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\es.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\et.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\eu.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\fa.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\fi.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\fr.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\gl.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\he.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\hi.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\hr.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\hu.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\id.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\is.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\it.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\ja.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\km.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\ko.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\lt.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\lv.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\mk.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\ms.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\nb.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\nl.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\pl.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\pt-BR.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\pt.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\ro.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\ru.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\sk.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\sr-Cyrl.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\sr.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\sv.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\th.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\tr.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\uk.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\vi.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\zh-CN.js" />
+    <Content Include="Areas\Admin\Content\select2\js\i18n\zh-TW.js" />
+    <Content Include="Areas\Admin\Content\select2\js\select2.full.js" />
+    <Content Include="Areas\Admin\Content\select2\js\select2.full.min.js" />
+    <Content Include="Areas\Admin\Content\select2\js\select2.js" />
+    <Content Include="Areas\Admin\Content\select2\js\select2.min.js" />
+    <Content Include="Areas\Admin\Content\uploadify\150x150.png" />
+    <Content Include="Areas\Admin\Content\uploadify\uploadify-cancel.png" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\PhotoList.cshtml" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fancybox\blank.gif" />
+    <Content Include="Content\fancybox\fancybox_buttons.png" />
+    <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Content\fancybox\fancybox_loading.gif" />
+    <Content Include="Content\fancybox\fancybox_overlay.png" />
+    <Content Include="Content\fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Content\fancybox\fancybox_sprite.png" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\geo\dashboard.css" />
+    <Content Include="Content\geo\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\geo\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\geo\footer.css" />
+    <Content Include="Content\geo\img\arrow.png" />
+    <Content Include="Content\geo\img\arrowUp.png" />
+    <Content Include="Content\geo\img\big-icon1.png" />
+    <Content Include="Content\geo\img\big-icon2.png" />
+    <Content Include="Content\geo\img\big-icon3.png" />
+    <Content Include="Content\geo\img\btn-icon1.png" />
+    <Content Include="Content\geo\img\btn-icon2.png" />
+    <Content Include="Content\geo\img\btn-icon3.png" />
+    <Content Include="Content\geo\img\content-icon.png" />
+    <Content Include="Content\geo\img\default_photo.png" />
+    <Content Include="Content\geo\img\delete.png" />
+    <Content Include="Content\geo\img\detail-photo.jpg" />
+    <Content Include="Content\geo\img\discuss-btn.png" />
+    <Content Include="Content\geo\img\down-icon.png" />
+    <Content Include="Content\geo\img\FB.jpg" />
+    <Content Include="Content\geo\img\google.jpg" />
+    <Content Include="Content\geo\img\homephoto.jpg" />
+    <Content Include="Content\geo\img\homephoto.png" />
+    <Content Include="Content\geo\img\icon.png" />
+    <Content Include="Content\geo\img\icon1.png" />
+    <Content Include="Content\geo\img\icon2.png" />
+    <Content Include="Content\geo\img\icon3.png" />
+    <Content Include="Content\geo\img\icon4.png" />
+    <Content Include="Content\geo\img\icon5.png" />
+    <Content Include="Content\geo\img\icon6.png" />
+    <Content Include="Content\geo\img\icon7.png" />
+    <Content Include="Content\geo\img\icon8.png" />
+    <Content Include="Content\geo\img\icon9.png" />
+    <Content Include="Content\geo\img\ic_marker_finish.png" />
+    <Content Include="Content\geo\img\ic_marker_notyet.png" />
+    <Content Include="Content\geo\img\ic_title_engineer.png" />
+    <Content Include="Content\geo\img\ic_window_finish.png" />
+    <Content Include="Content\geo\img\ic_window_notyet.png" />
+    <Content Include="Content\geo\img\link-icon.png" />
+    <Content Include="Content\geo\img\list-hover.png" />
+    <Content Include="Content\geo\img\login.png" />
+    <Content Include="Content\geo\img\announce.jpg" />
+    <Content Include="Content\geo\img\logo.png" />
+    <Content Include="Content\geo\img\new.gif" />
+    <Content Include="Content\geo\img\no-icon1.png" />
+    <Content Include="Content\geo\img\no-icon2.png" />
+    <Content Include="Content\geo\img\tainan.png" />
+    <Content Include="Content\geo\img\video-icon.png" />
+    <Content Include="Content\geo\img\yahoo.jpg" />
+    <Content Include="Content\geo\loading\default.gif" />
+    <Content Include="Content\geo\loading\ellipsis.svg" />
+    <Content Include="Content\geo\loading\hourglass.svg" />
+    <Content Include="Content\geo\geo.css" />
+    <Content Include="Content\geo\reset.css" />
+    <Content Include="Content\geo\slick\ajax-loader.gif" />
+    <Content Include="Content\geo\slick\fonts\slick.svg" />
+    <Content Include="Content\geo\slick\slick-theme.css" />
+    <Content Include="Content\geo\slick\slick.css" />
+    <Content Include="Content\geo\slick\slick.min.js" />
+    <Content Include="Content\geo\style.css" />
+    <Content Include="Content\jquery.fancybox-buttons.css" />
+    <Content Include="Content\jquery.fancybox-thumbs.css" />
+    <Content Include="Content\jquery.fancybox.css" />
+    <Content Include="Content\jquery.fancybox.min.css">
+      <DependentUpon>jquery.fancybox.css</DependentUpon>
+    </Content>
+    <Content Include="Content\oi.select\oi.select.css" />
+    <Content Include="Content\ol.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Test\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\PartialList.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Modal.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_ModalFrame.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\PhotoUpload.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutClean.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\PartialDocument.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\DocumentUpload.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\CreateHyperlink.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\PartialHyperlink.cshtml" />
+    <Content Include="Areas\Admin\Views\Knowledge\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Video\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Video\PartialList.cshtml" />
+    <Content Include="Areas\Admin\Views\Video\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Video\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\User\PartialList.cshtml" />
+    <Content Include="Areas\Admin\Views\Activity\ActIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Activity\ActList.cshtml" />
+    <Content Include="Areas\Admin\Views\Activity\ActNew.cshtml" />
+    <Content Include="Areas\Admin\Views\Activity\ActEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Activity\WorkList.cshtml" />
+    <Content Include="Areas\Admin\Views\Activity\WorkNew.cshtml" />
+    <Content Include="Areas\Admin\Views\Activity\WorkIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Activity\Document.cshtml" />
+    <Content Include="Content\Grid.MapFusion.min.css" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\DataSet\dataset.controller.js" />
+    <Content Include="Scripts\App\DataSet\dataset.detail.controller.js" />
+    <Content Include="Scripts\App\ParticipationDiscuss\common.js" />
+    <Content Include="Scripts\App\ParticipationDiscuss\discuss.app.js" />
+    <Content Include="Scripts\App\ParticipationDiscuss\discuss.controller.js" />
+    <Content Include="Scripts\App\ParticipationDiscuss\discuss.service.js" />
+    <Content Include="Scripts\App\ParticipationDiscuss\discuss.service.min.js">
+      <DependentUpon>discuss.service.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\App\ParticipationDiscuss\subDetail.contoller.js" />
+    <Content Include="Scripts\App\Discuss\common.js" />
+    <Content Include="Scripts\App\Discuss\discuss.service.min.js">
+      <DependentUpon>discuss.service.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\App\Engineering\engineering.app.js" />
+    <Content Include="Scripts\App\Engineering\engineering.controller.js" />
+    <Content Include="Scripts\App\Engineering\engineering.detail.controller.js" />
+    <Content Include="Scripts\App\Engineering\engineering.service.js" />
+    <Content Include="Scripts\App\Question\gather.controller.js" />
+    <Content Include="Scripts\App\Question\gather.service.js" />
+    <Content Include="Scripts\App\Question\question.app.js" />
+    <Content Include="Scripts\App\Discuss\discuss.app.js" />
+    <Content Include="Scripts\App\DataSet\dataset.app.js" />
+    <Content Include="Scripts\App\Home\home.app.js" />
+    <Content Include="Scripts\App\ShowCase\showcase.app.js" />
+    <Content Include="Scripts\App\Home\home.controller.js" />
+    <Content Include="Scripts\App\ShowCase\showcase.detail.controller.js" />
+    <Content Include="Scripts\App\ShowCase\showcase.controller.js" />
+    <Content Include="Scripts\App\DataSet\dataset.service.js" />
+    <Content Include="Scripts\App\Home\home.service.js" />
+    <Content Include="Scripts\App\ShowCase\showcase.service.js" />
+    <Content Include="Scripts\App\Vote\gather.controller.js" />
+    <Content Include="Scripts\App\Discuss\discuss.controller.js" />
+    <Content Include="Scripts\App\Vote\gather.service.js" />
+    <Content Include="Scripts\App\Discuss\discuss.service.js" />
+    <Content Include="Scripts\App\Discuss\subDetail.contoller.js" />
+    <Content Include="Scripts\App\Vote\vote.app.js" />
+    <Content Include="Scripts\App\Vote\vote.controller.js" />
+    <Content Include="Scripts\App\Vote\vote.service.js" />
+    <Content Include="Scripts\App\Budget\budget.app.js" />
+    <Content Include="Scripts\App\Budget\budget.controller.js" />
+    <Content Include="Scripts\App\Budget\budget.service.js" />
+    <Content Include="Scripts\App\Welfare\welfare.app.js" />
+    <Content Include="Scripts\App\Welfare\welfare.controller.js" />
+    <Content Include="Scripts\App\Welfare\welfare.detail.controller.js" />
+    <Content Include="Scripts\App\Welfare\welfare.service.js" />
+    <Content Include="Scripts\geo\component\mixinMethod.js" />
+    <Content Include="Scripts\geo\component\tinyMce.js" />
+    <Content Include="Scripts\geo\component\fileUploader.js" />
+    <Content Include="Scripts\geo\forum-detail.js" />
+    <Content Include="Scripts\geo\forum-detail.min.js">
+      <DependentUpon>forum-detail.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\geo\GeoFunc.js" />
+    <Content Include="Scripts\geo\Grid.MapFusion.min.js" />
+    <Content Include="Scripts\geo\home-index.min.js.map">
+      <DependentUpon>home-index.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\geo\forum-detail.min.js.map">
+      <DependentUpon>forum-detail.min.js</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\Suggest\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Suggest\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Suggest\CreateHyperlink.cshtml" />
+    <Content Include="Areas\Admin\Views\Suggest\DocumentUpload.cshtml" />
+    <Content Include="Areas\Admin\Views\Suggest\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Suggest\PartialDocument.cshtml" />
+    <Content Include="Areas\Admin\Views\Suggest\PartialHyperlink.cshtml" />
+    <Content Include="Areas\Admin\Views\Suggest\PartialList.cshtml" />
+    <Content Include="Areas\Admin\Views\Suggest\PhotoUpload.cshtml" />
+    <Content Include="Scripts\geo\Home\Edit.js" />
+    <Content Include="Scripts\geo\Home\index.js" />
+    <Content Include="Scripts\geo\suggest-detail.min.js.map">
+      <DependentUpon>suggest-detail.min.js</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\Forum\PartialResponse.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\ResponseUpload.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\PartialExport.cshtml" />
+    <Content Include="Areas\Admin\Views\Suggest\PartialExport.cshtml" />
+    <Content Include="Areas\Admin\Views\SubForum\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SubForum\PartialList.cshtml" />
+    <Content Include="Areas\Admin\Views\SubForum\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\SubForum\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\SubForum\UploadDocument.cshtml" />
+    <Content Include="Areas\Admin\Views\SubForum\DocUploadPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\QuestionInfo.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\PartialIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\GroupIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\PartialGroupIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\GroupCreate.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\GroupEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\QuestionCreate.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\QuestionEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\Gather.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\Examine.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\_AjaxExamine.cshtml" />
+    <Content Include="Areas\Admin\Views\Question\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Vote\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Vote\_AjaxIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Vote\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Vote\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Vote\Gather.cshtml" />
+    <Content Include="Areas\Admin\Views\Tag\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Tag\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Tag\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Tag\_AjaxIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Discuss\_AjaxIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Discuss\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\CheckBoxList.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Ckeditor.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Info.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Int32.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\SelectList.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\SelectList_Chained.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\SelectList_Image.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\UploadFile.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Photo.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSetType\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSetType\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSetType\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSetType\_AjaxIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSet\_AjaxIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSet\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSet\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSet\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\SelectList_Chosen.cshtml" />
+    <Content Include="Areas\Admin\Views\ShowCase\_AjaxIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ShowCase\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ShowCase\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ShowCase\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\SelectList_Select2.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\EditorMd.cshtml" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\AUTHORS" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\bower.json" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\LICENSE" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\package.json" />
+    <Content Include="Areas\Admin\Content\editorMd\lib\codemirror\README.md" />
+    <Content Include="Areas\Admin\Content\editorMd\fonts\editormd-logo.eot" />
+    <Content Include="Areas\Admin\Content\editorMd\fonts\editormd-logo.ttf" />
+    <Content Include="Areas\Admin\Content\editorMd\fonts\editormd-logo.woff" />
+    <Content Include="Areas\Admin\Content\editorMd\fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\Admin\Content\editorMd\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Areas\Admin\Content\editorMd\fonts\fontawesome-webfont.woff" />
+    <Content Include="Areas\Admin\Content\editorMd\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Areas\Admin\Content\editorMd\fonts\FontAwesome.otf" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\emoji-dialog\emoji.json" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\help-dialog\help.md" />
+    <Content Include="Areas\Admin\Content\editorMd\plugins\html-entities-dialog\html-entities.json" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\PageUrl.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSetHistory\_AjaxIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSetHistory\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSetHistory\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSetHistory\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DataSetHistory\PopPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\DateTimePicker.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\String-W-200.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\String-W-320.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Info-5-300.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\DateTimePicker-W-200.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Info-3-300.cshtml" />
+    <Content Include="Areas\Admin\Views\Banner\_AjaxIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Banner\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Banner\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Banner\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Card\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Menu.cshtml" />
+    <Content Include="Areas\Admin\Views\User\OfficeRole.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ChoseRole.cshtml" />
+    <Content Include="Areas\Admin\Views\Allowance\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Allowance\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Allowance\PartialList.cshtml" />
+    <Content Include="Areas\Admin\Views\Allowance\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Engineering\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Engineering\PartialList.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\CreateHyperlink.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\DocumentUpload.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\PartialDocument.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\PartialExport.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\PartialHyperlink.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\PartialList.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\PartialResponse.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\PhotoUpload.cshtml" />
+    <Content Include="Areas\Admin\Views\Participation\ResponseUpload.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\RadioButtonList.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationActivity\ActEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationActivity\ActIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationActivity\ActList.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationActivity\ActNew.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationActivity\Document.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationActivity\WorkIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationActivity\WorkList.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationActivity\WorkNew.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationTag\_AjaxIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationTag\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationTag\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationTag\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationDiscuss\_AjaxIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ParticipationDiscuss\Index.cshtml" />
+    <None Include="bundleconfig.json" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\geo\slick\fonts\slick.eot" />
+    <Content Include="Content\geo\slick\fonts\slick.ttf" />
+    <Content Include="Content\geo\slick\fonts\slick.woff" />
+    <Content Include="Geo.Grid.Common.dll.config" />
+    <Content Include="Content\geo\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\geo\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\geo\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\geo\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\geo\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\geo\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\geo\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\geo\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\geo\fonts\FontAwesome.otf" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\opengov.pubxml" />
+    <None Include="Properties\PublishProfiles\OpenGov_Leo.pubxml" />
+    <None Include="Properties\PublishProfiles\LocalhostDeploy.pubxml" />
+    <None Include="Properties\PublishProfiles\nigel publish.pubxml" />
+    <None Include="Properties\PublishProfiles\OpenGov_Nick.pubxml" />
+    <None Include="Properties\PublishProfiles\set.pubxml" />
+    <None Include="Properties\PublishProfiles\TainanOD.pubxml" />
+    <None Include="Properties\PublishProfiles\TainanOpenData.pubxml" />
+    <None Include="Properties\PublishProfiles\TEst.pubxml" />
+    <Content Include="Scripts\nodep-date-input-polyfill.dist.js" />
+    <Content Include="Scripts\ol-debug.js" />
+    <Content Include="Scripts\ol.js" />
+    <Content Include="Scripts\Sortable.js" />
+    <Content Include="Scripts\Sortable.min.js" />
+    <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
+    <Content Include="Scripts\tinymce\license.txt" />
+    <Content Include="Scripts\tinymce\plugins\advlist\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\anchor\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\autolink\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\autoresize\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\autoresize\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\autosave\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\bbcode\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\bbcode\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\charmap\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\codesample\css\prism.css" />
+    <Content Include="Scripts\tinymce\plugins\codesample\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\codesample\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\code\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\colorpicker\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\colorpicker\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\css\dialog.css" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\buttons.png" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\icons.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\items.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\menu_arrow.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\menu_check.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\progress.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\tabs.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\tiny_mce_popup.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\utils\editable_selects.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\utils\form_utils.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\utils\mctabs.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\utils\validate.js" />
+    <Content Include="Scripts\tinymce\plugins\contextmenu\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\contextmenu\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\directionality\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\example\dialog.html" />
+    <Content Include="Scripts\tinymce\plugins\example\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\example\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\example_dependency\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\example_dependency\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\fullpage\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\fullpage\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\fullscreen\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\hr\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\imagetools\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\imagetools\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\image\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\importcss\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\importcss\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\insertdatetime\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\legacyoutput\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\link\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\lists\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\media\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\nonbreaking\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\noneditable\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\noneditable\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\pagebreak\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\paste\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\preview\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\print\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\save\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\searchreplace\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\spellchecker\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\spellchecker\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\tabfocus\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\tabfocus\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\table\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\template\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\template\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\textcolor\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\textcolor\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\textpattern\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\textpattern\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\toc\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\toc\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\address.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\article.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\aside.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\blockquote.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\div.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\dl.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\figure.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h1.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h2.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h3.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h4.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h5.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h6.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\hgroup.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\ol.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\p.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\pre.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\section.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\img\ul.gif" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\visualchars\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\wordcount\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="Scripts\tinymce\skins\lightgray\content.inline.min.css" />
+    <Content Include="Scripts\tinymce\skins\lightgray\content.min.css" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\anchor.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\loader.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\object.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\trans.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="Scripts\tinymce\skins\lightgray\skin.min.css" />
+    <Content Include="Scripts\tinymce\themes\inlite\theme.js" />
+    <Content Include="Scripts\tinymce\themes\inlite\theme.min.js" />
+    <Content Include="Scripts\tinymce\themes\modern\theme.js" />
+    <Content Include="Scripts\tinymce\themes\modern\theme.min.js" />
+    <Content Include="Scripts\tinymce\tinymce.js" />
+    <Content Include="Scripts\tinymce\tinymce.min.js" />
+    <Content Include="Scripts\vue-resource.js" />
+    <Content Include="Scripts\vue-resource.min.js" />
+    <Content Include="Scripts\vue.js" />
+    <Content Include="Scripts\vue.min.js" />
+    <Content Include="Scripts\vuedraggable.js" />
+    <Content Include="Scripts\vuedraggable.min.js" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\ShowCase\_SubmitPop.cshtml" />
+    <None Include="Properties\PublishProfiles\測試機發布.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Icon.png" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\geo\home-index.js" />
+    <Content Include="Scripts\geo\home-index.min.js">
+      <DependentUpon>home-index.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\geo\suggest-detail.js" />
+    <Content Include="Scripts\geo\suggest-detail.min.js">
+      <DependentUpon>suggest-detail.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.fancybox.min.js.map">
+      <DependentUpon>jquery.fancybox.min.js</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.countdown.js" />
+    <Content Include="Scripts\jquery.fancybox-buttons.js" />
+    <Content Include="Scripts\jquery.fancybox-media.js" />
+    <Content Include="Scripts\jquery.fancybox-thumbs.js" />
+    <Content Include="Scripts\jquery.fancybox.js" />
+    <Content Include="Scripts\jquery.fancybox.min.js">
+      <DependentUpon>jquery.fancybox.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\jquery.mousewheel-3.0.6.pack.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\notify.min.js" />
+    <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\oi.select\select-tpls.js" />
+    <Content Include="Scripts\oi.select\select.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Shared\_ga.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\_Layout_bak.cshtml" />
+    <Content Include="Views\Home\TnodPartial.cshtml" />
+    <Content Include="Views\Home\RssPartial.cshtml" />
+    <Content Include="Views\Forum\Index.cshtml" />
+    <Content Include="Views\Home\YoutubePartial.cshtml" />
+    <Content Include="Views\Home\ForumPartial.cshtml" />
+    <Content Include="Views\Home\MayorPartial.cshtml" />
+    <Content Include="Views\Account\LoginPartial.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Suggest\Index.cshtml" />
+    <Content Include="Views\Suggest\Detail.cshtml" />
+    <Content Include="Views\Suggest\DiscussPartial.cshtml" />
+    <Content Include="Views\Home\SuggestPartial.cshtml" />
+    <Content Include="Views\Forum\Detail.cshtml" />
+    <Content Include="Views\Forum\DetailPartial.cshtml" />
+    <Content Include="Views\Forum\SubDetail.cshtml" />
+    <Content Include="Views\Question\TestUi.cshtml" />
+    <Content Include="Views\Question\Detail.cshtml" />
+    <Content Include="Views\Vote\Detail.cshtml" />
+    <Content Include="Views\Vote\Gather.cshtml" />
+    <Content Include="Views\Vote\Message.cshtml" />
+    <Content Include="Views\Question\Message.cshtml" />
+    <Content Include="Views\Question\Gather.cshtml" />
+    <Content Include="Views\ShowCase\Index.cshtml" />
+    <Content Include="Views\DataSet\Index.cshtml" />
+    <Content Include="Views\ShowCase\Detail.cshtml" />
+    <Content Include="Views\Shared\_TabPartial.cshtml" />
+    <Content Include="Views\DataSet\Detail.cshtml" />
+    <Content Include="Views\Shared\_Loading.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Home\Index - 複製.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Scripts\tinymce\langs\readme.md" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\readme.md" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.json" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.json" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Swagger\Web.config" />
+    <Content Include="Views\Welfare\Index.cshtml" />
+    <Content Include="Views\Welfare\_TabPartial.cshtml" />
+    <Content Include="Views\Welfare\Detail.cshtml" />
+    <Content Include="Views\Welfare\Map.cshtml" />
+    <Content Include="Views\Engineering\Index.cshtml" />
+    <Content Include="Views\Engineering\Detail.cshtml" />
+    <Content Include="Views\Budget\Index.cshtml" />
+    <Content Include="Views\Participation\Detail.cshtml" />
+    <Content Include="Views\Participation\DetailPartial.cshtml" />
+    <Content Include="Views\Participation\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\Elmah.Errors\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\C\" />
+    <Folder Include="Areas\Admin\Views\Resource\" />
+    <Folder Include="Views\Activity\" />
+    <Folder Include="Views\Hyperlink\" />
+    <Folder Include="Views\Manage\Photo\" />
+    <Folder Include="Views\Resource\" />
+    <Folder Include="Views\WaitingMail\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Geo.Grid.Tainan.OpenGov.Dal\Geo.Grid.Tainan.OpenGov.Dal.csproj">
+      <Project>{d72f3fae-804b-4ec0-bfd0-51af0bd875e2}</Project>
+      <Name>Geo.Grid.Tainan.OpenGov.Dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Geo.Grid.Tainan.OpenGov.Entity\Geo.Grid.Tainan.OpenGov.Entity.csproj">
+      <Project>{95a226cb-5dc8-4eab-b5d3-12538aeb37ff}</Project>
+      <Name>Geo.Grid.Tainan.OpenGov.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Geo.Grid.Tainan.OpenGov.Service\Geo.Grid.Tainan.OpenGov.Service.csproj">
+      <Project>{692fd7e9-87ac-4d1a-bce1-51bf6fa151a5}</Project>
+      <Name>Geo.Grid.Tainan.OpenGov.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>8672</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:8672/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

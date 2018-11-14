@@ -1,0 +1,10 @@
+﻿@model List<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.MenuVm>
+
+<div class="panel-body">
+    <ul class="nav nav-sidebar">
+        @foreach (var item in Model)
+        {
+            <li>@Html.ActionLink(item.Name, item.Action, item.Controller, new { area = item.Area }, null)</li>
+        }
+    </ul>
+</div>

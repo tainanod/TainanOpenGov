@@ -1,0 +1,19 @@
+﻿@model IPagedList<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestGatherExamineVm>
+@{
+    ViewBag.Title = "Examine";
+    var infoData = ViewBag.infoData as Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestGatherInfoVm;
+}
+
+<h2>問卷結果管理</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @Html.ActionLink("匯出報表", "Excel", new { id = infoData.InfoId }, new { @class = "btn btn-success pull-right", @target = "_blank" })
+        @Html.ActionLink("統計圖表", "Gather", new { id = infoData.InfoId }, new { @class = "btn btn-success pull-right" , style = "margin-right:10px" })
+        @Html.ActionLink("←返回問卷", "Index", "Question", new { id = infoData.ForumId }, new { @class = "btn btn-primary pull-right", style = "margin-right:10px" })
+        <h4>@infoData.Title</h4>
+    </div>
+</div>
+<div id="qList">
+    @{Html.RenderPartial("_AjaxExamine", Model);}
+</div>

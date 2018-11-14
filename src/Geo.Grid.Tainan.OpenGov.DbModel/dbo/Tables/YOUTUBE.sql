@@ -1,0 +1,57 @@
+﻿CREATE TABLE [dbo].[YOUTUBE] (
+    [YOUTUBE_ID]   UNIQUEIDENTIFIER DEFAULT (newsequentialid()) NOT NULL,
+    [NAME]         NVARCHAR (50)    NOT NULL,
+    [URL]          NVARCHAR (4000)  NULL,
+    [START_DATE]   DATETIME         NOT NULL,
+    [VIDEO_TIME]   NVARCHAR (50)    NULL,
+    [IS_OPENED]    BIT              NOT NULL,
+    [DESCRIPTION]  NVARCHAR (4000)  NULL,
+    [END_DATE]     DATETIME         NOT NULL,
+    [IS_ENABLED]   BIT              NOT NULL,
+    [CREATED_BY]   NVARCHAR (100)   NOT NULL,
+    [CREATED_DATE] DATETIME         NOT NULL,
+    [UPDATE_BY]    NVARCHAR (100)   NOT NULL,
+    [UPDATE_DATE]  DATETIME         NOT NULL,
+    CONSTRAINT [PK_dbo.YOUTUBE] PRIMARY KEY CLUSTERED ([YOUTUBE_ID] ASC)
+);
+
+
+
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+
+
+GO
+
+

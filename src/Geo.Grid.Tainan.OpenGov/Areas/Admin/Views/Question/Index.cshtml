@@ -1,0 +1,33 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.Forum
+
+@{
+    ViewBag.Title = "問卷";
+}
+
+<h2>問卷</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @*equest.RequestContext.RouteData.Values["id"]*@
+        @Html.ActionLink("新增問卷", "QuestionInfo", "Question", new { Area = "Admin", fid = Model.ForumId }, new { @class = "btn btn-success pull-right " })
+        @Html.ActionLink("返回公民論壇", "Index", "Forum", new { Area = "Admin" }, new { @class = "btn btn-primary pull-right", style="margin-right:10px" })
+        
+        <h4>@Model.Subject</h4>
+    </div>
+</div>
+
+<div id="qList"></div>
+
+@section scripts{
+
+    <script>
+        (function () {
+            PageInit();
+        })();
+
+        function PageInit() {
+            var url = '@Url.Action("PartialIndex", new { Area = "Admin" ,id=Model.ForumId })';
+            ShowPartial(url, 'qList');
+        }
+    </script>
+}

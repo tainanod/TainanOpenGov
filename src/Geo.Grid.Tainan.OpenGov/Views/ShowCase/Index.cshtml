@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "應用展示";
+    bool isAuthenticated = User.Identity.IsAuthenticated;
+}
+
+@section styles {
+    <link href='@Url.Content("~/Content/oi.select/oi.select.css")' rel="stylesheet" />
+    <style>
+        body {
+            background: #fff;
+        }
+    </style>
+}
+
+<div class="main" ng-app="app" ng-controller="showcaseController" ng-cloak>
+    <h1 class="hidden">野生台南 - @(ViewBag.Title)</h1>
+    <h1 class="clear-title-style">
+        <i class="fa fa-rocket" aria-hidden="true"></i>
+        野生台南
+    </h1>
+
+    <main role="tabpanel">
+        <!-- Nav tabs -->
+        @Html.Partial("_TabPartial")
+        <!-- Tab panes -->
+        <div class="tab-content pd-1">
+            <div role="tabpanel" class="tab-pane active">
+                <div class="row">
+                    <form class="col-md-6 form-inline mg-tb-1">
+                        每頁顯示
+                        <select class="form-control pageShowItem" ng-model="page.pageSize" ng-options="o for o in vm.optionModel" ng-change="pageChange()">
+                        </select> 筆
+                    </form>
+                    <div class="col-md-6 text-right mg-tb-1 form-inline">
+                        @if (isAuthenticated)
+                        {
+                            <button class="btn btn-lg btn-danger form-control" data-toggle="modal" data-target="#submitPop" style="color:#fff" ng-click="blockPop()"><i class="fa fa-file" aria-hidden="true"></i> 創新應用成果投稿</button>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Login", "Account", new { returnUrl = Url.Action("Index") })" class="btn btn-lg btn-danger form-control">
+                                <i class="fa fa-file" aria-hidden="true"></i>創新應用成果投稿
+                            </a>
+                        }
+                    </div>
+                </div>
+
+                @Html.Partial("_Loading")
+
+                <ul class="list-wrapper">                    
+                    <li class="row" ng-repeat="x in vm.list">
+                        <figure class="col-xs-12 col-sm-3 col-md-2 text-center">
+                            <img class="case-app-img" ng-src="{{x.PhotoUrl}}" alt="" />
+                        </figure>
+                        <figcaption class="col-xs-12 col-sm-9 col-md-10">
+                            <a href="@Url.Action("Detail", "ShowCase")/{{x.CaseId}}" title="{{x.Title}}"><h2>{{x.Title}}</h2></a>
+                            <p>{{x.Contents}}</p>
+                            <div class="form-inline text-right">
+                                <a href="@Url.Action("Detail","ShowCase")/{{x.CaseId}}" class="btn btn-sm btn-warning form-control" style="color:#fff">更多</a>
+                            </div>
+                        </figcaption>
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="col-xs-12 col-md-push-8 col-md-4">
+                        <div class="text-center mg-tb-1" style="font-size: .9em;">
+                            資料筆數:{{page.totalRecord}} 總頁數:{{page.totalPages}} 目前頁數{{page.currentPage}}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-pull-4 col-md-8">
+                        <uib-pagination style="vertical-align:middle" boundary-links="true" items-per-page="page.pageSize" max-size="10" total-items="page.totalRecord" ng-model="page.currentPage" class="pagination-sm" previous-text="上一頁" next-text="下一頁" first-text="第一頁" last-text="最後頁" ng-change="pageChange()"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    @Html.Partial("_submitPop")
+
+</div>
+
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/ShowCase/showcase.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/ShowCase/showcase.service.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/ShowCase/showcase.controller.js")'></script>
+    <script>
+        $('#imgLoading').show();
+        $('#submitPop').modal({
+            show: false,
+            backdrop: 'static'
+        });
+    </script>
+}
+

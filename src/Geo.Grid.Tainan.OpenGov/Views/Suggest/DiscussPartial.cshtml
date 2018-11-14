@@ -1,0 +1,14 @@
+﻿@model IQueryable<Geo.Grid.Tainan.OpenGov.Entity.Discuss>
+
+@foreach (var item in Model)
+{
+    <div class="message">
+        <span class="img"><img src="@item.AspNetUsers.ImageUrl" /></span>
+        <b>@item.AspNetUsers.NickName<span>@item.CreatedDate.ToString("yyyy/MM/dd")</span></b>
+        <p class="message-lh">
+            @Html.Raw(item.Message)
+            @*@Html.Raw(item.Message.Replace("\n", "<br/>"))*@
+        </p>
+        <br class="clearfix">
+    </div>
+}

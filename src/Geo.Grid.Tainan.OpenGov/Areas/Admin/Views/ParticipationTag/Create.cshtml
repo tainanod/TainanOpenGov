@@ -1,0 +1,28 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Participation.ParticipationTagVm
+
+@{
+    ViewBag.Title = "新增標籤";
+}
+
+@Html.ActionLink("返回標籤", "Index", new { id = Model.ParticipationId }, new { @class = "btn btn-primary pull-right" })
+<h2>新增標籤</h2>
+<hr />
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", @id = "form_1" }))
+{
+    <input type="hidden" id="TagId" name="TagId" value="@Model.TagId" />
+    <input type="hidden" id="ParticipationId" name="ParticipationId" value="@Model.ParticipationId" />
+    <table class="table1" width="100%">
+        <tr>
+            <th class="w130">標題*</th>
+            <td><input type="text" id="TagName" name="TagName" class="form-control" value="@Model.TagName" required="required" data-require="請填寫標題" /></td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th></th>
+            <td>
+                <input type="submit" class="btn btn-primary" value="Create" />
+            </td>
+        </tr>
+    </table>
+}

@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="home" style="min-height: 200px;">
+    <h2 style="font-size: 28px;">處理您的要求時發生錯誤！</h2>
+    <p style="margin: 20px;">十秒後將幫您導回首頁！或者直接<a href="/Home/Index">回首頁</a></p>
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+    $(function () {
+        window.setTimeout(function () {
+            window.location.href = "@Url.Action("Index","Home")";
+        }, 10000);
+    });
+    </script>
+}

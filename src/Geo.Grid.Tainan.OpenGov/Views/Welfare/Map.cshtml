@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "公益台南";
+}
+
+@section styles {
+    <link href="~/Content/ol.css" rel="stylesheet" />
+    <link href="~/Content/Grid.MapFusion.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: #fff;
+        }
+    </style>
+}
+
+<div class="main" >
+    <h1 class="hidden">@(ViewBag.Title)</h1>
+    <h1 class="clear-title-style">
+        <i class="fa fa-heart" aria-hidden="true"></i>
+        @ViewBag.Title
+    </h1>
+
+    <main role="tabpanel">
+
+
+
+        <div class="tab-content pd-1">
+            <div role="tabpanel" class="tab-pane active">
+                <div id="googleMap"></div>
+               
+                
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    
+    <script src='@Url.Content("~/Scripts/ol-debug.js")'></script>
+    <script src='@Url.Content("~/Scripts/geo/Grid.MapFusion.min.js")'></script>
+    <script>
+        //$('#imgLoading').show();
+
+        var map, marker, infoWindow;
+        var mapConfig = {
+            target: "googleMap",
+            center: {
+                lon: 120.314736,
+                lat: 23.311684,
+                zoom: 17
+            },
+        };
+        var layerOption = [
+            { type: 'nlsc', name: '通用版', active: true },
+        ];
+
+        map = new MapFusion(mapConfig, layerOption);
+    </script>
+}
+

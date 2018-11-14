@@ -1,0 +1,119 @@
+﻿@{
+    string _url = "http://" + Request.Url.Authority + Url.Action("Detail", "Forum");
+}
+<div ng-show="discuss.Data.length>0 || showAnnounceTop=='block'">
+
+    <hr />
+
+    <table style="text-align:center;width:100%">
+        <tr>
+            <td><uib-pagination style="vertical-align:middle" boundary-links="true" items-per-page="page.pageSize" max-size="10" total-items="page.totalRecord" ng-model="page.currentPage" class="pagination-sm" previous-text="上一頁" next-text="下一頁" first-text="第一頁" last-text="最後頁" ng-change="pageChange()"></uib-pagination></td>
+            <td style="width:30%">
+                <div style="line-height:101px"> 資料筆數:{{page.totalRecord}} 總頁數:{{page.totalPages}} 目前頁數{{page.currentPage}}</div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="message" style="display:{{ showAnnounce}}; background-color:#e7ceaa; margin-bottom:15px;">
+        <span class="img"><img src="http://opengov.tainan.gov.tw/Content/geo/img/announce.jpg" class="ng-scope"></span>
+        <div class="message-content">
+            <b><strong class="message-name ng-binding">臺南市政府</strong><span class="message-time ng-binding"></span></b>
+            <hr>
+            <p class="message-lh">{{forum.Announcement}}</p>
+            <hr class="clearfix">
+        </div>
+    </div>
+
+    <div class="form-horizontal form-inline text-right">
+        <div class="form-group">
+            <div class="col-xs-12">
+                <label class="control-label col-xs-3 col-sm-4">
+                    標籤查詢
+                </label>
+                <div class="col-xs-9 col-sm-8">
+                    <select class="form-control" style="max-width: 200px;" ng-model="getTag" ng-options="u.TagId as u.TagName for u in vm.tagList" ng-change="getTagSearch()">
+                        <option value="">請選擇</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <div class="col-xs-12 has-feedback">
+                    <input class="form-control" type="text" value="" placeholder="請輸入關鍵字搜尋" ng-model="getKeyWord" ng-keypress="getKeyWordSearch()" />
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <label class="control-label col-xs-3 col-sm-4">
+                    排序
+                </label>
+                <div class="col-xs-9 col-sm-8">
+                    <select class="form-control" ng-model="getSort" ng-options="u.value as u.name for u in vm.sortList" ng-change="getSortSearch()">
+                        <option value="">請選擇</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div ng-repeat="x in discuss.Data">
+        <div id="{{x.DiscussId}}" ng-class="{true:'message discussTop',false:'message'}[x.IsTop]">           
+            <span class="img"><img ng-repeat="x in [x.AspNetUser.ImageUrl]" src="{{x}}" /></span>
+            <div class="message-content">
+                <b><strong class="message-name">{{x.AspNetUser.NickName}}</strong><span class="message-time">{{x.CreatedDate.toDate()}}</span></b>
+                <hr />
+                <p class="message-lh" ng-bind-html="x.Message">
+                </p>
+                <hr class="clearfix">
+                <ul class="message-tag"><li style="display:inline" ng-show="x.TagNames.length>0">標籤:</li><li ng-repeat="y in x.TagNames" style="margin-left:10px;display:inline">{{y}}</li></ul>
+                <p class="addthis_toolbox addthis_default_style" addthis:url="@(_url)?did={{x.DiscussId}}" addthis:title="{{x.AspNetUser.NickName}}" addthis:description="{{x.Message}}" style="text-align:right;font-size:large">
+                    <a class="btn btn-sm bg-blue addthis_button_facebook" fb:like:layout="button_count"><i class="fa fa-facebook"></i> 分享</a>
+                    <a class="btn btn-sm bg-red addthis_button_google_plusone_share"><i class="fa fa-google-plus"></i> 分享</a>
+                    <input type="button" class="btn btn-sm btn-warning" ng-class="{cursorNA: x.RefusePush}" ng-disabled="x.RefusePush" ng-click="pushDiscuss(x.DiscussId,user.Id)" value="推文" /> ({{x.PushAmt}})
+                    &nbsp;&nbsp;&nbsp;
+                    <input type="button" class="btn btn-sm btn-warning" onclick="replyClick(this)" index="{{$index}}" ng-click="replyClick(x.DiscussId)" value="回復" />
+                    ({{x.ReplyAmount}})
+                </p>
+
+            </div>
+        </div>
+        <div class="submessage" style="display:none" id="reply{{$index}}">
+            <div class="reply" ng-hide="x.RefuseReply" ng-disabled="x.RefuseReply">
+                <img ng-repeat="x in [user.ImageUrl]" src="{{x}}" />
+                <strong class="message-name" style="margin-left: 20px;">{{user.NickName}}</strong><span class="pull-right"></span>
+                <div class="reply-input">
+                    <textarea placeholder="寫下您的回復..." ng-model="x.replyTextArea"></textarea>
+                    <p>
+                        <input type="button" class="btn-sm btn btn-warning btn-block" value="回復" ng-click="replySubmit(x)" />
+                    </p>
+                </div>
+            </div>
+
+            <div class="reply" style="margin-top:10px" ng-repeat="y in replys[x.DiscussId]">
+                <img class="img" ng-repeat="z in [y.AspNetUser.ImageUrl]" src="{{z}}" />
+                <div class="reply-content">
+                    <strong class="message-name">{{y.AspNetUser.NickName}}</strong><span class="pull-right">{{y.CreatedDate.toDate()}}</span>
+                    <br />
+                    <span class="message-lh" ng-bind-html="y.Message"></span>
+                </div>
+            </div>
+            <div class="reply" style="margin-top:10px;text-align:center;font-weight:bolder" ng-show="replys[x.DiscussId].length==0">目前沒有回復</div>
+            <p style="text-align:right; margin-bottom: 30px; padding:10px;">
+                <img src="~/Content/geo/img/arrowUp.png" style="cursor:pointer" title="關閉" index="{{$index}}" onclick="replyClose(this)" />
+            </p>
+        </div>
+    </div>
+
+    <table style="text-align:center;width:100%">
+        <tr>
+            <td><uib-pagination style="vertical-align:middle" boundary-links="true" items-per-page="page.pageSize" max-size="10" total-items="page.totalRecord" ng-model="page.currentPage" class="pagination-sm" previous-text="上一頁" next-text="下一頁" first-text="第一頁" last-text="最後頁" ng-change="pageChange()"></uib-pagination></td>
+            <td style="width:30%">
+                <div style="line-height:101px"> 資料筆數:{{page.totalRecord}} 總頁數:{{page.totalPages}} 目前頁數{{page.currentPage}}</div>
+            </td>
+        </tr>
+    </table>
+</div>

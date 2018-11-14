@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "資料目錄";
+}
+
+@section styles {
+    <style>
+        body {
+            background: #fff;
+        }
+    </style>
+}
+
+<div class="main" ng-app="app" ng-controller="datasetController" ng-init="datasetId='@(Url.RequestContext.RouteData.Values["id"])'" ng-cloak>
+    <h1 class="hidden">野生台南 - @(ViewBag.Title)</h1>
+    <h1 class="clear-title-style">
+        <i class="fa fa-rocket" aria-hidden="true"></i>
+        野生台南
+    </h1>
+
+    <main role="tabpanel">
+        <!-- Nav tabs -->
+        @Html.Partial("_TabPartial")
+        <!-- Tab panes -->
+        <div class="tab-content pd-1">
+            <div role="tabpanel" class="tab-pane active">
+
+                <div class="row">
+                    <div class="col-md-2 col-md-push-10 text-right form-inline">
+                        <button class="btn btn-info btn-sm form-control" style="color: #fff;" onclick="javascript:window.history.back();"><i class="fa fa-arrow-left" aria-hidden="true"></i> 返回</button>
+                    </div>
+                    <h2 class="col-md-10 col-md-pull-2 detail-title">{{vm.detail.Title}}</h2>
+                </div>
+
+                @Html.Partial("_Loading")
+
+                <div class="row" ng-show="vm.detail">
+                    <div class="col-md-12 form-horizontal">
+                        <div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 control-label label-custom">業管單位</label>
+                                <div class="col-xs-8 col-sm-10">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.UnitName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 control-label label-custom">聯繫窗口</label>
+                                <div class="col-xs-8 col-sm-10">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.ContactName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 control-label label-custom">聯絡電話</label>
+                                <div class="col-xs-8 col-sm-10">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.ContactTel}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 control-label label-custom">連結位址</label>
+                                <div class="col-xs-8 col-sm-10">
+                                    <div class="form-control form-control-text">
+                                        <a href="{{vm.detail.WebUrl}}" target="_blank" title="開新視窗 {{vm.detail.Title}} 連結位址">{{vm.detail.WebUrl}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 control-label label-custom">資料格式</label>
+                                <div class="col-xs-8 col-sm-10">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.ExtensionArray}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 control-label label-custom">最新版次</label>
+                                <div class="col-xs-8 col-sm-10">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.VersionName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 control-label label-custom">更新日期</label>
+                                <div class="col-xs-8 col-sm-10">
+                                    <div class="form-control form-control-text">
+                                        {{vm.detail.UpdatedDate | date:'yyyy/MM/dd'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 control-label label-custom">簡介</label>
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="form-control form-control-text guide-wrapper" ng-bind-html="vm.detail.Info | trust">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xs-4 col-sm-2 control-label label-custom">使用指南</label>
+                                <div class="col-xs-12 col-sm-10">
+                                    <div id="dvMarkdown" class="form-control form-control-text guide-wrapper"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <section class="data-info-wrapper">
+                            <h3><i class="fa fa-history" aria-hidden="true"></i> API歷程</h3>
+                            <table class="table table-cutstom">
+                                <tr>
+                                    <th width="8%">版本</th>
+                                    <th width="40%">歷程說明</th>
+                                    <th width="12%">使用指南</th>
+                                    <th width="10%">更新日期</th>
+                                </tr>
+                                <tr ng-repeat="a in vm.detail.DataSetHistoryList">
+                                    <td data-th="版本" class="text-center">{{a.Title}}</td>
+                                    <td data-th="歷程說明">{{a.Info}}</td>
+                                    <td data-th="使用指南" class="text-center">
+                                        <a href="javascript:;" @*data-toggle="modal" data-target="#guidePop"*@ ng-click="getPopGuide(a.HistoryId)">
+                                            <i class="fa fa-book" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td data-th="更新日期" class="text-center">{{a.UpdatedDate | date:'yyyy/MM/dd'}}</td>
+                                </tr>
+                            </table>
+                        </section>
+                        <section class="data-info-wrapper">
+                            <h3><i class="fa fa-desktop" aria-hidden="true"></i> 創新應用成果</h3>
+                            <ul class="list-wrapper">
+                                <li class="row" ng-repeat="c in vm.detail.ShowCaseList">
+                                    <figure class="col-xs-12 col-sm-3 col-md-2 text-center">
+                                        <img class="case-app-img" ng-src="{{c.PhotoUrl}}" alt="{{c.Title}}" />
+                                    </figure>
+                                    <figcaption class="col-xs-12 col-sm-9 col-md-10">
+                                        <a href="@Url.Action("Detail","ShowCase")/{{c.CaseId}}" title="{{c.Title}}">
+                                            <h2>{{c.Title}}</h2>
+                                        </a>
+                                        <p>{{c.Contents}}</p>
+                                        <div class="form-inline text-right">
+                                            <a href="@Url.Action("Detail","ShowCase")/{{c.CaseId}}" class="btn btn-sm btn-warning form-control" style="color:#fff">更多</a>
+                                        </div>
+                                    </figcaption>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Modal -->
+    <div class="modal fade modal-custom" id="guidePop" tabindex="-1" role="dialog" aria-labelledby="guidePopLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    <h4 class="modal-title" id="guidePopLabel">使用指南</h4>
+                </div>
+                <div id="dvMarkdownPop" class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="border-color: #ccc;">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+
+    <script src="@Url.Content("~/Areas/Admin/Content/editorMd/js/editormd.min.js")"></script>
+    <script src="@Url.Content("~/Areas/Admin/Content/editorMd/lib/marked.min.js")"></script>
+    <script src="@Url.Content("~/Areas/Admin/Content/editorMd/lib/prettify.min.js")"></script>
+
+    <script src='@Url.Content("~/Scripts/App/DataSet/dataset.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/DataSet/dataset.service.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/DataSet/dataset.detail.controller.js")'></script>
+    <script>
+        $('#imgLoading').show();
+    </script>
+
+
+    @*<script type="text/javascript">
+            $(window).load(function () {
+                $.get('@Url.Action("Detail","Api/DataSet",new { id = Url.RequestContext.RouteData.Values["id"] })', function (res) {
+                    editormd.markdownToHTML("dvMarkdown", {
+                        markdown: res.Contents,
+                        htmlDecode: "style,script,iframe",
+                        emoji: true,
+                        taskList: true
+                    });
+                });
+            });
+        </script>*@
+}

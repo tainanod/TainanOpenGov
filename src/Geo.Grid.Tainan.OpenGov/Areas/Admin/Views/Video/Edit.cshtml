@@ -1,0 +1,41 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.Youtube
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="pull-right">
+    <a class="btn btn-primary" href="/Admin/Video/Index">
+        <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>
+        返回直播會議清單
+    </a>
+</div>
+<h2>編輯直播會議</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.YoutubeId)
+
+    <div class="form-horizontal">
+
+        @Html.EditorFor(model => model.Name)
+
+        @Html.EditorFor(model => model.Url)
+
+        @Html.EditorFor(model => model.Description)
+
+        @Html.EditorFor(model => model.StartDate)
+
+        @Html.EditorFor(model => model.EndDate)
+
+        @Html.EditorFor(model => model.VideoTime)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="更新" class="btn btn-primary" />
+                <br />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Vote";
+    var key = ViewBag.key as Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.SearchVm;
+    var forumData = ViewBag.forumData as Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.ForumVm;
+}
+
+<h2>投票管理</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @Html.ActionLink("新增標籤", "Create", new { id = forumData.ForumId }, new { @class = "btn btn-success pull-right" })
+        @Html.ActionLink("←返回公民論壇", "Index", "Forum", new { id = forumData.ForumId }, new { @class = "btn btn-primary pull-right", style = "margin-right:10px" })
+        <h4>@forumData.Subject</h4>
+    </div>
+</div>
+<div id="qList">
+    <div id="collapse4" class="body"></div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            blockList();
+        })
+
+        function blockList() {
+            var $this = $('#collapse4');
+            $this.html('');
+            $.post('@Url.Action("_AjaxIndex", new { id = forumData.ForumId })', function (result) {
+                $this.html(result);
+            });
+        }
+
+        //排序-升
+        function blockUp(nId) {
+            $.post('@Url.Action("SortUp")', { id: nId }, function (result) {
+                if (result.Success) {
+                    blockList();
+                }
+            });
+        }
+
+        //排序-降
+        function blockDown(nId) {
+            $.post('@Url.Action("SortDown")', { id: nId }, function (result) {
+                if (result.Success) {
+                    blockList();
+                }
+            });
+        }
+    </script>
+}

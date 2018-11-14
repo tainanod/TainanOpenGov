@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")" type="image/x-icon" />
+    <title>台南開放政府平台</title>
+    
+    @Styles.Render("~/Content/geo/style")
+    @RenderSection("styles", required: false)
+    @Html.Partial("_ga")
+</head>
+<body>
+
+    <div id="header">
+        <div class="wrapper">
+            <a href="@Url.Action("Index","Home")" class="logo"><img src="~/Content/geo/img/logo.png"></a>
+            @Html.Action("LoginPartial", "Account")
+            <br style="clear: both;">
+        </div>
+    </div>
+
+    
+    @RenderBody()
+    <div id="footer">
+        <div>
+            <img src="~/Content/geo/img/tainan.png">
+            <span>永華市政中心 70801臺南市安平區永華路二段６號｜總機︰886-6-2991111｜<br>民治市政中心 73001臺南市新營區民治路３６號｜總機：886-6-6322231｜</span>
+        </div>
+    </div>
+    
+    @Scripts.Render("~/bundles/jquery")
+@*<script src="@Url.Content("~/Content/geo/slick/slick.min.js")"></script>*@
+    
+    <script>
+        @*window.appRoot = {
+            rel: "@Url.Content("~/")"
+        }*@
+
+        (function (undefined) {
+            'use strict';
+            $(function () {
+
+            });
+            window.geo = {};
+            var root = '@Url.Content("~/").ToLower()';
+            window.appRoot = {
+                rel: root,
+                full: location.origin + root
+            }
+        })();
+
+    </script>
+    @RenderSection("scripts", required: false)
+    
+   
+    <script type="text/javascript">
+        $(window).load(function () {
+            $.getScript("https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-50a0c00078a8e6ee");
+            var addthis_config = {
+                ui_language: "zh-tw"
+            }
+        });
+
+        //$('#homePhotoWrapper').slick({
+        //    dots: false,
+        //    arrows: true,
+        //    infinite: true,
+        //    speed: 400,
+        //    slidesToShow: 1,
+        //    slidesToScroll: 1,
+        //    autoplay: true
+        //})
+    </script>
+</body>
+</html>

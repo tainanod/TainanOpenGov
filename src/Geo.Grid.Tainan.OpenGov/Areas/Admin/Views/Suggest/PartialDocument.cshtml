@@ -1,0 +1,16 @@
+﻿@model IQueryable<Geo.Grid.Tainan.OpenGov.Entity.Document>
+
+<ul class="list-group" id="ulDocument">
+    @foreach (var m in Model)
+    {
+        <li class="list-group-item list-group-item-warning">
+            <button type="button" class="btn btn-danger btn-sm pull-right" value="@m.DocumentId" onclick="RemoveDocument(this);"
+                    style="line-height: 10px;">
+                刪除
+            </button>
+            <h4><span class="label label-success">@m.CreatedDate.ToString("yyyy/MM/dd HH:mm")</span></h4>
+            
+            <p style="color: #333"><a href="@Url.Action("Document", "resource", new { area = "", id = m.DocumentId })" target="_blank">@m.FileName</a></p>
+        </li>
+    }
+</ul>

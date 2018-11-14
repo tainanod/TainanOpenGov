@@ -1,0 +1,77 @@
+﻿@using Geo.Grid.Tainan.OpenGov.Entity
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    var forum = (Forum) @ViewBag.Forum;
+}
+
+<h2>子議題</h2>
+@*資料篩選*@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="pull-right text-right">
+            <a class="btn btn-primary "
+               href="@Url.Action("Index", "Forum", new {id = forum.ForumId, Area = "Admin"})"><span class="glyphicon glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回公民論壇</a>
+            <a class="btn btn-success "
+               href="@Url.Action("Create", "SubForum", new {id = forum.ForumId, Area = "Admin"})">新增子議題</a>
+        </div>
+        
+        <h4>@forum.Subject</h4>
+    </div>
+</div>
+
+@*論壇清單*@
+<div id="dvList"></div>
+
+
+@section styles
+{
+    <link href="@Url.Content("~/Content/PagedList.css")" rel="stylesheet" type="text/css" />
+}
+
+@Html.Partial("_ModalFrame")
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            //window._forumId = '@ViewBag.ForumId';
+            ShowList();
+        });
+
+        function ShowList(page) {
+            page = page || 1;
+            var url = "@Url.Action("PartialList", "SubForum", new {id = @forum.ForumId })?page=" + page;
+            ShowPartial(url, "dvList", function () {
+                $('#dvList .pagination li a').each(function (i, item) {
+                    var hyperLinkUrl = $(item).attr('href');
+                    if (typeof hyperLinkUrl !== 'undefined' && hyperLinkUrl !== false) {
+                        var pageNumber = GetUrlPara('page', hyperLinkUrl);
+                        $(item).attr('href', '#').click(function (event) {
+                            event.preventDefault();
+                            $(event.target).attr('href');
+                            ShowList(pageNumber);
+                        });
+                    }
+                });
+            });
+        }
+        function DeleteForum(id) {
+            if (!confirm('確認要移除此子議題?')) {
+                return;
+            }
+            var url = '@Url.Action("Remove", "SubForum", new {Area="Admin"})'
+            DoAjaxPost('@Url.Action("Remove", "SubForum")/' + id, null, function (result) {
+                if (result.Success) {
+                    $.notify("子議題已移除!", "success");
+                    ShowList();
+                } else {
+                    $.notify(result.Message, "error");
+                }
+            });
+        }
+    </script>
+
+}
+

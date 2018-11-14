@@ -1,0 +1,26 @@
+[
+  {
+    "outputFileName": "Scripts/geo/suggest-detail.js",
+    "inputFiles": [
+      "Scripts/geo/suggest-detail.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/geo/forum-detail.js",
+    "inputFiles": [
+      "Scripts/geo/forum-detail.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/geo/home-index.min.js",
+    "inputFiles": [
+      "Scripts/geo/home-index.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/App/Discuss/discuss.service.min.js",
+    "inputFiles": [
+      "Scripts/App/Discuss/discuss.service.js"
+    ]
+  }
+]

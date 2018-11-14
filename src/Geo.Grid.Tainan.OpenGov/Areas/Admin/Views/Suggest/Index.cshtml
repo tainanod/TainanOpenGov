@@ -1,0 +1,86 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.Forum
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>市政提案管理</h2>
+
+@*資料篩選*@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        
+        @Html.ActionLink("新增市政提案", "Create", "Suggest", new { Area = "Admin" }, new { @class = "btn btn-primary pull-right" })
+        <h4>資料篩選</h4>
+        @*<form class="form-inline" role="form">
+            <label for="ddlTown">請選擇區域：</label>
+
+            <label for="txtKeyword">，關鍵字：</label>
+
+            <input type="button" class="btn btn-primary" value="搜尋" id="btnQuery"/>
+        </form>*@
+
+    </div>
+</div>
+
+
+@*市政提案清單*@
+<div id="dvList"></div>
+
+@*popup 對話框*@
+@Html.Partial("_ModalFrame")
+
+@section styles
+{
+    <link href="@Url.Content("~/Content/PagedList.css")" rel="stylesheet" type="text/css" />
+}
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            ShowList();
+        });
+
+        function ShowList(page) {
+            page = page || 1;
+            var url = "@Url.Action("PartialList", "Suggest")?page=" + page;
+            ShowPartial(url, "dvList", function () {
+                $('#dvList .pagination li a').each(function (i, item) {
+                    var hyperLinkUrl = $(item).attr('href');
+                    if (typeof hyperLinkUrl !== 'undefined' && hyperLinkUrl !== false) {
+                        var pageNumber = GetUrlPara('page', hyperLinkUrl);
+                        $(item).attr('href', '#').click(function (event) {
+                            event.preventDefault();
+                            $(event.target).attr('href');
+                            ShowList(pageNumber);
+                        });
+                    }
+                });
+            });
+        }
+        function DeleteForum(id) {
+            if (!confirm('確認要移除此市政提案?')) {
+                return;
+            }
+            DoAjaxPost('@Url.Action("RemoveForum", "Suggest")/' + id, null, function (result) {
+                if (result.Success) {
+                    $.notify("市政提案已移除!", "success");
+                    ShowList();
+                } else {
+                    $.notify(result.Message, "error");
+                }
+            });
+        }
+
+        function ShowExportDialog(id) {
+            var url = "@Url.Action("PartialExport", "Suggest")/" + id;
+            $('#modalFrameTitle').html('市政提案民眾討論資料匯出');
+            $('#frameModal').attr("src", url);
+            $('#dvModalFrame').modal({ show: true });
+        }
+    </script>
+
+}
+

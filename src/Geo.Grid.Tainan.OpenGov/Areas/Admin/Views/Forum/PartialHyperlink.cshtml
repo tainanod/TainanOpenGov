@@ -1,0 +1,16 @@
+﻿@model IQueryable<Geo.Grid.Tainan.OpenGov.Entity.Hyperlink>
+
+<ul class="list-group" id="ulHyperlink">
+    @foreach (var m in Model)
+    {
+        <li class="list-group-item list-group-item-warning">
+            <button type="button" class="btn btn-danger btn-sm pull-right" value="@m.HyperlinkId" onclick="RemoveHyperlink(this);" style="line-height: 10px;">
+                刪除
+            </button>
+            <p style="color: #333">
+                <a href="@m.Url" target="_blank">@m.Title</a>
+            </p>
+        </li>
+    }
+</ul>
+

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Message";
+    var data = ViewBag.data as Geo.Grid.Tainan.OpenGov.Entity.ViewModel.VoteVm;
+}
+
+@section styles {
+    <style>
+        .homephoto {
+            display: none;
+        }
+    </style>
+}
+
+<div class="container" id="afterSubmitBox">
+    <div class="qa-section-wrapper">
+        <p>@(Session["msgError"] != null ? Session["msgError"].ToString() : "臺南開放政府平台")</p>
+        <div class="row">
+            <div class="col-xs-12">
+                <input type="button" value="返回公民論壇" class="qa-btn" onclick="window.location.href='@Url.Action("Index", "Forum")'" />
+                @if (data != null && data.CanVote)
+                {
+                    <a href="@Url.Action("Gather", new { id = data.VoteId })" class="qa-btn">問卷結果</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

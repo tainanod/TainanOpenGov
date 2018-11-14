@@ -1,0 +1,20 @@
+﻿@using Newtonsoft.Json
+@model List<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.TnodMayor>
+
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <li><a class="mayorbox" href="#dvMayorbox" onclick="MayorDetail(@item._id)"><span>@item.開始時間.ToString("MM/dd")</span>@item.標題</a></li>
+    }
+}
+else
+{
+    <li>目前無行程公開。</li>
+}
+<script type="text/javascript">
+    gmap.data = @Html.Raw(JsonConvert.SerializeObject(@Model));
+    $(".mayorbox").fancybox({
+        'modal': true
+    });
+</script>

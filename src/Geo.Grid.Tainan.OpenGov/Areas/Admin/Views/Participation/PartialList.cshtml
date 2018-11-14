@@ -1,0 +1,95 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<Geo.Grid.Tainan.OpenGov.Entity.Participation>
+@{ 
+    var unitList = ViewBag.unitList as List<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.PageNameVm>;
+}
+
+<div class="container-fluid">
+    <table class="table table-bordered table-striped table-hover">
+        <caption class="text-right">                
+            @Html.PagedListPager(Model, page => Url.Action("Index", new {page = page}), new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+                DisplayLinkToNextPage = PagedListDisplayMode.Never,
+                DisplayLinkToIndividualPages = false,
+                DisplayItemSliceAndTotal = true,
+                ItemSliceAndTotalFormat = "顯示: {0} ~ {1} , 共 {2}"
+            })
+            
+        </caption>
+        <tr>
+            <th>主題</th>
+            <th class="w130">發佈時間</th>
+            <th class="w130">截止時間</th>
+            <th class="w130">主辦單位</th>
+            <th class="w215">&nbsp;</th>
+            <th style="width: 50px;">&nbsp;</th>
+            <th class="w130">&nbsp;</th>
+        </tr>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    
+                    <td>
+                        @item.Subject
+                        <br/>
+                        @if (item.IsMothball)
+                        {
+                            <span style="color:red">已封存</span>
+                        }
+                    </td>
+                    <td>@item.OpenDate.ToString("yyyy/MM/dd HH:mm")</td>
+                    <td class="@(item.CloseDate < DateTime.Now ? "btn-danger btn-sm" : string.Empty)">@item.CloseDate.ToString("yyyy/MM/dd HH:mm")</td>
+                    <td>@(unitList.Where(x=>x.PageId == item.DataSetUnitId.ToString()).FirstOrDefault().PageName)</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("ActIndex", "ParticipationActivity", new {Area = "Admin", id = item.ParticipationId})">論壇活動</a>
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("WorkIndex", "ParticipationActivity", new {Area = "Admin", id = item.ParticipationId})">工作坊</a>
+                    </td>
+                    <td style="width: 80px; ">
+                        <a href="@Url.Action("Index", "ParticipationTag", new { id = item.ParticipationId })" class="btn btn-primary btn-sm">標籤設定</a>
+                        <a href="@Url.Action("Index", "ParticipationDiscuss", new { id = item.ParticipationId })" class="btn btn-success btn-sm">論壇列表</a>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="ShowExportDialog('@item.ParticipationId');">論壇匯出</button>
+                    </td>
+                    <td align="center">
+                        <div>
+                            <a class="btn btn-primary btn-sm" href="@Url.Action("Edit",new { id=item.ParticipationId})">編輯</a>
+                            <input type="button" class="btn btn-danger btn-sm" value="刪除" onclick="DeleteForum('@item.ParticipationId'); " />
+                        </div>
+                        <div>
+                            @if (item.IsMothball == false)
+                            {
+                                <a class="btn btn-success btn-sm" onclick="Mothball('@item.ParticipationId'); ">封存</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-success btn-sm" onclick="Mothball('@item.ParticipationId'); ">取消封存</a>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<div class="container-fluid">
+    <div class="col-md-9 col-lg-9 text-center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+    <div class="col-md-3 col-lg-3 text-left">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page}), new PagedListRenderOptions
+    {
+        DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+        DisplayLinkToLastPage = PagedListDisplayMode.Never,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+        DisplayLinkToIndividualPages = false,
+        DisplayPageCountAndCurrentLocation = true,
+        PageCountAndCurrentLocationFormat = "第 {0} 頁 / 共 {1} 頁"
+    })
+    </div>
+</div>

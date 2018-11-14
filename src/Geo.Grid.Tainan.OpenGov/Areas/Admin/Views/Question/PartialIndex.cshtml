@@ -1,0 +1,57 @@
+﻿@using Geo.Grid.Tainan.OpenGov.Common;
+@model List<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestInfoVm>
+
+@functions{
+    public string DateBetweenStr(string stDate, string endDate)
+    {
+        if (string.IsNullOrEmpty(stDate) && string.IsNullOrEmpty(endDate))
+        {
+            return string.Empty;
+        }
+
+        return string.Format("{0}~{1}", stDate, endDate);
+    }
+}
+
+@section styles{
+    <style>
+        .table td {
+            text-align: center;
+            vertical-align: central;
+        }
+    </style>
+}
+
+<div class="container-fluid">
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>主題</th>
+            <th style="width:12%;">發佈日</th>
+            <th style="width:12%;">填寫期間</th>
+            <th style="width:10%;">是否開放</th>
+            <th style="width:10%;">開放結果</th>
+            <th style="width:25%;"></th>
+            <th style="width:12%"></th>
+        </tr>
+        @foreach (var info in Model)
+        {
+            <tr>
+                <td>@info.InfoTitle.ShortStr(18)</td>
+                <td>@info.EditDate.ToString("yyyy/MM/dd hh:mm")</td>
+                <td>@DateBetweenStr(info.InfoDateSt.GetDateTimeString(), info.InfoDateEnd.GetDateTimeString())</td>
+                <td>@info.InfoValid</td>
+                <td>@info.IsGather</td>
+                <td>
+                    @Html.ActionLink("題組管理", "GroupIndex", new { id = info.InfoId }, new { @class = "btn btn-primary btn-xs", style = "margin-right:2px" })
+                    @Html.ActionLink("問卷結果", "Gather", new { id = info.InfoId }, new { @class = "btn btn-primary btn-xs", style = "margin-right:2px" })
+                    @Html.ActionLink("匯出結果", "Excel", new { id = info.InfoId }, new { @class = "btn btn-success btn-xs", @target = "_blank" })
+                </td>
+                <td>
+                    @Html.ActionLink("編輯", "QuestionInfo", "Question", new { Area = "Admin", id = info.InfoId, fid = Request.RequestContext.RouteData.Values["id"] }, new { @class = "btn btn-primary btn-xs", style = "margin-right:2px" })
+                    @*@Html.ActionLink("刪除", "QuestionInfoRemove", new { id = info.InfoId }, new { @class = "btn btn-danger btn-xs" })*@
+                    <a href="@Url.Action("QuestionInfoRemove", new { id = info.InfoId })" class="btn btn-danger btn-xs" onclick="if (!confirm('您將會刪除問卷題組及回覆問卷結果，確定要刪除嗎？')) { return false;}">刪除</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

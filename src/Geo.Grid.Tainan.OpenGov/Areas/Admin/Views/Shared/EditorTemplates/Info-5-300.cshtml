@@ -1,0 +1,32 @@
+﻿@model String
+@{
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();
+    htmlAttributes.Add("class", "control-label col-md-2");
+
+    IDictionary<string, object> htmlAttributes2 = new Dictionary<string, object>();
+    htmlAttributes2.Add("class", "form-control");
+    //浮水印
+    htmlAttributes2.Add("placeholder", ViewData.ModelMetadata.Watermark);
+    int rowsInt = 5;
+    int colsInt = 300;
+
+    foreach (var item in ViewData.ModelMetadata.AdditionalValues)
+    {
+        htmlAttributes2.Add(item.Key, item.Value);
+    }
+    if (ViewData.ModelMetadata.AdditionalValues.Count() == 0)
+    {
+        htmlAttributes2.Add("rows", rowsInt);
+        htmlAttributes2.Add("cols", colsInt);
+    }
+
+    string id = ViewData.ModelMetadata.PropertyName;
+}
+
+<div class="form-group">
+    @Html.Label("", htmlAttributes)
+    <div class="col-md-10">
+        @Html.TextArea("", ViewData.TemplateInfo.FormattedModelValue.ToString(), htmlAttributes2)
+        @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+    </div>
+</div>

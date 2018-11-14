@@ -1,0 +1,99 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href='@Url.Content("~/Content/bootstrap.css")' rel="stylesheet" />
+<link href='@Url.Content("~/Content/jquery.fancybox.css")' rel="stylesheet" />
+<link href='@Url.Content("~/Content/toastr.min.css")' rel="stylesheet" />
+<link href='@Url.Content("~/Content/oi.select/oi.select.css")' rel="stylesheet" />
+
+<div class="main" ng-app="app" ng-controller="subDetailContoller" ng-init="forumId='@Url.RequestContext.RouteData.Values["id"]'">
+    <div class="social">
+        <a href='@Url.Content("/Forum/Detail/{{upperForumId}}")' class="btn btn-warning pull-right">返回主議題</a>
+        <h2>主議題：{{vm.pSubject}}</h2>
+        <br class="clearfix">
+    </div>
+    <h1 class="detail-title"><i></i>{{forum.Subject}}</h1>
+    <div class="time">
+        <span>發佈於 <b>{{forum.OpenDate.toDate()}}</b></span>
+    </div>
+    <div class="content">
+        {{forum.Description}}
+    </div>
+
+    <!-- Nella緊急要求直接Hardcode  by_Nigel_20160914-->
+    <!--  <li>@Html.ActionLink("臺南市政府新市政中心評估指標及候選地點基本資料.pdf", "download", "forum", null, new { target = "_blank" })</li>-->
+    <div class="discuss">
+        <b class="main_title">下載附件</b>
+        <ul class="link down">
+            <li ng-repeat="x in forum.NormalDocuments">
+                <a target="_blank" href="/Resource/Document/{{x.DocumentId}}">{{x.FileName}}&nbsp;&nbsp;&nbsp;<span>更新日期 {{x.CreatedDate.toDate()}}</span></a>
+            </li>
+        </ul>
+</div>
+    <!---->
+
+    <div id="發表意見" class="discuss">
+        <b class="main_title">共同討論</b>
+        <input type="hidden" id="ForumId" name="ForumId" value="{{forumId}}" />
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="send">
+                <span class="img"><img ng-repeat="x in user.imgList" src="{{x}}" /></span>
+                <form>
+                    <textarea id="Message" name="Message" placeholder="加入討論" ng-model="vm.DiscussTextArea"></textarea>
+                    <img id="imgLoading" src="/Content/geo/loading/default.gif" alt="loading" style="width: 48px; display: none;" />
+                    <oi-select style="float:left;width:400px" ng-model="vm.selectedTag" oi-options="tag.TagName for tag in vm.tagList" oi-select-options="{
+    closeList: false
+}" multiple placeholder="標籤"></oi-select>
+                    <br/>
+                    <button type="button" id="btnPost" class="btn btn-lg btn-warning btn-block" ng-click="discussSubmit()"> 以 {{user.NickName}} 身份發文 </button>
+                </form>
+                <br class="clearfix">
+            </div>
+        }
+        else
+        {
+            <div class="send">
+                <form>
+                    <button type="button" id="btnLogin" ng-click="loginClick()">登入後參與討論</button>
+                </form>
+                <br class="clearfix">
+            </div>
+        }
+
+        @Html.Partial("DetailPartial")
+    </div>
+</div>
+
+@section styles{
+    <link href="~/Content/jquery.fancybox.min.css" rel="stylesheet" />
+
+}
+@section scripts
+{
+    <script src='@Url.Content("~/Scripts/App/Discuss/common.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/toastr.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Discuss/discuss.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Discuss/discuss.service.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Discuss/subDetail.contoller.js")'></script>
+
+    <script type="text/javascript">
+        function replyClick(obj) {
+            var index = $(obj).attr('index');
+            $('#reply' + index).slideDown(500);
+        }
+
+        function replyClose(obj) {
+            var index = $(obj).attr('index');
+            $('#reply' + index).hide(300);
+        }
+
+        $(function () {
+            $('.homephoto').hide();
+        });
+    </script>
+}

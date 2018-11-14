@@ -1,0 +1,95 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.Forum
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="pull-right">
+    <a class="btn btn-primary" href="/Admin/Forum/Index">
+        <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>
+        返回公民論壇清單
+    </a>
+</div>
+<h2>論壇活動</h2>
+
+@*資料篩選*@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <button id="btnNewActivity" type="button" class="btn btn-primary pull-right">新增論壇活動</button>
+        <h4>@Model.Subject</h4>
+    </div>
+</div>
+
+@*論壇清單*@
+<div id="dvList"></div>
+
+@*popup 對話框*@
+@Html.Partial("_ModalFrame")
+
+@section styles
+{
+    <link href="@Url.Content("~/Content/PagedList.css")" rel="stylesheet" type="text/css" />
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            ShowList();
+            $('#btnNewActivity').click(function () {
+                var url = "@Url.Action("ActNew","Activity",new { area="Admin"})/@Url.RequestContext.RouteData.Values["id"]";
+                ShowModal('新增論壇活動', url);
+            });
+            $('#dvModalFrame').on('hidden.bs.modal', function (e) {
+                ShowList();
+            });
+        });
+        function ShowModal(title, url) {
+            $('#modalFrameTitle').html(title);
+            $('#frameModal').attr("src", url);
+            $('#dvModalFrame').modal({ show: true });
+        }
+        function ShowList(page) {
+            page = page || 1;
+            var url = "@Url.Action("ActList", "Activity", new {Area = "Admin", id = Model.ForumId})?page=" + page;
+            ShowPartial(url, "dvList", function () {
+                $('#dvList .pagination li a').each(function (i, item) {
+                    var hyperLinkUrl = $(item).attr('href');
+                    if (typeof hyperLinkUrl !== 'undefined' && hyperLinkUrl !== false) {
+                        var pageNumber = GetUrlPara('page', hyperLinkUrl);
+                        $(item).attr('href', '#').click(function (event) {
+                            event.preventDefault();
+                            $(event.target).attr('href');
+                            ShowList(pageNumber);
+                        });
+                    }
+                });
+            });
+        }
+        function ActivitySuccess(message) {
+            $("#dvModalFrame").modal('hide');
+            $.notify(message, "success");
+            ShowList();
+        }
+
+        function OnEdit(id) {
+            var url = "@Url.Action("ActEdit", "Activity",new { area="Admin"})/" + id;
+            ShowModal('編輯論壇活動', url);
+        }
+        function OnDocument(id) {
+            var url = "@Url.Action("Document", "Activity",new { area="Admin"})/" + id;
+            ShowModal('附件管理', url);
+        }
+
+        function DeleteActivity(id) {
+            if (!confirm('確認要移除此論壇活動?')) {
+                return;
+            }
+            DoAjaxPost('@Url.Action("Remove", "Activity",new { area="Admin"})/' + id, null, function (result) {
+                if (result.Success) {
+                    ActivitySuccess("論壇活動已移除!");
+                } else {
+                    $.notify(result.Message, "error");
+                }
+            });
+        }
+    </script>
+}

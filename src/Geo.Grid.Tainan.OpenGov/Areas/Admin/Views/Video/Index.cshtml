@@ -1,0 +1,79 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.Youtube
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>直播會議管理</h2>
+<hr/>
+@*資料篩選*@
+<div class="panel panel-default">
+    <div class="panel-heading">
+
+        @Html.ActionLink("新增直播會議", "Create", "Video", new { Area = "Admin" }, new { @class = "btn btn-primary pull-right" })
+        <h4>資料篩選</h4>
+        @*<form class="form-inline" role="form">
+                <label for="ddlTown">請選擇區域：</label>
+
+                <label for="txtKeyword">，關鍵字：</label>
+
+                <input type="button" class="btn btn-primary" value="搜尋" id="btnQuery"/>
+            </form>*@
+
+    </div>
+</div>
+
+
+@*論壇清單*@
+<div id="dvList"></div>
+
+@*popup 對話框*@
+<div id="dvModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+
+@section styles
+{
+    <link href="@Url.Content("~/Content/PagedList.css")" rel="stylesheet" type="text/css" />
+}
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            ShowList();
+        });
+
+        function ShowList(page) {
+            page = page || 1;
+            var url = "@Url.Action("PartialList", "Video")?page=" + page;
+            ShowPartial(url, "dvList", function () {
+                $('#dvList .pagination li a').each(function (i, item) {
+                    var hyperLinkUrl = $(item).attr('href');
+                    if (typeof hyperLinkUrl !== 'undefined' && hyperLinkUrl !== false) {
+                        var pageNumber = GetUrlPara('page', hyperLinkUrl);
+                        $(item).attr('href', '#').click(function (event) {
+                            event.preventDefault();
+                            $(event.target).attr('href');
+                            ShowList(pageNumber);
+                        });
+                    }
+                });
+            });
+        }
+        function DeleteVideo(id) {
+            if (!confirm('確認要移除此直播會議?')) {
+                return;
+            }
+            DoAjaxPost('@Url.Action("Remove", "Video")/' + id, null, function (result) {
+                if (result.Success) {
+                    $.notify("直播會議已移除!", "success");
+                    ShowList();
+                } else {
+                    $.notify(result.Message, "error");
+                }
+            });
+        }
+    </script>
+
+}
+

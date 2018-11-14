@@ -1,0 +1,65 @@
+﻿
+@model IPagedList<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.DiscussVm>
+@{
+    Layout = null;
+    var key = ViewBag.key as Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.SearchVm;
+}
+
+<div id="collapse4" class="body">
+    <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
+        <caption class="text-right">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions
+       {
+
+           DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+           DisplayLinkToLastPage = PagedListDisplayMode.Never,
+           DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+           DisplayLinkToNextPage = PagedListDisplayMode.Never,
+           DisplayLinkToIndividualPages = false,
+           DisplayItemSliceAndTotal = true,
+           ItemSliceAndTotalFormat = "顯示: {0} ~ {1} , 共 {2}"
+       })
+
+        </caption>
+
+        <tr>
+            <th class="col-w-2 text-center">留言內容</th>
+            <td class="col-w-2 text-center">是否置頂</td>
+            <th class="col-w-15 text-center">建立時間</th>
+            <th class="col-w-2">&nbsp;</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.Raw(item.Message)</td>
+                <td class="text-center">@item.IsTop</td>
+                <td class="text-center">@item.CreatedDate</td>
+              
+                <td class="text-center">
+                    <a href="@Url.Action("UpdateTop", new { id = item.DiscussId })" class="btn btn-@(item.IsTop ? "danger":"primary") btn-xs">
+                        @(item.IsTop ? "取消置頂" : "置頂")
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="container-fluid">
+        <div class="col-md-9 col-lg-9 text-center">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, keyword = key.KeyWord }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+        </div>
+        <div class="col-md-3 col-lg-3 text-left">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions
+       {
+           DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+           DisplayLinkToLastPage = PagedListDisplayMode.Never,
+           DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+           DisplayLinkToNextPage = PagedListDisplayMode.Never,
+           DisplayLinkToIndividualPages = false,
+           DisplayPageCountAndCurrentLocation = true,
+           PageCountAndCurrentLocationFormat = "第 {0} 頁 / 共 {1} 頁"
+       })
+        </div>
+    </div>
+
+</div>

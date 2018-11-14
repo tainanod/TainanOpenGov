@@ -1,0 +1,48 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.BannerVm
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h3>基本資料</h3>
+        <div class="form-group">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", @id = "form_1", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-horizontal">
+
+                    @Html.HiddenFor(model => model.BannerId)
+
+                    @Html.EditorFor(model => model.Title)
+
+                    @Html.EditorFor(model => model.WebUrl)
+
+                    @Html.EditorFor(model => model.Target)
+
+                    @Html.EditorFor(model => model.IsTopEnabled)
+
+                    @Html.EditorFor(model => model.IsEnabled)
+
+                    @Html.EditorFor(model => model.PhotoId)
+
+                </div>
+                <div class="navbar-text">
+                    <input type="submit" class="btn btn-primary" value="儲存" />
+                    @Html.ActionLink("返回清單", "Index", null, new { @class = "btn btn-primary" })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/notify.min.js")"></script>
+    <script type="text/javascript">
+        var _controllerName = "Banner";
+        var _photoUrl = "@Url.Action("Upload", "Photo", new { Area = "" })";
+        var _photoDetail = "@Url.Action("Detail","Photo",new { Area = ""})";
+    </script>
+    <script src="@Url.Content("~/Areas/Admin/Content/js/adminPhoto.js")"></script>
+}
+

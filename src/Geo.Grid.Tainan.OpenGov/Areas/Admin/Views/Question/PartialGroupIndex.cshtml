@@ -1,0 +1,81 @@
+﻿@model List<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestGroupVm>
+
+<style>
+    .btn-gray {
+        background-color: #808080;
+        color: white;
+    }
+
+    tr.group:hover {
+        background-color: #b5b3b3 !important;
+    }
+
+    tr.group {
+        background-color: #dbdbdb !important;
+    }
+
+    .not-active {
+        pointer-events: none;
+        cursor: none;
+    }
+</style>
+
+<div class="container-fluid">
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>主題</th>
+            <th class="w130"></th>
+        </tr>
+        @{
+            var maxGroupSort = Model.Any() ? Model.Max(x => x.GroupSort) : 0;
+        }
+
+
+        @foreach (var group in Model)
+        {
+            /*題組*/
+            <tr class="group">
+                <td>
+                    <a href="#" style="margin-left:2px" class="btn btn-gray brn-sm pull-right @(group.GroupSort==maxGroupSort?"not-active":"")" onclick="ChangeSort('@group.GroupId','grp',false)">↓</a>
+                    <a href="#" style="margin-left:2px" class="btn btn-gray brn-sm pull-right @(group.GroupSort==1?"not-active":"")" onclick="ChangeSort('@group.GroupId','grp',true)">↑</a>
+                    @Html.ActionLink("子題目", "QuestionCreate", "Question", new { Area = "Admin", id = group.GroupId }, new { @class = "btn btn-primary brn-sm pull-right" })
+                    <strong>@group.GroupTitle</strong>
+                    @if (!string.IsNullOrEmpty(group.GroupDesc))
+                    {
+                        <br />
+                        @group.GroupDesc
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("編輯", "GroupEdit", "Question", new { Area = "Admin", id = group.GroupId }, new { @class = "btn btn-primary" })
+                    <a href="#" class="btn btn-danger" onclick="DeleteGroup('@group.GroupId')">刪除</a>
+                </td>
+            </tr>
+
+            var maxQuestSort = group.MdQuestions.Any() ? group.MdQuestions.Max(x => x.QstSorting) : 0;
+            /*題目*/
+            foreach (var qst in group.MdQuestions)
+            {
+                <tr>
+                    <td>
+                        <a href="#" style="margin-left:2px" class="btn btn-gray brn-sm pull-right @(qst.QstSorting==maxQuestSort?"not-active":"")" onclick="ChangeSort('@qst.QstId','qst',false)">↓</a>
+                        <a href="#" style="margin-left:2px" class="btn btn-gray brn-sm pull-right @(qst.QstSorting==1?"not-active":"")" onclick="ChangeSort('@qst.QstId', 'qst', true)">↑</a>
+                        @qst.QstQuestion
+                    </td>
+                    <td align="center">
+                        @if (!group.GroupTitle.Contains("個人基本資料"))
+                        {
+                            @Html.ActionLink("編輯", "QuestionEdit", "Question", new { Area = "Admin", id = qst.QstId }, new { @class = "btn btn-primary " + (new[] { 5, 6 }.Contains(qst.QstAnsType) ? "not-active" : "") })
+                        }
+                        <a href="#" class="btn btn-danger" onclick="DeleteQuestion('@qst.QstId')">刪除</a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<script>
+
+
+</script>

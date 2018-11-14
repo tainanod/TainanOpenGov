@@ -1,0 +1,53 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.DataSetHistoryVm
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h3>基本資料</h3>
+        <div class="form-group">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", @id = "form_1", enctype = "multipart/form-data" }))
+            {
+                <div class="form-horizontal">
+
+                    @Html.HiddenFor(model => model.HistoryId)
+
+                    @Html.HiddenFor(model => model.SetId)
+
+                    @Html.EditorFor(model => model.Info)
+
+                    @Html.EditorFor(model => model.Contents)
+
+                </div>
+                <div class="navbar-text">
+                    <input type="submit" class="btn btn-primary" value="儲存" />
+                    @Html.ActionLink("返回清單", "Index", new { id = Model.SetId }, new { @class = "btn btn-primary" })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/notify.min.js")"></script>    
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#form_1').validate({
+                rules: {
+                    Title: { required: true }
+                },
+                messages: {
+                    Title: "@Html.DisplayNameFor(x => x.Title)，必需填寫"
+                },
+                highlight: function (element) {
+                    jQuery(element).closest('.control-group').removeClass('text-success').addClass('field-validation-error');
+                },
+                success: function (element) {
+                    element.addClass('valid')
+                    .closest('.control-group').removeClass('field-validation-error').addClass('text-success');
+                }
+            });
+        });
+    </script>
+}
+

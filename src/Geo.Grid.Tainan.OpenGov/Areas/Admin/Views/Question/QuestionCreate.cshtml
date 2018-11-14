@@ -1,0 +1,120 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestQuestionVm
+
+@{
+    ViewBag.Title = "QuestionCreate";
+}
+
+@section styles{
+    <style>
+        .no-wrap {
+            display: inline-block;
+        }
+
+        span.blk {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+}
+
+
+@Html.ActionLink("返回題目", "GroupIndex", "Question", new { Area = "admin", id = ViewData["infoId"] }, new { @class = "btn btn-primary pull-right" })
+<h2>新增題目</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    <table class="table1" width="100%">
+        <tr>
+            <th class="w130">題目</th>
+            <td><input type="text" class="form-control" required style="height:150px" value="@Model.QstQuestion" name="QstQuestion" /></td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>題型</th>
+            <td>
+                <select class="form-control w150" name="QstAnsType" onchange="AnsTypeChange(this)">
+                    <option selected value="0">請選擇</option>
+                    <option @(Model.QstAnsType == 1 ? "selected" : "") value="1">單選(含是非)</option>
+                    <option @(Model.QstAnsType == 2 ? "selected" : "") value="2">複選</option>
+                    <option @(Model.QstAnsType == 3 ? "selected" : "") value="3">問答</option>
+                    <option @(Model.QstAnsType == 4 ? "selected" : "") value="4">多重問答</option>
+                </select>
+            </td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr id="itemTr" style="display:none">
+            <th valign="top">答案</th>
+            <td>
+                <span>
+                    <input type="text" class="form-control no-wrap w215" />
+                    <input type="button" class="btn btn-default btn-sm" style="margin-left:2px;font-weight:bolder" value="+" onclick="AddItem(this)" />
+                </span>
+                <span style="color:red;">增加答案請務必按+</span>
+            </td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th>是否為必答</th>
+            <td><input type="checkbox" id="chkNeed" name="IsRequired" value="true" /><label class="control-label" for="chkNeed">此題目為必填</label></td>
+        </tr>
+        <tr><td style="height:30px"></td></tr>
+        <tr>
+            <th></th>
+            <td>
+                <input type="button" value="Create" class="btn btn-primary" onclick="submitClick()" />
+                <input type="submit" style="display:none" id="btnSubmit" />
+            </td>
+        </tr>
+    </table>
+}
+
+@section scripts{
+    <script>
+        function submitClick() {
+            if (!$('select[name="QstAnsType"]').val()) {
+                alert('請選擇題目類型');
+                return;
+            }
+
+            $('#btnSubmit').click();
+        }
+
+        function AddItem(sender) {
+            var parent = $(sender).parent();
+            var txt = parent.find('input:text').val();
+            if (!txt) {
+                alert('選項不可為空白');
+                return;
+            }
+
+            parent.find('input:text').val(null);
+            parent.before(ItemTemplate(txt));
+        }
+
+        function ItemTemplate(txt) {
+            return "<span class='blk'><input type='text' name='setItem' class='form-control no-wrap w215' value='" + txt + "'/>"
+            + "<input type='button'class='btn btn-danger btn-sm' style='margin-left:6.5px;' value='x' onclick='DeleteItem(this)' /></span>";
+        }
+
+        function DeleteItem(sender) {
+            $(sender).parent().remove();
+        }
+
+        function AnsTypeChange(sender) {
+            var ansType = $(sender).val();
+            switch (ansType) {
+                case "0":
+                case "3":
+                    $('#itemTr .blk').remove();
+                    $('#itemTr').hide();
+                    break;
+                case "1":
+                case "2":
+                case "4":
+                    $('#itemTr').show();
+
+            }
+        }
+    </script>
+}

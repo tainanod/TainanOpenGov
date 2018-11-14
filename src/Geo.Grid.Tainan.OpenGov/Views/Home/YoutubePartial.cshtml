@@ -1,0 +1,46 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.Youtube
+
+@if (Model == null)
+{
+    <div class="no">
+        <i class="icon1"></i>近期尚無<span>重大會議直播</span>
+    </div>
+}
+else if (Model.StartDate > DateTime.Now)
+{
+    <div class="video">
+        <i></i>@Model.Name<br>
+        <span id="video" date="@Model.StartDate.ToString("yyyy/MM/dd HH:mm:ss")" src="@Model.Url"></span>
+        <br>
+        後進行直播
+    </div>
+}
+else
+{
+    <div style="margin-top: 20px;">
+        <iframe height="170" src="@Model.Url" frameborder="0" allowfullscreen></iframe>
+    </div>
+}
+
+
+<script type="text/javascript">
+    $(function () {
+        var seed = self.setInterval("countdown()", 1000);
+    });
+
+    function countdown() {
+        var sdate = $('#video').attr('date');
+        $('#video').countdown(sdate, function (evt) {
+            var format = '%M分 %S秒';
+            if (evt.offset.days > 0) {
+                format = '%D 天 %H小時';
+            } else if (evt.offset.hours > 1) {
+                format = '%H小時 %M分';
+            
+            } else if (evt.offset.hours > 0) {
+                format = '%H小時 %M分';
+            }
+            $(this).text(evt.strftime(format));
+        });
+    }
+</script>

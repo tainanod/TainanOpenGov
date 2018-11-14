@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.MenuVm>
+
+<h2>帳號與權限管理</h2>
+<hr />
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @Html.ActionLink("返回帳號與權限", "Index", "User", new { Area = "Admin" }, new { @class = "btn btn-danger pull-right" })
+        <h4>資料篩選</h4>
+    </div>
+</div>
+<div class="contrain-fluid">
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>功能</th>
+            <th>設定</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>
+                    @if (item.IsEnabled)
+                    {
+                        <input type="button" class="btn btn-danger" value="移除局處功能" onclick="RemoveFromOffice('@item.MenuId')" />
+                    }
+                    else
+                    {
+                        <input type="button" class="btn btn-primary" value="設為局處功能" onclick="AddToOffice('@item.MenuId')" />
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<script>
+    function AddToOffice(id) {
+            if (!confirm('確認要將此功能開放給局處管理員?')) {
+                return;
+            }
+
+            DoAjaxPost('@Url.Action("AddToOffice","User")/' + id, null, function (result) {
+                location.href = "@Url.Action("OfficeRole","User",new { area="Admin"})";
+            });
+        }
+
+        function RemoveFromOffice(id) {
+            if (!confirm('確認要將此功能從局處管理員移除?')) {
+                return;
+            }
+
+            DoAjaxPost('@Url.Action("RemoveFromOffice", "User")/' + id, null, function (result) {
+                location.href = "@Url.Action("OfficeRole","User",new { area="Admin"})";
+            });
+        }
+</script>

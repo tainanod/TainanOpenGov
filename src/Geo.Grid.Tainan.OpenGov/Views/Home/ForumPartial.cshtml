@@ -1,0 +1,23 @@
+﻿@model IQueryable<Geo.Grid.Tainan.OpenGov.Entity.Forum>
+
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <li>
+            <span class="subject-title">@item.Category</span>
+            @Html.ActionLink(item.Subject, "Detail", "Forum", new { id = item.ForumId }, new { @class = "link-title" })
+            @*<a href="/Forum/Detail/@item.ForumId" class="link-title">@item.Subject</a>*@
+            @*<a href="#" class="question-tag tag-btn"><span>填寫問卷</span></a>*@
+        </li>
+    }
+}
+else
+{
+    <li>目前無公民論壇資訊。</li>
+
+}
+
+
+
+

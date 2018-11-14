@@ -1,0 +1,39 @@
+﻿@model Guid
+@{
+    string propertyName = ViewData.ModelMetadata.PropertyName;
+    string controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+    string displayName = ViewData.ModelMetadata.DisplayName;
+}
+
+<div class="blockFile">
+    <div class="form-group">
+        <label class="control-label col-md-2">@displayName</label>
+        <div class="col-md-10">
+            <input type="file" xx="@propertyName" accept="image/*" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">&nbsp;</label>
+        <div class="col-md-10">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 150px; height: 150px; margin-bottom:5%;">
+                    @if (Model.ToString() != "00000000-0000-0000-0000-000000000000")
+                    {
+                        <a href="@Url.Action("Detail", "Photo", new { area = "", id = Model })" target="_blank" class="blockPhotoHref">
+                            <img id="block_src_@(propertyName)" class="blockPhotoSrc" src="@Url.Action("Detail", "Photo", new { area = "", id = Model })" style="width: 150px; height: 150px;" />
+                        </a>
+                        <div class="caption">
+                            <input type="hidden" id="@propertyName" name="@propertyName" value="@Model" class="blockPhotoGuid" />
+                        </div>
+                    }
+                    else
+                    {
+                        <img id="block_src_@(propertyName)" src="@Url.Content("~/Areas/Admin/Content/uploadify/150x150.png")" style="width: 150px; height: 150px;" />
+                        <input type="hidden" id="@propertyName" name="@propertyName" value="" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.Common.Result<Geo.Grid.Tainan.OpenGov.Entity.ParticipationDocument>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutClean.cshtml";
+}
+
+@*<h3>文件上傳</h3>*@
+@using (Html.BeginForm("ResponseUpload", "Participation", new { Area = "Admin", id = Url.RequestContext.RouteData.Values["id"] }, FormMethod.Post, new { enctype = "multipart/form-data", id = "DocumentForm" }))
+{
+    <div class="form-group">
+        <label>選擇檔案：</label>
+        <input type="file" name="postedFile" id="postedFile" />
+    </div>
+    <div class="form-group" style="">
+        <label>回應文件顯示名稱：</label>
+        <input type="text" class="form-control" id="name" name="name" value="" />
+    </div>
+    <div class="form-group" style="">
+        <label>內容說明：</label>
+        <input type="text" class="form-control" id="alt" name="alt" value="" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="文件上傳" class="btn btn-primary" />
+    </div>
+}
+
+@section scripts
+{
+    @if (Model != null)
+    {
+        <script type="text/javascript">
+            var result = @Html.Raw(Json.Encode(Model));
+            if(result.Success){
+                parent.ReponseSuccess(result);
+            }else{
+                parent.$.notify(result.Message, "error");
+            }
+        </script>
+    }
+    <script type="text/javascript">
+        $(function () {
+            $("#DocumentForm").submit(function () {
+                if (!$("#postedFile").val()) {
+                    alert("請先選擇要上傳的文件!");
+                    return false;
+                }
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "投票";
+    bool isComplete = ViewBag.isComplete;
+}
+
+@section styles {
+    <style>
+        .homephoto {
+            display: none;
+        }
+    </style>
+}
+
+<form class="container no-big-banner" name="voteForm" ng-app="app" ng-controller="voteController" ng-init="voteId='@Url.RequestContext.RouteData.Values["id"]'" ng-submit="voteFormSubmit()" ng-cloak novalidate>
+    <h2 class="hidden">臺南市政府新市政中心開放決策@(ViewBag.Title)</h2>
+    <section class="qa-section-wrapper">
+        <h3 class="section-title">{{vote.Title}}</h3>
+        <p>{{vote.Info}}</p>
+        <div class="qa-wrapper">
+            <div class="a-wrapper">
+                <div class="option-wrapper" ng-repeat="option in vote.OptionArray">
+                    <input ng-if="vote.SelectNumber<2" type="radio" value="{{option.PageGuid}}" name="voteOption" id="{{option.PageGuid}}" ng-model="getVoteContent[0]" ng-change="onSelected({{vote.SelectNumber}} , getVoteContent)" />
+                    <input ng-if="vote.SelectNumber>1" type="checkbox" value="{{option.PageGuid}}" name="voteOption" id="{{option.PageGuid}}" ng-model="getVoteContent[$index]" @*ng-required="!optionRequired"*@ ng-change="onSelected({{vote.SelectNumber}} , getVoteContent)" />
+                    <label for="{{option.PageGuid}}">
+                        <span>{{option.PageName}}</span>
+                    </label>
+                </div>
+                <div class="error" @*ng-show="voteForm.voteOption.$error.required&& voteForm.voteOption.$dirty"*@ ng-show="!optionRequired && voteForm.submitted">
+                    請至少選取 1 項<span ng-if="vote.SelectNumber>1">，最多選取 {{vote.SelectNumber}} 項</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section ng-if="vote.BasicArray.length>0" class="qa-section-wrapper">
+        <h3 class="section-title">個人基本資料</h3>
+        <div class="qa-wrapper" ng-repeat="group in basicArray">
+            <div class="q-wrapper">
+                {{group.Name}}
+            </div>
+            <div class="a-wrapper">
+                <div class="option-wrapper form-inline" ng-repeat="option in group.VoteBasicArray">
+                    <input type="radio" value="{{option.BasicId}}" name="{{group.GroupId}}" id="{{option.BasicId}}" ng-if="option.Name" ng-model="getInfoContent[group.GroupId].BasicId" />
+                    <label for="{{option.BasicId}}">
+                        <span>{{option.Name}}</span>
+                    </label>
+                    <label ng-if="option.IsExplain">
+                        <input type="text" value="" id="" placeholder="您的回答" ng-model="getInfoContent[group.GroupId].BasicDesc" size="60" />
+
+                        <label class="col-xs-12"></label>
+                    </label>
+
+                    <label ng-if="group.GroupId==6||group.GroupId==7">
+                        <select class="form-control" ng-if="group.GroupId==6" ng-model="getInfoContent[group.GroupId].getCitySeq" ng-options="city.PageName as city.PageName for city in vm.citys">
+                            <option value="">縣市</option>
+                        </select>
+                        <select class="form-control" ng-if="group.GroupId==7" ng-model="getInfoContent[group.GroupId].getCitySeq" ng-options="city.PageName as city.PageName for city in vm.citys" ng-disabled="true">
+                            <option value="">縣市</option>
+                        </select>
+                        <select class="form-control" ng-model="getInfoContent[group.GroupId].getTownSeq" ng-options="town.TownName as town.TownName for town in vm.towns|filter:{CityName:getInfoContent[group.GroupId].getCitySeq}:true">
+                            <option value="">鄉鎮區</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="error" @*ng-if="group.GroupId!=7"*@ ng-show="(getInfoContent[group.GroupId].BasicDesc=='' || getInfoContent[group.GroupId].getTownSeq===null || !getInfoContent[group.GroupId]) && voteForm.submitted">
+                    此項目為必填
+                </div>
+                @*<div class="error" ng-if="group.GroupId==7" ng-show="getInfoContent[group.GroupId].getTownSeq==null && voteForm.submitted">
+                        此項目為必填
+                    </div>*@
+            </div>
+        </div>
+        <div class="qa-wrapper">
+            <div class="a-wrapper" ng-if="vote.VerifyType == 2">
+                <div class="option-wrapper form-inline">
+                    <label for="formEmail">
+                        <span>Email</span>
+                    </label>
+                    <input type="email" placeholder="您的回答" size="60" ng-model="vm.getUserMail" value="" />
+                    <label class="col-xs-12"></label>
+                    <span style="color:red; margin-top:1em; padding:1em;">投票將寄出驗證信，請填寫正確mail。</span>
+                    <div class="error" ng-show="!vm.getUserMail && voteForm.submitted">
+                        電子信箱為必填 或 格式有誤
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section ng-if="vote.BasicArray.length == 0 && vote.VerifyType == 2" class="qa-section-wrapper">
+        <h3 class="section-title">個人基本資料</h3>
+        <div class="qa-wrapper">
+            <div class="q-wrapper">
+                E-Mail
+            </div>            
+            <div class="a-wrapper">
+                <div class="option-wrapper form-inline">
+                    <input type="email" placeholder="您的回答" size="60" ng-model="vm.getUserMail" value="" />
+                    <label class="col-xs-12"></label>
+                    <span style="color:red; margin-top:1em; padding:1em;">投票將寄出驗證信，請填寫正確mail。</span>
+                    <div class="error" ng-show="!vm.getUserMail && voteForm.submitted">
+                        電子信箱為必填 或 格式有誤
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @if (!isComplete)
+    {
+        <div class="col-xs-12 text-center">
+            <input type="reset" value="清除重填" class="qa-btn gray" ng-click="voteFormReset()" />
+            <input id="submitBtn" type="button" value="送出投票" class="qa-btn" ng-click="voteFormSubmit();" @*ng-disabled="voteForm.$invalid"*@ />
+        </div>
+    }
+</form>
+
+
+@section scripts {
+    <script src='@Url.Content("~/Scripts/bootstrap.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    @*<script src='@Url.Content("~/Scripts/jquery.fancybox.min.js")'></script>*@
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Vote/vote.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Vote/vote.service.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Vote/vote.controller.js")'></script>
+}
+

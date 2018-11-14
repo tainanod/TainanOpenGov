@@ -1,0 +1,48 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.Participation
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="pull-right">
+    <a class="btn btn-primary" href="@Url.Action("Index", "Participation")">
+        <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>
+        返回市政參與清單
+    </a>
+</div>
+<h2>新增市政參與議題</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.EditorFor(model => model.Category)
+
+        @Html.EditorFor(model => model.DataSetUnitId)
+
+        @Html.EditorFor(model => model.Subject)
+
+        @Html.EditorFor(model => model.Description)
+
+        @Html.EditorFor(model => model.Announcement)
+
+        @Html.EditorFor(model => model.EnableDiscussStr)
+
+        @Html.EditorFor(model => model.OpenDate)
+
+        @Html.EditorFor(model => model.CloseDate)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+@if (ViewBag.Error != null)
+{
+    <script type="text/javascript">
+        alert('@ViewBag.Error');
+    </script>
+}

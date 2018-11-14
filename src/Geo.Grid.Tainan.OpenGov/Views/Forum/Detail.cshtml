@@ -1,0 +1,265 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+
+    <link href='@Url.Content("~/Content/bootstrap.css")' rel="stylesheet" />
+    <link href='@Url.Content("~/Content/jquery.fancybox.css")' rel="stylesheet" />
+    <link href='@Url.Content("~/Content/oi.select/oi.select.css")' rel="stylesheet" />
+    <link href='@Url.Content("~/Content/toastr.min.css")' rel="stylesheet" />
+    <style type="text/css">
+        div.main > div.discuss div.message.discussTop{
+            background-color:#e7ceaa; margin-bottom:15px;
+        }
+    </style>
+}
+<div class="homephoto">
+    <a href="@Url.Action("Detail","Forum",new {id ="9258dbf9-80ec-e411-82d7-bcee7bd92c28" })" title="連結至 臺南市政府新市政中心開放決策"><img src="~/Content/geo/img/homephoto.jpg" alt="臺南市政府新市政中心開放決策" /></a>
+</div>
+<div class="main" ng-app="app" ng-controller="discussController" ng-init="forumId='@Url.RequestContext.RouteData.Values["id"]';voteId='47070B47-A35B-44D0-ABAA-0F14C10315A9'">
+    @*/resource/photo/{{photo.PhotoId}}?size=4*@
+    <img ng-repeat="url in vm.imgList" src="{{url}}" class="detail-photo">
+
+    <div class="social">
+        主辦單位&nbsp;{{forum.Holder}}
+        @*<div class="addthis_native_toolbox "><span>@*分享至</span></div>*@
+        <br class="clearfix">
+    </div>
+    <h1 class="detail-title"><i></i>{{forum.Subject}}</h1>
+    <div class="time">
+        <span>發佈於 <b>{{forum.OpenDate.toDate()}}</b></span>
+        @*<span>截止時間 <b>@Model.CloseDate.ToString("yyyy/MM/dd")</b></span>*@
+        @*<div class="over">
+                討論剩餘時間 <b>@Math.Ceiling((Model.CloseDate - DateTime.Now).TotalDays)</b> 天
+            </div>*@
+    </div>
+    <div class="content">
+        <div ng-bind-html="forum.Description">討論區敘述</div>
+        <ul class="btn">
+            @*<li><a href="/Question/TestUi" class="tag-btn marginRight"><span>填寫問卷</span></a></li>*@
+            <li class="icon1">{{discuss.Total}} 則回應</li>
+            @*<li class="icon2">91 關注</li>*@
+            <li class="icon3" style="display: none;"><a href="#">關注</a></li>
+        </ul>
+    </div>
+    <div id="資料公開" class="link">
+        <b class="main_title">相關連結</b>
+        <ul class="link">
+            <li ng-repeat="x in forum.HyperLinks">
+                <a href="@Url.Action("Detail", "Hyperlink")/{{x.HyperlinkId}}" ng-click="getClick()" target="_blank">{{x.Title}}</a>
+                <span ng-show="!x.IsClick">
+                    <img src="@Url.Content("~/Content/geo/img/new.gif")" alt="最新" />
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="link">
+        <b class="main_title">文件下載</b>
+        <ul class="link down">
+            <li ng-repeat="x in forum.NormalDocuments">
+                <a href="@Url.Action("Document", "Resource")/{{x.DocumentId}}" ng-click="getClick()" target="_blank">{{x.FileName}}&nbsp;&nbsp;&nbsp;<span>更新日期 {{x.CreatedDate.toDate()}}</span></a>
+                <span ng-show="!x.IsClick">
+                    <img src="@Url.Content("~/Content/geo/img/new.gif")" alt="最新" />
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="link">
+        <b class="main_title">市府回應</b>
+        <ul class="link down">
+            <li ng-repeat="x in forum.GovReplyDocuments">
+                <a href="@Url.Action("Document", "Resource")/{{x.DocumentId}}" ng-click="getClick()" target="_blank">{{x.FileName}}&nbsp;&nbsp;&nbsp;<span>更新日期 {{x.CreatedDate.toDate()}}</span></a>
+                <span ng-show="!x.IsClick">
+                    <img src="@Url.Content("~/Content/geo/img/new.gif")" alt="最新" />
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    @*子議題*@
+    <div class="sub-forum">
+        <h2>子議題討論</h2>
+        <ul class="link down">
+            <li ng-repeat="x in subForum">
+                <h4>{{x.Subject}}</h4>
+                <div class="content">{{x.Description}}</div>
+                <div class="reply">
+                    <span class="label" style="color: #666;">{{x.DiscussAmount}}則回應</span>
+                    <a href="@Url.Action("SubDetail", "Forum")/{{x.ForumId}}" class="btn btn-sm btn-warning">參與討論</a>
+                    <hr />
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tabs" @*style="display:none"*@>
+        <input id="tabQuestion" type="radio" name="tab" checked><label for="tabQuestion">問卷調查</label>
+        <div class="tab question-tab" style="z-index: 1;">
+            <ul style="height: 124px; overflow: hidden;">
+                <li ng-repeat="x in questionList">
+                    <div style="float:left">
+                        <span class="forumListDate">{{x.EditDate.toDate()}}</span>{{x.InfoTitle}}
+                    </div>
+                    <div style="float:right">
+                        <a class="btn btn-sm btn-danger marginRight" href="@Url.Action("Detail","Question")/{{x.InfoId}}" ng-if="!x.IsComplete">填寫問卷</a>
+                        <a href="@Url.Action("Detail","Question")/{{x.InfoId}}" class="btn btn-sm btn-default marginRight" ng-if="x.IsComplete">問卷已填</a>
+                        @*<span class="btn btn-sm btn-default disabled marginRight" ng-if="x.IsComplete">問卷已填</span>*@
+                        <a class="btn btn-sm btn-default marginRight" href="@Url.Action("Gather","Question")/{{x.InfoId}}" ng-if="x.IsGather">問卷結果</a>
+                    </div>
+                </li>
+                <li ng-show="questionList.length==0">尚無問卷</li>
+            </ul>
+        </div>
+        <input id="tabVote" type="radio" name="tab"><label for="tabVote">投票</label>
+        <div class="tab">
+            <ul style="height: 124px; overflow: hidden;">
+                <li ng-repeat="list in voteList">
+                    <div style="float:left">
+                        <span class="forumListDate">{{list.StartDate.toDate()}}</span>{{list.Title}}
+                    </div>
+                    <div style="float:right;">
+                        <a class="btn btn-sm btn-danger marginRight" href="@Url.Action("Detail","Vote")/{{list.VoteId}}" ng-if="(Today| date:'yyyy-MM-ddTHH:mm:ss'>=list.StartDate) && (Today| date:'yyyy-MM-ddTHH:mm:ss'<list.EndDate) && (!list.IsVote)">我要投票</a>                        
+                        <a href="@Url.Action("Detail","Vote")/{{list.VoteId}}" class="btn btn-sm btn-default marginRight" ng-if="list.IsVote">您已投票</a>
+                        @*<span class="btn btn-sm btn-default disabled marginRight" ng-if="list.IsVote">您已投票</span>*@
+                        <a class="btn btn-sm btn-default marginRight" href="@Url.Action("Gather","Vote")/{{list.VoteId}}" ng-if="list.CanVote">觀看結果</a>
+                    </div>
+                </li>
+                <li ng-show="voteList.length==0">尚無投票</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <input id="tab1" type="radio" name="tab" checked><label for="tab1">論壇活動</label>
+        <div class="tab" style="z-index: 1;">
+            <ul>
+                <li ng-repeat="x in forum.ForumActivity">
+                    <span>{{x.CreatedDate.toDate()}}</span><a class="actbox" href="#dvActivityBox" onclick="ActivityDetail(this)" actId="{{x.ActivityId}}">{{x.Subject}}</a>
+                </li>
+                <li ng-show="forum.ForumActivity.length==0">Coming Soon</li>
+            </ul>
+        </div>
+        <input id="tab2" type="radio" name="tab"><label for="tab2">工作坊</label>
+        <div class="tab">
+            <ul>
+                <li ng-repeat="x in forum.WorkActivity">
+                    <span>{{x.CreatedDate.toDate()}}</span><a class="actbox" href="#dvActivityBox" onclick="ActivityDetail(this)" actId="{{x.ActivityId}}">{{x.Subject}}</a>
+                </li>
+                <li ng-show="forum.WorkActivity.length==0">Coming Soon</li>
+            </ul>
+        </div>
+    </div>
+
+    <hr />
+
+    @*<div id="" class="link" style="display:{{ showAnnounce}}">
+            <b class="main_title">討論區公告</b>
+            <p style="text-indent:2em; padding:0 20px 30px;font-size: 16px;">{{forum.Announcement}}</p>
+        </div>*@
+
+    <div id="發表意見" class="discuss">
+        <b class="main_title">共同討論</b>
+        <input type="hidden" id="ForumId" name="ForumId" value="{{forumId}}" />
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="send">
+                <span class="img"><img ng-repeat="x in [user.ImageUrl]" src="{{x}}" style="width: 72px;" /></span>
+                <form>
+                    <textarea id="Message" name="Message" ng-model="vm.DiscussTextArea" placeholder="加入討論"></textarea>
+                    <img id="imgLoading" src="@Url.Content("~/Content/geo/loading/default.gif")" alt="loading" style="width: 72px; display: none;" />
+                    <oi-select style="float:left;width:400px" ng-model="vm.selectedTag" oi-options="tag.TagName for tag in vm.tagList" oi-select-options="{
+    closeList: false
+}" multiple placeholder="標籤"></oi-select>
+                    <br />
+                    <button type="button" class="btn btn-lg btn-warning btn-block" ng-click="discussSubmit()" id="btnPost"> 以 {{user.NickName}} 身份發文 </button>
+                </form>
+                <br class="clearfix">
+            </div>
+        }
+        else
+        {
+            <div class="send">
+                <form>
+                    <button type="button" id="btnLogin" ng-click="loginClick()">登入後參與討論</button>
+                </form>
+                <br class="clearfix">
+            </div>
+        }
+
+        @Html.Partial("DetailPartial")
+
+        <!--<a class="activitybox" href="#dvActivityBox" ><span>開始時間</span>標題</a>-->
+    </div>
+</div>
+<div class="activity" id="dvActivityBox" style="display: none;">
+    <a href="javascript:;" onclick="$.fancybox.close();" class="delete"><img src="@Url.Content("~/Content/geo/img/delete.png")" /></a>
+    <span class="activity-title"><img src="@Url.Content("~/Content/geo/img/icon2.png")">&nbsp;<span id="ActivityTitle"></span></span>
+    <div class="activity-content">
+
+        <p>&nbsp;&nbsp;日期與時間&nbsp;&nbsp;</p>
+        <span id="actDate"></span>
+        <p>&nbsp;&nbsp;地點&nbsp;&nbsp;</p>
+        <span id="actLocation">水利署</span>
+        <p>&nbsp;&nbsp;說明&nbsp;&nbsp;</p>
+        <span id="actDescription"></span>
+        <p>&nbsp;&nbsp;附件下載&nbsp;&nbsp;</p>
+        <div id="dvAttachment">
+        </div>
+    </div>
+    <!--<a class="addcalender" href="#">加入行事曆</a>-->
+</div>
+
+@section scripts{
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Discuss/common.js")'></script>
+    <script src='@Url.Content("~/Scripts/toastr.js")'></script>
+    <script src='@Url.Content("~/Scripts/jquery.fancybox.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Discuss/discuss.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Discuss/discuss.service.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Discuss/discuss.controller.js")'></script>
+
+    <script>
+        function ActivityDetail(hylink) {
+            var id = $(hylink).attr('actId');
+
+            var url = "@Url.Action("Detail", "Activity")/" + id;
+            DoAjaxPost(url, {}, function (result) {
+                $('#ActivityTitle').html(result.Subject);
+
+                $('#actDate').html(result.HoldDate);
+                $('#actLocation').html(result.Location);
+                $('#actDescription').html(result.Description);
+                if (result.Attachments.length > 0) {
+                    var aps = '<ul>';
+                    $(result.Attachments).each(function (i, d) {
+                        aps += '<li style="margin:10px;"><a href="@Url.Action("Document", "resource")/' + d.Id + '">' + d.Name + '</a></li>';
+                    });
+                    aps += '</ul>';
+                    $('#dvAttachment').html('');
+                    $('#dvAttachment').html(aps);
+                }
+                else {
+                    $('#dvAttachment').html('');
+                }
+            });
+        }
+
+
+        $(".actbox").fancybox({
+            'modal': true
+        });
+
+        function replyClick(obj) {
+            var index = $(obj).attr('index');
+            $('#reply' + index).show();
+        }
+
+        function replyClose(obj) {
+            var index = $(obj).attr('index');
+            $('#reply' + index).hide(300);
+        }
+    </script>
+}

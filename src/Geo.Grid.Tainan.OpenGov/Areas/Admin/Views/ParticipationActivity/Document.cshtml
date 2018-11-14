@@ -1,0 +1,84 @@
+﻿@using Geo.Grid.Tainan.OpenGov.Entity
+@using Geo.Grid.Tainan.OpenGov.Entity.Common
+@model IQueryable<Geo.Grid.Tainan.OpenGov.Entity.ParticipationDocument>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutClean.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-body">
+        @using (Html.BeginForm("DocumentUpload", "ParticipationActivity", new { Area = "Admin", id = Url.RequestContext.RouteData.Values["id"] }, FormMethod.Post, new { enctype = "multipart/form-data", id = "DocumentForm" }))
+        {
+            <input type="hidden" id="docType" name="docType" value="0" />
+            <div class="form-group">
+                <label>選擇檔案：</label>
+                <input type="file" name="postedFile" id="postedFile" />
+            </div>
+            <div class="form-group" style="">
+                <label>文件顯示名稱：</label>
+                <input type="text" class="form-control" id="name" name="name" value="" />
+            </div>
+            <div class="form-group" style="display: none;">
+                <label>內容說明：</label>
+                <input type="text" class="form-control" id="alt" name="alt" value="" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="檔案上傳" class="btn btn-primary" />
+            </div>
+        }
+    </div>
+</div>
+
+<ul class="list-group" id="ulDocument">
+    @foreach (var m in Model)
+    {
+        <li class="list-group-item list-group-item-warning">
+            <button type="button" class="btn btn-danger btn-sm pull-right" value="@m.DocumentId" onclick="RemoveDocument(this);"
+                    style="line-height: 10px;">
+                刪除
+            </button>
+            @*<h4><span class="label label-success">@m.CreatedDate.ToString("yyyy/MM/dd HH:mm")</span></h4>*@
+            <h4><a href="/resource/Document/@m.DocumentId" target="_blank">@m.FileName</a></h4>
+            @*<p style="color: #333"><a href="/resource/Document/@m.DocumentId" target="_blank">@m.FileName</a></p>*@
+        </li>
+    }
+</ul>
+
+
+@section scripts
+{
+    @if (ViewBag.Result != null)
+    {
+        <script type="text/javascript">
+        var result = @Html.Raw(Json.Encode(ViewBag.Result));
+        if(result.Success){
+            //parent.DocumentSuccess(result);
+        }else{
+            parent.$.notify(result.Message, "error");
+        }
+        </script>
+    }
+    <script type="text/javascript">
+    $(function () {
+        $("#DocumentForm").submit(function () {
+            if (!$("#postedFile").val()) {
+                alert("請先選擇要上傳的附件!");
+                return false;
+            }
+        });
+    });
+    function RemoveDocument(evt) {
+        if (!confirm('確認要移除此附件?')) {
+            return;
+        }
+        DoAjaxPost('@Url.Action("RemoveDocument", "ParticipationActivity")/' + evt.value, null, function (result) {
+            if (result.Success) {
+                location.href = location.href;
+                
+            } else {
+                $.notify(result.Message, "error");
+            }
+        });
+    }
+    </script>
+
+}

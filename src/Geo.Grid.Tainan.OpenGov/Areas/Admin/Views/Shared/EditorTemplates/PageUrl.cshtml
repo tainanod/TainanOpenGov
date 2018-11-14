@@ -1,0 +1,59 @@
+﻿@{
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();
+    htmlAttributes.Add("class", "control-label col-md-2");
+
+    IDictionary<string, object> htmlAttributes2 = new Dictionary<string, object>();
+    //浮水印
+    htmlAttributes2.Add("placeholder", ViewData.ModelMetadata.Watermark);
+    htmlAttributes2.Add("class", "form-control");
+
+    string id = ViewData.ModelMetadata.PropertyName;
+    var data = ViewData[id] as List<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.PageNameVm>;
+}
+
+<style>
+    #datafill li {
+        display: inline;
+    }
+
+    input[type='text'].blockLinkName {
+        width: 20%;
+        display: inline-block;
+    }
+
+    input[type='text'].blockLinkUrl {
+        width: 60%;
+        display: inline-block;
+    }
+</style>
+
+<div class="form-group blockUrl">
+    @Html.Label("", htmlAttributes)
+    <div class="col-md-10">
+        <input type="text" id="LinkName" value="" class="form-control blockLinkName" placeholder="請填寫連結名稱" />
+        <input type="text" id="LinkUrl" value="" class="form-control blockLinkUrl" placeholder="請填寫連結網址" />
+        <input type="button" value="確認" class="btn btn-primary pageLinkCreate" />
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-10" style="margin-top:10px;">
+        <ol class="LinkOption">
+            @foreach (var item in data)
+            {
+                int i = data.IndexOf(item);
+                <li class="blockLi">
+                    <input type="text" name="@(id)[@i].PageName" value="@item.PageName" class="form-control blockLinkName" />
+                    <input type="text" name="@(id)[@i].PageUrl" value="@item.PageUrl" class="form-control blockLinkUrl" />
+                    <input type="button" class="btn btn-danger blockRemove" value="X" />
+                </li>
+            }
+        </ol>
+    </div>
+</div>
+
+<ul id="PageLink" style="display:none;">
+    <li class="blockLi">
+        <input type="text" name="@(id)[{number}].PageName" value="{pageNameVal}" class="form-control blockLinkName" />
+        <input type="text" name="@(id)[{number}].PageUrl" value="{pageLinkVal}" class="form-control blockLinkUrl" />
+        <input type="button" class="btn btn-danger blockRemove" value="X" />
+    </li>
+</ul>

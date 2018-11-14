@@ -1,0 +1,29 @@
+﻿@model string
+@{
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();
+    htmlAttributes.Add("class", "control-label");
+
+    IDictionary<string, object> htmlAttributes2 = new Dictionary<string, object>();
+    htmlAttributes2.Add("class", "checkbox-inline");
+
+
+    string id = ViewData.ModelMetadata.PropertyName;
+    string val = ViewData.TemplateInfo.FormattedModelValue.ToString();
+
+    List<ListItem> ListItems = new List<ListItem>();
+
+    if (ViewData[id] != null) { ListItems = (List<ListItem>)ViewData[id]; }
+
+
+
+}
+<div class="control-group">
+    @Html.Label("", htmlAttributes)
+    <div class="controls width70">
+        @if (ListItems.Count > 0)
+        {
+            @Html.CheckBoxList(id, ListItems, htmlAttributes2, 0)
+        }
+    </div>
+</div>
+

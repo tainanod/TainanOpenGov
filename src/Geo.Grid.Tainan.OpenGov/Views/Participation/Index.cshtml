@@ -1,0 +1,38 @@
+﻿@model IQueryable<Geo.Grid.Tainan.OpenGov.Entity.Participation>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="homephoto">
+    <a href="@Url.Action("Detail","Forum",new {id ="9258dbf9-80ec-e411-82d7-bcee7bd92c28" })" title="連結至 臺南市政府新市政中心開放決策"><img src="~/Content/geo/img/homephoto.jpg" alt="臺南市政府新市政中心開放決策" /></a>
+</div>
+<div class="main">
+    <h1>
+        <i></i>市政參與
+        <br class="clearfix">
+    </h1>
+    <div class="list listul">
+        <ul>
+            @foreach (var m in Model)
+            {
+                <li>
+                    <b class="title"><a href="@Url.Action("Detail", "Participation", new { id = m.ParticipationId })">@m.Subject</a></b><span class="time">公告日期 @m.CreatedDate.ToString("yyyy/MM/dd")</span>
+                    <p>
+                        <span class="detail_link">
+                            <a href='@Url.Action("Detail", "Participation", new { id = m.ParticipationId })#資料公開'>資料公開</a>
+                        </span>
+                        @if (m.EnableDiscuss)
+                        {
+                            <span class="detail_link">
+                                <a href='@Url.Action("Detail", "Participation", new { id = m.ParticipationId })#發表意見'>發表意見</a>
+                            </span>
+                        }
+                    </p>
+                    <p>
+                        @m.Description
+                    </p>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+

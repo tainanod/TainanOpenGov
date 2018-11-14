@@ -1,0 +1,17 @@
+﻿@model IPagedList<Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.DiscussVm>
+@{
+    ViewBag.Title = "Vote";
+    var forumData = ViewBag.forumData as Geo.Grid.Tainan.OpenGov.Entity.ViewModel.Admin.ForumVm;
+}
+
+<h2>討論區管理</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">      
+        @Html.ActionLink("←返回公民論壇", "Index", "Forum", new { id = forumData.ForumId }, new { @class = "btn btn-primary pull-right", style = "margin-right:10px" })
+        <h4>@forumData.Subject</h4>
+    </div>
+</div>
+<div id="qList">
+    @{Html.RenderPartial("_AjaxIndex", Model);}
+</div>

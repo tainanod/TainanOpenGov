@@ -1,0 +1,227 @@
+﻿
+@{
+    ViewBag.Title = "市政監督";
+}
+
+
+<div class="main" ng-app="app" ng-controller="engineeringController" @*ng-init="allowanceId='@(Url.RequestContext.RouteData.Values["id"])'"*@ ng-cloak>
+    <h1 class="hidden">@(ViewBag.Title)</h1>
+    <h1 class="clear-title-style">
+        <img src="@Url.Content("~/Content/geo/img/ic_title_engineer.png")" />
+        @ViewBag.Title
+    </h1>
+
+    <main role="tabpanel">
+
+        <div class="tab-content pd-1">
+            <div role="tabpanel" class="tab-pane active">
+
+                <div class="row">
+                    <div class="col-md-2 col-md-push-10 text-right form-inline">
+                        <button class="btn btn-warning btn-sm form-control" style="color: #fff;" ng-click="goBack()"><i class="fa fa-arrow-left" aria-hidden="true"></i> 返回</button>
+                    </div>
+                    <h2 class="col-md-10 col-md-pull-2 detail-title" style="margin-top: 0">{{vm.detail.Name}}</h2>
+                </div>
+
+                @Html.Partial("_Loading")
+
+                <div class="row form-horizontal" ng-class="vm.mainClass" ng-show="vm.detail">
+                    <div class="col-md-12">
+                        <section class="card-wrapper">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h3 class="section-title" style="display:inline-block">工程進度</h3>
+                                    <ul class="progress-list clearfix">
+                                        <li>
+                                            預定進度(%):
+                                            <span>{{vm.detail.TargetProgress}}</span>
+                                        </li>
+                                        <li>
+                                            實際進度(%):
+                                            <span>{{vm.detail.ActualProgress}}</span>
+                                        </li>
+                                        <li>
+                                            差異(%):
+                                            <span>{{vm.detail.Discrepancy}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-4 text-right">
+                                    <div class="note-tag">{{vm.realStatus}}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="progress-line">
+                                        <ul>
+                                            <li ng-class="{active:vm.detail.Status === '未開工'}">
+                                                <div class="circle-point"></div>
+                                                <p>未開工</p>
+                                            </li>
+                                            <li ng-class="{active:vm.detail.Status === '準備開工中'}">
+                                                <div class="circle-point"></div>
+                                                <p>準備開工中</p>
+                                            </li>
+                                            <li ng-class="{active:vm.detail.Status === '施工中'}">
+                                                <div class="circle-point"></div>
+                                                <p>施工中</p>
+                                            </li>
+                                            <li ng-class="{active:vm.detail.Status === '停工中'}">
+                                                <div class="circle-point"></div>
+                                                <p>停工中</p>
+                                            </li>
+                                            <li ng-class="{active:vm.detail.Status === '完工待驗收'}">
+                                                <div class="circle-point"></div>
+                                                <p>完工待驗收</p>
+                                            </li>
+                                            <li ng-class="{active:vm.detail.Status === '驗收中'}">
+                                                <div class="circle-point"></div>
+                                                <p>驗收中</p>
+                                            </li>
+                                            <li ng-class="{active:vm.detail.Status === '驗收完成'}">
+                                                <div class="circle-point"></div>
+                                                <p>驗收完成</p>
+                                            </li>
+                                            @*<li ng-class="{active:vm.detail.Status === '保固中'}">
+                                                <div class="circle-point"></div>
+                                                <p>保固中</p>
+                                            </li>*@
+                                            <li ng-class="{active:vm.detail.Status === '已結案' || vm.detail.Status === '保固中'}">
+                                                <div class="circle-point"></div>
+                                                <p>已結案</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>開工日期</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{dateConvert(vm.detail.ActualStartDate)}}</div>
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>預定完工日期</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{dateConvert(vm.detail.CompleteDate)}}</div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>實際完工日期</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{dateConvert(vm.detail.ActualCompleteDate)}}</div>
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>落後因素</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{vm.detail.BehindReason ? vm.detail.BehindReason : '無'}}</div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>原因分析</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{vm.detail.Analysis ? vm.detail.Analysis : '無'}}</div>
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>解決方法</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{vm.detail.Solution ? vm.detail.Solution : '無'}}</div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>改進期限</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{dateConvert(vm.detail.ImproveTermDate)}}</div>
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>進度月份</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{dateConvert(vm.detail.ProgressDate, 1)}}</div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-12">
+                        <section class="card-wrapper">
+                            <div class="row">
+                                <div class="col-sm-9 col-md-10">
+                                    <h3 class="section-title">工程資料</h3>
+                                </div>
+                                <div class="col-sm-3 col-md-2 text-right">
+                                    <button type="button" class="btn btn-danger" ng-click="goBack(1)">
+                                        <i class="fa fa-map-marker" aria-hidden="true"></i> 地圖展示
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <ul class="triangle-list">
+                                        <li>
+                                            <span>工程名稱</span> {{vm.detail.Name}}
+                                        </li>
+                                        <li>
+                                            <span>工程概要</span> {{vm.detail.Summary}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>工程類別</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{vm.detail.Category}}</div>
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>行政區</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{cityFormat(vm.detail.CityTown)}}</div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>詳細地點</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{vm.detail.Address}}</div>
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>工程坐標<span>(TWD97)</span></div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{geomConvert(vm.detail.Geom)}}</div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>執行機關</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{vm.detail.GovernmentAencies}}</div>
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>監造單位</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{vm.detail.Supervision}}</div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>得標廠商</div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{vm.detail.Factory}}</div>
+                                <label class="col-sm-4 col-md-2 control-label engineer-label">
+                                    <div>決標金額<span>(萬元)</span></div>
+                                </label>
+                                <div class="col-sm-8 col-md-4 text-control">{{moneyFormat(vm.detail.Amount/10)}}</div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src='@Url.Content("~/Scripts/angular.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/oi.select/select-tpls.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Engineering/engineering.app.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Engineering/engineering.service.js")'></script>
+    <script src='@Url.Content("~/Scripts/App/Engineering/engineering.detail.controller.js")'></script>
+    <script>
+        $('#imgLoading').show();
+
+        var map, marker, infoWindow;
+
+    </script>
+}
+

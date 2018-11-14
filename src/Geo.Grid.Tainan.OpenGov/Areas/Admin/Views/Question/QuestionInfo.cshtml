@@ -1,0 +1,155 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestInfoVm
+@{
+    ViewBag.Title = "新增問卷";
+}
+@functions{
+    public MvcHtmlString GetHtmlStr(string ori)
+    {
+        return new MvcHtmlString(ori);
+    }
+
+    public string GetDateString(DateTime? ori)
+    {
+        return ori.HasValue ? ori.Value.ToString("yyyy-MM-dd") : string.Empty;
+    }
+}
+
+@section styles{
+    <style>
+        .table1 input[type='date']{
+            width:200px;
+          display:inline;
+        }
+        #datafill li{
+            display:inline;
+        }
+
+    </style>
+   
+}
+
+<a href="@Url.Action("Index","question",new { id=ViewData["fid"] })" style="float:right" class="btn btn-primary">返回問卷</a>
+<h2>@(Model.InfoId==Guid.Empty?"新增問卷":"編輯問卷")</h2>
+<hr />
+
+@using (Html.BeginForm(null, null, new { Area = "Admin", id = Model.InfoId, fid = ViewData["fid"] }, FormMethod.Post))
+{
+    <input type="hidden" value="@ViewData["fid"]" name="fid"/>
+    <input type="hidden" value="@Model.InfoId" name="infoid" />
+    <table class="table1" width="100%">
+        <tr>
+            <th>主題</th>
+            <td><input type="text" class="form-control" value="@Model.InfoTitle" name="InfoTitle" data-require="請填寫主題" required /></td>
+        </tr>
+        <tr><td style="height:20px"></td></tr>
+        <tr>
+            <th>說明</th>
+            <td>
+                <textarea class="form-control" style="height:150px" name="InfoDesc">@GetHtmlStr(Model.InfoDesc)</textarea>
+            </td>
+        </tr>
+        <tr><td style="height:20px"></td></tr>
+        @if (Model.InfoId != Guid.Empty)
+        {
+            <tr>
+                <th>發佈時間</th>
+                <td>
+                    <input type="date" class="form-control" readonly name="EditDate" value="@GetDateString(Model.EditDate)" />
+                </td>
+            </tr>
+        }
+        <tr><td style="height:20px"></td></tr>
+        <tr>
+            <th>填寫日期</th>
+            <td><input type="date" class="form-control" name="InfoDateSt" value="@GetDateString(Model.InfoDateSt)" /> ~ <input type="date" class="form-control" name="InfoDateEnd" value="@GetDateString(Model.InfoDateEnd)" />
+        </tr>
+        <tr><td style="height:20px"></td></tr>
+        <tr>
+            <th>驗證方式</th>
+            <td>
+                <select id="VerifyType" name="VerifyType" class="form-control" @(Model.InfoId != Guid.Empty ? "disabled=disabled" : string.Empty)  style="width:auto" data-require="請選擇驗證方式" required>
+                    <option value="">請選擇</option>
+                    <option value="1" @(Model.VerifyType == 1 ? "selected" : "")>第一階段：毋須登入即可填寫（無驗證）。</option>
+                    <option value="2" @(Model.VerifyType == 2 ? "selected" : "")>第二階段：毋須登入，惟須透過電子郵件進行資料驗證。</option>
+                    <option value="3" @(Model.VerifyType == 3 ? "selected" : "")>第三階段：民眾以帳號（MAIL）登入驗證。</option>
+                </select>
+            </td>
+        </tr>
+        <tr><td style="height:20px"></td></tr>
+        <tr>
+            <th>是否開放</th>
+            <td>
+                <label>
+                    <input type="radio" name="InfoValid" value="true" @(Model.InfoValid ? "checked=checked" : "")  />&nbsp;是
+                </label>
+                <label>
+                    <input type="radio" name="InfoValid" value="false" @(!Model.InfoValid ? "checked=checked" : "") />&nbsp;否
+                </label>
+            </td>            
+        </tr>
+        <tr><td style="height:20px"></td></tr>
+        <tr>
+            <th>是否開放結果</th>
+            <td>
+                <label>
+                    <input type="radio" name="IsGather" value="true" @(Model.IsGather ? "checked=checked" : "") />&nbsp;是
+                </label>
+                <label>
+                    <input type="radio" name="IsGather" value="false" @(!Model.IsGather ? "checked=checked" : "") />&nbsp;否
+                </label>
+            </td>
+        </tr>
+        <tr><td style="height:20px"></td></tr>
+        <!--編輯時不顯示資料填寫欄位-->
+        @if (Model.InfoId == Guid.Empty)
+        {
+            <tr>
+                <th>資料填寫欄位</th>
+                <td>
+                    <ul style="list-style:none;display:inline" id="datafill">
+                        <li>
+                            <input type="checkbox" id="ckb0" value="0" name="ckbDataFill" />
+                            <label for="ckb0">性別</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="ckb1" value="1" name="ckbDataFill" />
+                            <label for="ckb1">年齡</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="ckb2" value="2" name="ckbDataFill" />
+                            <label for="ckb2">職業</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="ckb3" value="3" name="ckbDataFill" />
+                            <label for="ckb3">學歷</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="ckb4" value="4" name="ckbDataFill" />
+                            <label for="ckb4">家庭年總所得</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="ckb5" value="5" name="ckbDataFill" />
+                            <label for="ckb5">居住地(台灣縣市/鄉鎮)</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="ckb6" value="6" name="ckbDataFill" />
+                            <label for="ckb6">居住地(限台南/縣市)</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="ckb7" value="7" name="ckbDataFill" />
+                            <label for="ckb7">填寫地址詳細欄位</label>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        }
+        <tr><td style="height:20px"></td></tr>
+        <tr>
+            <th></th>
+            <td>
+                <input type="submit" value="@(Model.InfoId==Guid.Empty?"Create":"Update")" class="btn btn-primary" />
+            </td>
+        </tr>
+    </table>
+
+}

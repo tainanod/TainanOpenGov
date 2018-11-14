@@ -1,0 +1,72 @@
+﻿@model IQueryable<Geo.Grid.Tainan.OpenGov.Entity.Document>
+
+@Html.Partial("_ModalFrame")
+
+<div class="col-sm-9">
+    <div class="text-right pad10">
+        <button id="btnNewDocument" type="button" class="btn btn-primary">新增附件</button>
+    </div>
+   
+        <ul>
+            @foreach (var m in Model)
+            {
+                <li class="list-group-item list-group-item-warning">
+                    <button type="button" class="btn btn-danger btn-sm pull-right" value="@m.DocumentId" onclick="RemoveDocument(this);"
+                            style="line-height: 10px;">
+                        刪除
+                    </button>
+                    <h4><span class="label label-success">@m.CreatedDate.ToString("yyyy/MM/dd HH:mm")</span></h4>
+
+                    <p style="color: #333"><a href="@Url.Action("Document", "resource", new { area = "", id = m.DocumentId })" target="_blank">@m.FileName</a></p>
+                </li>
+            }
+        </ul>
+   
+    <div class="text-right pad10">
+        <button id="btnBack" type="button" class="btn btn-primary">回列表</button>
+    </div>
+</div>
+@*<input type="hidden" name="fid" value="@ViewData["mainForumId"]" />*@
+
+
+@section scripts{
+    <script>
+        $(function () {
+            $('#btnBack').click(function () {
+                window.location.href = '@Url.Action("Index","SubForum", new { Area = "Admin", id = @ViewData["mainForumId"] })';
+            });
+        });
+
+        function Refresh() {
+            window.location.href = '@Url.Action("UploadDocument","SubForum", new { Area = "Admin", id = Url.RequestContext.RouteData.Values["id"], fid = @ViewData["mainForumId"] })';
+        }
+
+        $('#btnNewDocument').click(function () {
+            $('#modalFrameTitle').html('新增附件');
+            $('#frameModal').attr("src", '@Url.Action("DocUploadPartial", "SubForum", new { Area = "Admin", id = Url.RequestContext.RouteData.Values["id"] })');
+            $('#dvModalFrame').modal({ show: true });
+        });
+
+        function DocumentSuccess(result) {
+            debugger;
+            alert('新增附件成功');
+            $("#dvModalFrame").modal('hide');
+            Refresh();
+        }
+
+        function RemoveDocument(sender) {
+            debugger;
+            var docID = $(sender).val();
+            $.post('@Url.Action("RemoveDocument","SubForum",new {area="Admin"})/' + docID, null, function (result) {
+                console.log(result);
+                if (result.Success) {
+                    alert('刪除成功');
+                    Refresh();
+                }
+                else {
+                    alert(result.Message);
+                }
+            });
+        }
+    </script>
+}

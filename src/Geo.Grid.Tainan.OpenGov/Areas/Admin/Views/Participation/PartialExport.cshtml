@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutClean.cshtml";
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>資料篩選</h4>
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "export" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="startDate">開始日期</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" data-date-format="YYYY/MM/DD"
+                               id="startDate" name="startDate" style="max-width:200px;" type="datetime" value="@DateTime.Now.AddDays(-1).ToString("yyyy/MM/dd")">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="endDate">結束日期</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" data-date-format="YYYY/MM/DD"
+                               id="endDate" name="endDate" style="max-width:200px;" type="datetime" value="@DateTime.Now.ToString("yyyy/MM/dd")">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="匯出" class="btn btn-primary" />
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $('form#export').submit(function (e) {
+            var startDate = new Date($("#startDate").val());
+            var endDate = new Date($("#endDate").val());
+            if (startDate > endDate) {
+                alert('時間輸入錯誤!!')
+                e.preventDefault();
+            }
+        });
+    </script>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <script type="text/javascript">
+            @Html.Raw("alert('" + ViewBag.Message + "');");
+        </script>
+    }
+}
+

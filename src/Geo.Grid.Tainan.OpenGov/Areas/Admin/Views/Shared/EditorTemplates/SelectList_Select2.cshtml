@@ -1,0 +1,46 @@
+﻿@{
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();
+    htmlAttributes.Add("class", "control-label");
+
+    IDictionary<string, object> htmlAttributes2 = new Dictionary<string, object>();
+    htmlAttributes2.Add("class", "form-control");
+    htmlAttributes2.Add("multiple", "multiple");
+
+    string id = ViewData.ModelMetadata.PropertyName;
+    string val = ViewData.TemplateInfo.FormattedModelValue.ToString();
+
+    List<SelectListItem> ListItems = new List<SelectListItem>();
+}
+
+<div class="control-group">
+    @Html.Label("", htmlAttributes)
+    <div class="controls">
+        @if (ViewData[id] != null)
+        {
+            @Html.DropDownList("", (IEnumerable<SelectListItem>)ViewData[id], "請選擇", htmlAttributes2)
+        }
+        else
+        {
+            @Html.DropDownList("", ListItems, "請選擇", htmlAttributes2)
+        }
+    </div>
+</div>
+<link href="" rel="stylesheet" />
+<script src=""></script>
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptFile(Url.Content("~/Areas/Admin/Content/select2/js/select2.min.js"));
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            $('#@(id)').select2({
+                tags: true,
+                tokenSeparators: [',', ' ']
+            });
+            $('<link/>', {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: '@Url.Content("~/Areas/Admin/Content/select2/css/select2.min.css")'
+            }).appendTo('head');
+        </script>
+        );
+}

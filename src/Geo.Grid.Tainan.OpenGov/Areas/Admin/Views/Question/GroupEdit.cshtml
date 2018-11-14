@@ -1,0 +1,32 @@
+﻿@model Geo.Grid.Tainan.OpenGov.Entity.ViewModel.QuestGroupVm
+
+@{
+    ViewBag.Title = "編輯題組";
+}
+
+@Html.ActionLink("返回問卷", "GroupIndex","Question", new { id=Model.InfoId }, new { @class = "btn btn-primary pull-right" })
+<h2>編輯題組</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    <input type="hidden" value="@Model.InfoId" name="InfoId" />   
+        <table class="table1" width="100%">
+            <tr>
+                <th>主題</th>
+                <td><input type="text" class="form-control w215" value="@Model.GroupTitle" name="GroupTitle"/></td>
+            </tr>
+            <tr><td style="height:20px"></td></tr>
+            <tr>
+                <th>說明</th>
+                <td><textarea style="height:150px" class="form-control" name="GroupDesc">@Model.GroupDesc</textarea></td>
+            </tr>
+            <tr><td style="height:20px"></td></tr>
+            <tr>
+                <th></th>
+                <td><input type="submit" class="btn btn-primary" value="Update"/></td>
+            </tr>
+
+        </table>
+    
+}

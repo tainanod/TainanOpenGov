@@ -1,0 +1,82 @@
+﻿@using GRiD.CURE.ISTM_FCU.Common
+@model string
+@{
+    string id = ViewData.ModelMetadata.PropertyName;
+    string con = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+
+    string placeholder = ViewData.ModelMetadata.Watermark;//浮水印
+
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();
+    htmlAttributes.Add("class", "control-label");
+
+    IDictionary<string, object> htmlAttributes2 = new Dictionary<string, object>();
+    htmlAttributes2.Add("class", "form-control");
+    bool bt = false;
+    string str = "#";
+    if (!string.IsNullOrEmpty(Model)) { str = Model; bt = true; }
+
+}
+<div class="control-group">
+    @Html.Label("", htmlAttributes)
+    <div class="controls">
+        <input type="hidden" id="@(id)" name="@(id)" value="@str" />
+        <input type="hidden" id="con_@(id)" name="con_@(id)" value="@con" />
+        <span class="btn btn-primary btn-file form-control">
+            <span class="block_file_wh">選擇上傳 - @placeholder </span><input type="file" id="FileFile_@(id)" name="FileFile_@(id)" />
+        </span>
+    </div>
+    <label class="control-label">預覽</label>
+    <div class="controls">
+        <div class="thumbnail_@(id)" style="text-align:center;width:20%; @(!bt ? "display:none;" : "")">
+            <a href="@Url.Content(str)" id="block_file_a_@(id)" target="_blank">
+                附件
+            </a>
+            <div class="caption_@(id)" @(!bt ? "style=display:none;" : "")>
+                <p style="margin-left:70%;"><a class="btn btn-primary" id="block_file_del_@(id)" style="cursor:pointer;">刪除</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#FileFile_@(id)').change(function () {
+            var data = new FormData();
+            data.append('FileImg', this.files[0]);
+            data.append('SourceCon', $('#con_@(id)').val());
+            data.append('SourceName', '@(id)');
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("IndexFile","FileUpload")',
+                data: data,
+                chche: false,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.Status) {
+                        var str = result.JsonName2;
+                        $('#block_file_a_@(id)').attr('href', str);
+                        $('#@(id)').val(result.JsonName);
+                        $('.thumbnail_@(id)').show();
+                        $('.caption_@(id)').show();
+
+                    } else {
+                        alert('新增失敗! 請重新上傳');
+                    }
+                }
+            });
+        });
+
+        $('#block_file_del_@(id)').click(function () {
+            if (confirm('確定刪除？')) {
+                //清空
+                $('#@(id)').val('');
+                $('.thumbnail_@(id)').hide();
+                $('.caption_@(id)').hide();
+            }
+        });
+
+    });
+
+</script>

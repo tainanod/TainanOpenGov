@@ -1,0 +1,31 @@
+﻿@model IQueryable<Geo.Grid.Tainan.OpenGov.Entity.Forum>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main">
+    <h1>
+        <i></i>市政提案
+        <span>
+            本單元提供臺南市政府近期正舉辦的實體公民論壇活動，針對臺南市轄區內相關市政議題進行討論，希望集結眾人的智慧勾勒更美好的臺南生活環境，歡迎全民一起來討論！
+        </span>
+        <br  class="clearfix">
+    </h1>
+    <div class="list listul">
+        <ul>
+            @foreach (var m in Model)
+            {
+                <li>
+                    <b class="title"><a href="/Suggest/Detail/@m.ForumId">@m.Subject</a></b><span class="time">公告日期 @m.CreatedDate.ToString("yyyy/MM/dd")</span>
+                    <p>
+                        <span class="detail_link"><a href="/Suggest/Detail/@m.ForumId#資料公開">資料公開</a></span>　<span class="detail_link"><a href="/Suggest/Detail/@m.ForumId#發表意見">發表意見</a></span>
+                    </p>
+                    <p>
+                        @m.Description
+                    </p>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+

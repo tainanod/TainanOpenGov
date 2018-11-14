@@ -1,0 +1,26 @@
+﻿@model IQueryable<Geo.Grid.Tainan.OpenGov.Entity.Forum>
+
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var item in Model)
+        {
+
+            <li><a href="/Suggest/Detail/@item.ForumId">@item.Subject</a></li>
+            <li class="number">累積 <span>@item.Discuss.Count(x => x.IsEnabled)</span> 筆討論</li>
+
+        }
+    </ul>
+    <script>
+        $(function() {
+            $('#dvSuggest').removeClass('no');
+        });
+    </script>
+}
+else
+{
+    <i class="icon2"></i>
+    <label>近期尚無</label><span> 市政提案 </span>
+        
+}
+
